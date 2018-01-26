@@ -7,6 +7,9 @@
 
 .App .section-one {
   position: fixed;
-  height: 100px;
-  width: 200px;
+  height: 368px;
+  width: 48vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

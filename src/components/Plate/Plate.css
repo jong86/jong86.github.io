@@ -1,4 +1,55 @@
 .plate {
   color: white;
   background-color: #646464;
+  width: 100%;
+  font-size: 1.5em;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 4px;
+
+  min-height: 175px;
+
+  border: 1px solid grey
+}
+
+.heading {
+  width: 100%;
+  margin-bottom: auto;
+}
+
+.name {
+  color: white;
+  font-size: 2em;
+  background-color: grey;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.menu {
+  position: relative;
+  background-color: #545454;
+  width: 100%;
+  margin-top: auto;
+}
+
+.menu .menu-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
