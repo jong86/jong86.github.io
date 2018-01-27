@@ -1,34 +1,34 @@
-:root {
-  --main-color: lime;
-}
-
 .plate {
   color: var(--main-color);
-  background: transparent;
-  width: 100%;
   font-size: 1.5em;
+  background-color: var(--menu-bg-color);
+  border-radius: 4px;
+  border: 1px solid var(--main-color);
+
+  width: 100%;
+  min-height: 192px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  border-radius: 4px;
-
-  min-height: 192px;
-
-  border: 1px solid var(--main-color);
+  position: relative;
+  z-index: 2;
 }
 
-.heading {
+.plate .heading {
   width: 100%;
   margin-bottom: auto;
+  background-color: var(--menu-bg-color);
+  border-bottom: 1px solid var(--main-color);
+  border-radius: 4px;
+  z-index: 1;
 }
 
-.name {
+.plate .name {
   font-family: 'Black Ops One';
   color: var(--main-color);
   font-size: 2em;
-  background: transparent;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -36,32 +36,26 @@
   padding-bottom: 5px;
 }
 
-.title {
+.plate .title {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 1em;
+  margin-bottom: 1em;
 }
 
-.menu {
-  position: relative;
-  background-color: #545454;
-  width: 100%;
-  margin-top: auto;
-}
-
-.menu .menu-footer {
+.plate .text {
+  color: white;
+  font-size: 0.6em;
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
+  bottom: 5em;
+  margin: 0 auto;
+  padding: 0 6em;
+  word-break: break-all;
 }
 
-.hr {
-  margin-top: 16px;
-  width: 100%;
-  height: 1px;
-  background-color: var(--main-color);
+.plate svg {
+  position: absolute;
+  margin: 0 auto;
+  bottom: 0;
 }

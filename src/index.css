@@ -1,3 +1,8 @@
+:root {
+  --main-color: lime;
+  --menu-bg-color: #121212;
+}
+
 body {
   margin: 0;
   padding: 0;
