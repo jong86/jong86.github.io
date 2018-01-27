@@ -1,6 +1,6 @@
 .plate {
-  color: white;
-  background-color: #646464;
+  color: lime;
+  background: transparent;
   width: 100%;
   font-size: 1.5em;
 
@@ -12,7 +12,7 @@
 
   min-height: 175px;
 
-  border: 1px solid grey
+  border: 1px solid lime;
 }
 
 .heading {
@@ -21,9 +21,10 @@
 }
 
 .name {
-  color: white;
+  font-family: 'Black Ops One';
+  color: lime;
   font-size: 2em;
-  background-color: grey;
+  background: transparent;
   width: 100%;
   display: flex;
   justify-content: center;

@@ -7,8 +7,7 @@ class Plate extends Component {
   constructor() {
     super()
     this.state = {
-      caretColorBlueAmt: 255,
-      caretColorBlueLoopDirection: 'down',
+      caretSingleColorAmt: 255,
     }
 
     this.loopCaretColor = this.loopCaretColor.bind(this)
@@ -19,20 +18,11 @@ class Plate extends Component {
   }
 
   loopCaretColor() {
-    console.log("called here", this.state.caretColorBlueAmt);
-
-    if (this.state.caretColorBlueLoopDirection === 'down') {
-      this.setState({caretColorBlueAmt: this.state.caretColorBlueAmt -= 4})
-    } else {
-      this.setState({caretColorBlueAmt: this.state.caretColorBlueAmt += 16})
-    }
-
-    if (this.state.caretColorBlueAmt < 30) {
-      this.setState({caretColorBlueLoopDirection: 'up'})
-    } else if (this.state.caretColorBlueAmt > 254) {
-      this.setState({caretColorBlueLoopDirection: 'down'})
-    }
-
+    this.setState({caretSingleColorAmt: this.state.caretSingleColorAmt -= 2}, () => {
+      if (this.state.caretSingleColorAmt < 32) {
+        this.setState({caretSingleColorAmt: 192})
+      }
+    })
     window.requestAnimationFrame(this.loopCaretColor)
   }
 
@@ -53,7 +43,7 @@ class Plate extends Component {
         </div>
         <div className="menu">
           <div className="menu-footer">
-            <AngleDown size={48} color={`rgb(237, 255, ${this.state.caretColorBlueAmt}`}/>
+            <AngleDown size={48} color={`rgb(${this.state.caretSingleColorAmt}, 255, ${this.state.caretSingleColorAmt})`}/>
           </div>
         </div>
       </div>

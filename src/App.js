@@ -34,6 +34,17 @@ class App extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  componentWillUpdate = () => {
+    if (this.props.viewPosition > 500) {
+      // this.setState({
+      //   sectionOnePos: {
+      //     top: this.state.sectionOnePos.top - this.props.viewPosition - 500,
+      //     left: this.state.sectionOnePos.left,
+      //   }
+      // })
+    }
+  }
+
   handleScroll = (event) => {
     // console.log("scroll event:", event);
 
@@ -59,6 +70,12 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    viewPosition: state.viewPosition,
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return({
     modifyViewPosition: (valueChange) => {
@@ -67,6 +84,6 @@ function mapDispatchToProps(dispatch) {
   })
 }
 
-App = connect(null, mapDispatchToProps)(App)
+App = connect(mapStateToProps, mapDispatchToProps)(App)
 
 export default App;
