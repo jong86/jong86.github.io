@@ -7,23 +7,23 @@ class Plate extends Component {
   constructor() {
     super()
     this.state = {
-      caretSingleColorAmt: 255,
+      loopingColorAmt: 255,
     }
 
-    this.loopCaretColor = this.loopCaretColor.bind(this)
+    this.loopColor = this.loopColor.bind(this)
   }
 
   componentWillMount() {
-    window.requestAnimationFrame(this.loopCaretColor)
+    window.requestAnimationFrame(this.loopColor)
   }
 
-  loopCaretColor() {
-    this.setState({caretSingleColorAmt: this.state.caretSingleColorAmt -= 2}, () => {
-      if (this.state.caretSingleColorAmt < 32) {
-        this.setState({caretSingleColorAmt: 192})
+  loopColor() {
+    this.setState({loopingColorAmt: this.state.loopingColorAmt -= 2}, () => {
+      if (this.state.loopingColorAmt < 32) {
+        this.setState({loopingColorAmt: 192})
       }
     })
-    window.requestAnimationFrame(this.loopCaretColor)
+    window.requestAnimationFrame(this.loopColor)
   }
 
   render() {
@@ -40,10 +40,11 @@ class Plate extends Component {
           <div className="title">
             WEB DEVELOPER
           </div>
+        <div className="hr"/>
         </div>
         <div className="menu">
           <div className="menu-footer">
-            <AngleDown size={48} color={`rgb(${this.state.caretSingleColorAmt}, 255, ${this.state.caretSingleColorAmt})`}/>
+            <AngleDown size={48} color={`rgb(${this.state.loopingColorAmt}, 255, ${this.state.loopingColorAmt})`}/>
           </div>
         </div>
       </div>

@@ -34,27 +34,25 @@ class App extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  componentWillUpdate = () => {
+  componentWillReceiveProps = () => {
     if (this.props.viewPosition > 500) {
-      // this.setState({
-      //   sectionOnePos: {
-      //     top: this.state.sectionOnePos.top - this.props.viewPosition - 500,
-      //     left: this.state.sectionOnePos.left,
-      //   }
-      // })
+      this.setState({
+        sectionOnePos: {
+          top: this.state.sectionOnePos.top - this.props.viewPosition - 500,
+          left: this.state.sectionOnePos.left,
+        }
+      })
     }
   }
 
   handleScroll = (event) => {
-    // console.log("scroll event:", event);
-
     const { modifyViewPosition } = this.props
     const currentScrollTop = document.documentElement.scrollTop
     modifyViewPosition(currentScrollTop - this.lastScrollTop)
     this.lastScrollTop = currentScrollTop
   }
 
-  render() {
+  render = () => {
     return (
       <div className="App">
         <BgSpaceNodes/>
@@ -66,7 +64,7 @@ class App extends Component {
           <Plate/>
         </div>
       </div>
-    );
+    )
   }
 }
 

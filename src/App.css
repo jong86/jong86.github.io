@@ -5,11 +5,18 @@
   height: 6000px;
 }
 
-.App .section-one {
+.section-one {
   position: fixed;
   height: 368px;
   width: 48vw;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .section-one {
+    width: 98vw;
+  }
 }

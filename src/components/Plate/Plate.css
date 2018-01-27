@@ -1,5 +1,9 @@
+:root {
+  --main-color: lime;
+}
+
 .plate {
-  color: lime;
+  color: var(--main-color);
   background: transparent;
   width: 100%;
   font-size: 1.5em;
@@ -10,9 +14,9 @@
 
   border-radius: 4px;
 
-  min-height: 175px;
+  min-height: 192px;
 
-  border: 1px solid lime;
+  border: 1px solid var(--main-color);
 }
 
 .heading {
@@ -22,7 +26,7 @@
 
 .name {
   font-family: 'Black Ops One';
-  color: lime;
+  color: var(--main-color);
   font-size: 2em;
   background: transparent;
   width: 100%;
@@ -53,4 +57,11 @@
   display: flex;
   justify-content: center;
   text-align: center;
+}
+
+.hr {
+  margin-top: 16px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--main-color);
 }
