@@ -13,11 +13,9 @@ class App extends Component {
     super()
     this.state = {
       sectionOnePos: {},
-      lastViewPosition: 0
     }
     this.sectionOneElmt = null
     this.sectionOneScrollThreshold = 175
-
   }
 
   componentDidMount = () => {
@@ -36,9 +34,11 @@ class App extends Component {
     })
   }
 
-  componentWillUpdate = () => {
+  componentWillReceiveProps = () => {
+    const { viewPosition, lastViewPosition } = this.props
+
     // Move Section One up, if user scrolls down, when scroll position is past specified point
-    if (this.props.viewPosition - this.state.lastViewPosition > 1 && this.props.viewPosition > this.sectionOneScrollThreshold) {
+    if (viewPosition - lastViewPosition > 1 && viewPosition > this.sectionOneScrollThreshold) {
       this.setState({
         sectionOnePos: {
           top: this.state.sectionOnePos.top - 5,
@@ -47,7 +47,7 @@ class App extends Component {
       })
 
     // Move Section One back down, if user scrolls up, when scroll position is past specified point
-    } else if (this.state.lastViewPosition - this.props.viewPosition > 1 && this.props.viewPosition > this.sectionOneScrollThreshold) {
+    } else if (lastViewPosition - viewPosition > 1 && viewPosition > this.sectionOneScrollThreshold) {
       if (this.state.sectionOnePos.top >= (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)) {
         // Don't move if it's already vertically centered
         return
@@ -64,12 +64,12 @@ class App extends Component {
   }
 
   handleScroll = (event) => {
-    const { modifyViewPosition } = this.props
-    const { scrollTop } = document.documentElement
-    modifyViewPosition(scrollTop - this.state.lastViewPosition)
-    this.setState({
-      lastViewPosition: this.props.viewPosition
-    })
+    const { viewPosition, lastViewPosition, setViewPosition, setLastViewPosition } = this.props
+    setViewPosition(document.documentElement.scrollTop)
+
+    if (viewPosition - lastViewPosition > 1 || lastViewPosition - viewPosition > 1) {
+      setLastViewPosition(viewPosition)
+    }
   }
 
   render = () => {
@@ -91,13 +91,17 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
+    lastViewPosition: state.lastViewPosition,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return({
-    modifyViewPosition: (valueChange) => {
-      dispatch(action('MODIFY_VIEW_POSITION', { valueChange: valueChange }))
+    setViewPosition: (viewPosition) => {
+      dispatch(action('SET_VIEW_POSITION', { viewPosition: viewPosition }))
+    },
+    setLastViewPosition: (lastViewPosition) => {
+      dispatch(action('SET_LAST_VIEW_POSITION', { lastViewPosition: lastViewPosition }))
     },
   })
 }

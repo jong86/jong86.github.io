@@ -8,7 +8,7 @@ class Plate extends Component {
     super()
     this.state = {
       loopingColorAmt: 255,
-      lastViewPosition: 0,
+      // lastViewPosition: 0,
       obfuscatedText: '',
       plateHeight: {},
     }
@@ -23,7 +23,7 @@ class Plate extends Component {
     window.requestAnimationFrame(this.loopColor)
 
     this.setState({
-      lastViewPosition: this.props.viewPosition,
+      // lastViewPosition: this.props.viewPosition,
       plateHeight: { height: this.props.viewPosition + 192},
     })
   }
@@ -37,25 +37,26 @@ class Plate extends Component {
     window.requestAnimationFrame(this.loopColor)
   }
 
-  componentWillUpdate = () => {
-    if ((this.props.viewPosition - this.state.lastViewPosition > 1 ||
-        this.state.lastViewPosition - this.props.viewPosition > 1) && this.props.viewPosition < 160) {
+  componentWillReceiveProps = () => {
+    const { viewPosition, lastViewPosition } = this.props
+
+    if ((viewPosition - lastViewPosition > 1 || lastViewPosition - viewPosition > 1) && viewPosition < 160) {
       let obfuscatedText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
         obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
       })
+
       this.setState({
-        lastViewPosition: this.props.viewPosition,
         obfuscatedText: obfuscatedText,
-        plateHeight: { height: this.props.viewPosition + 192},
+        plateHeight: { height: viewPosition + 192},
       })
     }
   }
 
   render = () => {
     return (
-      <div className="plate no-select" style={this.state.plateHeight}> 
+      <div className="plate no-select" style={this.state.plateHeight}>
         <div className="heading">
           <div className="name">
             Jon Gaspar
@@ -76,6 +77,7 @@ class Plate extends Component {
 function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
+    lastViewPosition: state.lastViewPosition,
   }
 }
 
