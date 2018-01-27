@@ -7,38 +7,23 @@ class Plate extends Component {
   constructor() {
     super()
     this.state = {
-      loopingColorAmt: 255,
-      // lastViewPosition: 0,
       obfuscatedText: '',
       plateHeight: {},
     }
     this.plateRef = null
     this.realText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis at consectetur lorem donec massa sapien. Nisi scelerisque eu ultrices vitae. Id diam vel quam elementum pulvinar etiam non. Accumsan tortor posuere ac ut consequat semper viverra nam libero.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
-
-    this.loopColor = this.loopColor.bind(this)
   }
 
   componentWillMount = () => {
-    window.requestAnimationFrame(this.loopColor)
-
     this.setState({
-      // lastViewPosition: this.props.viewPosition,
       plateHeight: { height: this.props.viewPosition + 192},
     })
   }
 
-  loopColor = () => {
-    this.setState({loopingColorAmt: this.state.loopingColorAmt -= 2}, () => {
-      if (this.state.loopingColorAmt < 0) {
-        this.setState({loopingColorAmt: 255})
-      }
-    })
-    window.requestAnimationFrame(this.loopColor)
-  }
-
-  componentWillReceiveProps = () => {
-    const { viewPosition, lastViewPosition } = this.props
+  componentWillReceiveProps = (nextProps) => {
+    const { viewPosition: lastViewPosition } = this.props
+    const { viewPosition } = nextProps
 
     if ((viewPosition - lastViewPosition > 1 || lastViewPosition - viewPosition > 1) && viewPosition < 160) {
       let obfuscatedText = ''
@@ -68,7 +53,7 @@ class Plate extends Component {
         <div className="text">
           {this.props.viewPosition < 160 ? this.state.obfuscatedText : this.realText}
         </div>
-        <AngleDown size={48} color={`rgb(${this.state.loopingColorAmt}, 255, ${this.state.loopingColorAmt})`}/>
+        <AngleDown size={48}/>
       </div>
     );
   }

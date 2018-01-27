@@ -58,4 +58,11 @@
   position: absolute;
   margin: 0 auto;
   bottom: 0;
+  animation: arrow-color 1s infinite;
+  animation-timing-function: ease-out;
+}
+
+@keyframes arrow-color {
+  0% { color: transparent; }
+  100% { color: var(--main-color) }
 }

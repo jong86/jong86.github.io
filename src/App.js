@@ -12,7 +12,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      sectionOnePos: {},
+      sectionOneStyle: {},
     }
     this.sectionOneElmt = null
     this.sectionOneScrollThreshold = 175
@@ -27,49 +27,38 @@ class App extends Component {
 
     this.setState({
       // Center Section One on page load
-      sectionOnePos: {
+      sectionOneStyle: {
         top: (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2),
         left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
       }
     })
   }
 
-  componentWillReceiveProps = () => {
-    const { viewPosition, lastViewPosition } = this.props
+  componentWillReceiveProps = (nextProps) => {
+    const { viewPosition: lastViewPosition } = this.props
+    const { viewPosition } = nextProps
 
-    // Move Section One up, if user scrolls down, when scroll position is past specified point
-    if (viewPosition - lastViewPosition > 1 && viewPosition > this.sectionOneScrollThreshold) {
+    if (viewPosition - lastViewPosition > 0 && viewPosition > this.sectionOneScrollThreshold) {
       this.setState({
-        sectionOnePos: {
-          top: this.state.sectionOnePos.top - 5,
-          left: this.state.sectionOnePos.left,
+        sectionOneStyle: {
+          ...this.state.sectionOneStyle,
+          top: this.state.sectionOneStyle.top - 3
         }
       })
-
-    // Move Section One back down, if user scrolls up, when scroll position is past specified point
-    } else if (lastViewPosition - viewPosition > 1 && viewPosition > this.sectionOneScrollThreshold) {
-      if (this.state.sectionOnePos.top >= (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)) {
-        // Don't move if it's already vertically centered
-        return
-      } else {
-        // Move it down if it's above center
-        this.setState({
-          sectionOnePos: {
-            top: this.state.sectionOnePos.top + 5,
-            left: this.state.sectionOnePos.left,
-          }
-        })
-      }
+    }
+    else if (viewPosition - lastViewPosition < 0 && viewPosition > this.sectionOneScrollThreshold) {
+      this.setState({
+        sectionOneStyle: {
+          ...this.state.sectionOneStyle,
+          top: this.state.sectionOneStyle.top + 3
+        }
+      })
     }
   }
 
   handleScroll = (event) => {
-    const { viewPosition, lastViewPosition, setViewPosition, setLastViewPosition } = this.props
+    const { viewPosition, setViewPosition, setLastViewPosition } = this.props
     setViewPosition(document.documentElement.scrollTop)
-
-    if (viewPosition - lastViewPosition > 1 || lastViewPosition - viewPosition > 1) {
-      setLastViewPosition(viewPosition)
-    }
   }
 
   render = () => {
@@ -78,7 +67,7 @@ class App extends Component {
         <BgSpaceNodes/>
         <div
           className="section-one"
-          style={this.state.sectionOnePos}
+          style={this.state.sectionOneStyle}
           ref={(el) => { this.sectionOneElmt = el }}
         >
           <Plate/>
@@ -91,7 +80,6 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
-    lastViewPosition: state.lastViewPosition,
   }
 }
 
@@ -99,9 +87,6 @@ function mapDispatchToProps(dispatch) {
   return({
     setViewPosition: (viewPosition) => {
       dispatch(action('SET_VIEW_POSITION', { viewPosition: viewPosition }))
-    },
-    setLastViewPosition: (lastViewPosition) => {
-      dispatch(action('SET_LAST_VIEW_POSITION', { lastViewPosition: lastViewPosition }))
     },
   })
 }
