@@ -51,11 +51,7 @@
   bottom: 5em;
   margin: 0 auto;
   padding: 0 6em;
-  word-break: break-all;
-}
-
-.plate .text-red {
-  color: red;
+  word-break: keep-all;
 }
 
 .plate svg {

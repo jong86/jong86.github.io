@@ -80,11 +80,11 @@ class App extends Component {
     }
 
 
-    console.log("viewPosition", viewPosition)
-    console.log("this.sectionOneScrollThreshold", this.sectionOneScrollThreshold)
-    console.log("this.sectionOneVerticalCenter", this.sectionOneVerticalCenter)
-    console.log("this.state.sectionOneStyle.top", this.state.sectionOneStyle.top);
-    console.log("-----------------------------")
+    // console.log("viewPosition", viewPosition)
+    // console.log("this.sectionOneScrollThreshold", this.sectionOneScrollThreshold)
+    // console.log("this.sectionOneVerticalCenter", this.sectionOneVerticalCenter)
+    // console.log("this.state.sectionOneStyle.top", this.state.sectionOneStyle.top);
+    // console.log("-----------------------------")
 
   }
 

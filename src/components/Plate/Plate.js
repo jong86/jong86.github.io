@@ -12,7 +12,7 @@ class Plate extends Component {
       plateHeight: {},
     }
     this.plateRef = null
-    this.realText = `I'm a 31 year old web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided to make the career switch into something I have more passion for. Other than coding, in my spare time I enjoy playing guitar and producing music.`
+    this.realText = `I'm a 31 year old web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided to make the career switch into what I have more passion for. Other than coding, in my spare time I enjoy playing guitar and producing music.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.textThreshold = 160
@@ -35,8 +35,12 @@ class Plate extends Component {
       const lenChars = this.chars.length
 
       this.realText.split('').forEach(letter => {
-        if (Math.random() > (viewPosition / this.textThreshold)) {
-          // Evaluates as true more often as viewPosition increases
+        if (letter === ' ') {
+          // Keeps the spaces
+          obfuscatedText += letter
+        }
+        else if (Math.random() > (viewPosition / this.textThreshold)) {
+          // Evaluates as true more often as viewPosition increases, so causes scramble to 'fade-out'
           obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
         } else {
           obfuscatedText += letter
@@ -51,10 +55,6 @@ class Plate extends Component {
   }
 
   render = () => {
-    const textWordBreak = {
-      wordBreak: this.props.viewPosition < this.textThreshold / 1.35 ? "break-all" : "break-word"
-    }
-
     return (
       <div className="plate no-select" style={this.state.plateHeight}>
         <div className="heading">
@@ -65,7 +65,7 @@ class Plate extends Component {
             WEB DEVELOPER
           </div>
         </div>
-        <div className="text" style={textWordBreak}>
+        <div className="text">
           {this.props.viewPosition < this.textThreshold ? this.state.obfuscatedText : this.realText}
         </div>
         <AngleDown size={48}/>
