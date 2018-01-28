@@ -12,16 +12,18 @@ class Plate extends Component {
       plateHeight: {},
     }
     this.plateRef = null
-    this.realText = `I'm a 31 year old web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided to make the career switch into what I have more passion for. Other than coding, in my spare time I enjoy playing guitar and producing music.`
+    this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
-    this.textThresholdOne = 160
-    this.textThresholdTwo = 350
+    this.cssMinHeight = 192
+    this.textThresholdOne = 200 // For text un-scrambling on the way in
+    this.textThresholdTwo = 350 // For text scrambling on the way out
   }
 
   componentWillMount = () => {
+    const { viewPosition } = this.props
     this.setState({
-      plateHeight: { height: this.props.viewPosition + 192},
+      plateHeight: { height: viewPosition + this.cssMinHeight},
     })
   }
 
@@ -34,7 +36,7 @@ class Plate extends Component {
       const lenChars = this.chars.length
 
       this.realText.split('').forEach(letter => {
-        if (letter === ' ') {
+        if (letter === ' ' || letter === '\n') {
           // Keeps the spaces
           obfuscatedText += letter
         }
@@ -56,15 +58,21 @@ class Plate extends Component {
 
       this.setState({
         obfuscatedText: obfuscatedText,
-        plateHeight: { height: viewPosition + 192},
       })
+
+      // Makes plate height grow while under first threshold
+      if (viewPosition < this.textThresholdOne) {
+        this.setState({
+          plateHeight: { height: viewPosition + this.cssMinHeight},
+        })
+      }
     }
 
     /* Edge case fix:
       Sets menu to full open if past textThreshold, because of bug with scrolling really fast */
     if (viewPosition >= this.textThresholdOne) {
       this.setState({
-        plateHeight: { height: this.textThresholdOne + 192 },
+        plateHeight: { height: this.textThresholdOne + this.cssMinHeight },
       })
     }
   }

@@ -17,7 +17,7 @@ class App extends Component {
       sectionOneStyle: {},
     }
     this.sectionOneElmt = null
-    this.sectionOneScrollThreshold = 175
+    this.sectionOneScrollThreshold = 225
     this.sectionOneVerticalCenter = null
   }
 

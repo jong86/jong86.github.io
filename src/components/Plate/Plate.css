@@ -15,6 +15,8 @@
 
   position: relative;
   z-index: 2;
+
+  overflow: hidden;
 }
 
 .plate .heading {
@@ -53,6 +55,7 @@
   margin: 0 auto;
   padding: 0 6em;
   word-break: keep-all;
+  white-space: pre-wrap;
 }
 
 .plate svg {
