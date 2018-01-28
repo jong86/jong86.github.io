@@ -7,6 +7,9 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import action from './redux/action.js'
 import { connect } from 'react-redux'
 
+import throttle from 'lodash.throttle'
+
+
 
 class App extends Component {
   constructor() {
@@ -15,7 +18,8 @@ class App extends Component {
       sectionOneStyle: {},
     }
     this.sectionOneElmt = null
-    this.sectionOneScrollThreshold = 175
+    this.sectionOneScrollThreshold = 275
+    this.sectionOneVerticalCenter = null
   }
 
   componentDidMount = () => {
@@ -23,7 +27,7 @@ class App extends Component {
     window.onbeforeunload = () => window.scrollTo(0,0)
 
     // Add scroll listener
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', throttle(this.handleScroll, 16));
 
     this.setState({
       // Center Section One on page load
@@ -32,32 +36,60 @@ class App extends Component {
         left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
       }
     })
+    this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
   }
 
   componentWillReceiveProps = (nextProps) => {
     const { viewPosition: lastViewPosition } = this.props
     const { viewPosition } = nextProps
 
+
+    /*
+      Box still stopping at higher point than normal
+
+      TO DO: Maybe make a scroll-end event??
+    */
+
+    if (viewPosition < this.sectionOneScrollThreshold) {
+      console.log("setting to vertical center")
+      this.setState({
+        sectionOneStyle: {
+          ...this.state.sectionOneStyle,
+          top: this.sectionOneVerticalCenter,
+        }
+      })
+    }
+
     if (viewPosition - lastViewPosition > 0 && viewPosition > this.sectionOneScrollThreshold) {
+      // console.log("moving up");
       this.setState({
         sectionOneStyle: {
           ...this.state.sectionOneStyle,
-          top: this.state.sectionOneStyle.top - 3
+          top: this.state.sectionOneStyle.top - 20
         }
       })
     }
-    else if (viewPosition - lastViewPosition < 0 && viewPosition > this.sectionOneScrollThreshold) {
+    else if (viewPosition - lastViewPosition < 0 && this.state.sectionOneStyle.top < this.sectionOneVerticalCenter) {
+      console.log("moving down");
       this.setState({
         sectionOneStyle: {
           ...this.state.sectionOneStyle,
-          top: this.state.sectionOneStyle.top + 3
+          top: this.state.sectionOneStyle.top + 20
         }
       })
     }
+
+
+    console.log("viewPosition", viewPosition)
+    console.log("this.sectionOneScrollThreshold", this.sectionOneScrollThreshold)
+    console.log("this.sectionOneVerticalCenter", this.sectionOneVerticalCenter)
+    console.log("this.state.sectionOneStyle.top", this.state.sectionOneStyle.top);
+    console.log("-----------------------------")
+
   }
 
   handleScroll = (event) => {
-    const { viewPosition, setViewPosition, setLastViewPosition } = this.props
+    const { setViewPosition } = this.props
     setViewPosition(document.documentElement.scrollTop)
   }
 

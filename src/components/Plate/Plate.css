@@ -54,6 +54,10 @@
   word-break: break-all;
 }
 
+.plate .text-red {
+  color: red;
+}
+
 .plate svg {
   position: absolute;
   margin: 0 auto;
