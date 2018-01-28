@@ -7,3 +7,14 @@
   left: 0;
   background-color: #000000;
 }
+
+.bg-space-nodes .inner-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-space-nodes .inner-container .space-node {
+  position: absolute;
+  background-color: white;
+}

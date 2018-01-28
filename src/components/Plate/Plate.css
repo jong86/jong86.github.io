@@ -2,6 +2,7 @@
   color: var(--main-color);
   font-size: 1.5em;
   background-color: var(--menu-bg-color);
+  background-color: #121212d0;
   border-radius: 4px;
   border: 1px solid var(--main-color);
 
@@ -21,7 +22,7 @@
   margin-bottom: auto;
   background-color: var(--menu-bg-color);
   border-bottom: 1px solid var(--main-color);
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
   z-index: 1;
 }
 

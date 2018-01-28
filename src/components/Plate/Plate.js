@@ -28,8 +28,6 @@ class Plate extends Component {
     const { viewPosition: lastViewPosition } = this.props
     const { viewPosition } = nextProps
 
-    console.log(Math.random() );
-
     if ((Math.abs(viewPosition - lastViewPosition) > 0) && (viewPosition < this.textThreshold)) {
       let obfuscatedText = ''
       const lenChars = this.chars.length
@@ -40,7 +38,7 @@ class Plate extends Component {
           obfuscatedText += letter
         }
         else if (Math.random() > (viewPosition / this.textThreshold)) {
-          // Evaluates as true more often as viewPosition increases, so causes scramble to 'fade-out'
+          // Evaluates as true less often as viewPosition increases, so causes scramble-amount to 'fade-out'
           obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
         } else {
           obfuscatedText += letter
@@ -50,6 +48,14 @@ class Plate extends Component {
       this.setState({
         obfuscatedText: obfuscatedText,
         plateHeight: { height: viewPosition + 192},
+      })
+    }
+
+    /* Edge case fix:
+      Sets menu to full open if past textThreshold, because bug with scrolling really fast */
+    if (viewPosition >= this.textThreshold) {
+      this.setState({
+        plateHeight: { height: this.textThreshold + 192 },
       })
     }
   }

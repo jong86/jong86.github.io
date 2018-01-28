@@ -4,14 +4,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "immutability-helper": "^2.6.4",
     "lodash.throttle": "^4.1.1",
     "react": "^16.2.0",
-    "react-addons-update": "^15.6.2",
     "react-dom": "^16.2.0",
     "react-icons": "^2.2.7",
     "react-redux": "^5.0.6",
     "react-scripts": "1.1.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "uuid": "^3.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
