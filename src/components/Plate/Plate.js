@@ -16,7 +16,7 @@ class Plate extends Component {
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.cssMinHeight = 192
-    this.textThresholdOne = 200 // For text un-scrambling on the way in
+    this.textThresholdOne = 200 // For text un-scrambling on the way in, and height should stop increasing here
     this.textThresholdTwo = 350 // For text scrambling on the way out
   }
 
@@ -28,13 +28,17 @@ class Plate extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { viewPosition: lastViewPosition } = this.props
     const { viewPosition } = nextProps
 
+    console.log('viewPosition:', viewPosition);
+
+    /*
+      For the text
+      ============
+    */
     if (viewPosition < this.textThresholdOne || viewPosition > this.textThresholdTwo) {
       let obfuscatedText = ''
       const lenChars = this.chars.length
-
       this.realText.split('').forEach(letter => {
         if (letter === ' ' || letter === '\n') {
           // Keeps the spaces
@@ -48,7 +52,6 @@ class Plate extends Component {
         else if (Math.random() < ((viewPosition / this.textThresholdTwo) - 1) && viewPosition > this.textThresholdTwo) {
           /* Second text scramble
             The 'if' evaluates as true MORE often as viewPosition increases, when past 2nd viewPosition threshold */
-            console.log('in here');
           obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else {
@@ -59,14 +62,17 @@ class Plate extends Component {
       this.setState({
         obfuscatedText: obfuscatedText,
       })
-
-      // Makes plate height grow while under first threshold
-      if (viewPosition < this.textThresholdOne) {
-        this.setState({
-          plateHeight: { height: viewPosition + this.cssMinHeight},
-        })
-      }
     }
+
+
+    /*
+      For the height of the plate
+      ===========================
+    */
+    this.setState({
+      plateHeight: { height: viewPosition + this.cssMinHeight},
+      // Max height of plate is determined by height of Section One element in App.css
+    })
 
     /* Edge case fix:
       Sets menu to full open if past textThreshold, because of bug with scrolling really fast */
@@ -76,6 +82,8 @@ class Plate extends Component {
       })
     }
   }
+
+
 
   render = () => {
     return (

@@ -25,7 +25,6 @@ class BgSpaceNodes extends Component {
       clearTimeout(this.timer)
     }
     if (Math.random() > 0.8) {
-      console.log("deleting a space node");
       this.setState(prevState => ({
         spaceNodes: update(prevState.spaceNodes, {$splice: [[Math.floor(Math.random() * prevState.spaceNodes.length), 1]]})
       }))
