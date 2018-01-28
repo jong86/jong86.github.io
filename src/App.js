@@ -33,6 +33,7 @@ class App extends Component {
       sectionOneStyle: {
         top: (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2),
         left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
+        opacity: 1.0,
       }
     })
     this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
@@ -44,37 +45,36 @@ class App extends Component {
 
 
     /* Edge case fix:
-      Resets to center at viewPosition = 0, because bug with scrolling really fast */
-    if (viewPosition < this.sectionOneScrollThreshold || viewPosition < this.sectionOneScrollThreshold) {
+      Reinitializes Section One under threshold, because of bug with scrolling really fast */
+    if (viewPosition < this.sectionOneScrollThreshold) {
       this.setState(prevState => ({
         sectionOneStyle: {
-          ...prevState.sectionOneStyle,
           top: this.sectionOneVerticalCenter,
+          left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
+          opacity: 1.0,
         }
       }))
     }
 
-    // When scrolling down
-    if (viewPosition - lastViewPosition > 0 && viewPosition > this.sectionOneScrollThreshold) {
+    // When scrolling
+    if (Math.abs(viewPosition - lastViewPosition) > 0 && viewPosition > this.sectionOneScrollThreshold) {
       this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
       this.setState(prevState => ({
         sectionOneStyle: {
-          ...prevState.sectionOneStyle,
-          top: this.sectionOneVerticalCenter - (viewPosition - this.sectionOneScrollThreshold),
+          top: this.moveSectionOneVertically(viewPosition),
+          left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
+          opacity: this.fadeOpacity(viewPosition),
         }
       }))
     }
+  }
 
-    // When scrollig up
-    else if (viewPosition - lastViewPosition < 0 && this.state.sectionOneStyle.top < this.sectionOneVerticalCenter) {
-      this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
-      this.setState(prevState => ({
-        sectionOneStyle: {
-          ...prevState.sectionOneStyle,
-          top: this.sectionOneVerticalCenter - (viewPosition - this.sectionOneScrollThreshold),
-        }
-      }))
-    }
+  fadeOpacity = (viewPosition) => {
+    return 1 - ((viewPosition / 800) ** 2)
+  }
+
+  moveSectionOneVertically = (viewPosition) => {
+    return this.sectionOneVerticalCenter - (viewPosition - this.sectionOneScrollThreshold)
   }
 
   handleScroll = (event) => {
