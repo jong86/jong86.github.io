@@ -22,10 +22,10 @@ export default class Sound {
     this.oscillator.type = this.waveshape
 
     this.filterLowPass.type = 'lowpass'
-    this.filterLowPass.frequency.value = 300
+    this.filterLowPass.frequency.value = 900
 
     this.filterHiPass.type = 'highpass'
-    this.filterHiPass.frequency.value = 4000
+    this.filterHiPass.frequency.value = 60
 
     this.isPlaying = false
   }
@@ -37,7 +37,7 @@ export default class Sound {
 
     this.gainNode.gain.value = 0
     this.oscillator.start()
-    this.gainNode.gain.setTargetAtTime(0.5, this.context.currentTime, 0.015)
+    this.gainNode.gain.setTargetAtTime(0.2, this.context.currentTime, 0.015)
     this.isPlaying = true
   }
 

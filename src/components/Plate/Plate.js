@@ -102,7 +102,6 @@ class Plate extends Component {
 
     // To adjust frequency
     this.synth1.frequency = freq
-    console.log("freq:", freq)
   }
 
 
@@ -122,13 +121,14 @@ class Plate extends Component {
   freqFunction = () => {
     const { viewPosition: x } = this.props
     const { textThresholdOne: h } = this
-    const freq = ((x - h) ** 2) / 5
+    const d = x < h ? 5 : 25 // Makes rise in freq slower on the way out
+    const freq = (((x - h) ** 2) / d) + 20
     return freq <= 22050 ? freq : 22050
   }
 
   instantiateSynth = () => {
     // This needs to happen to replay sound
-    this.synth1 = new Sound(this.props.audioContext, 'square')
+    this.synth1 = new Sound(this.props.audioContext, 'sawtooth')
   }
 
 
