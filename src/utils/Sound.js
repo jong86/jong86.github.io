@@ -26,14 +26,15 @@ export default class Sound {
     this.oscillator.frequency.value = freq
 
     console.log("starting osc")
+    this.gainNode.gain.value = 0
     this.oscillator.start()
+    this.gainNode.gain.setTargetAtTime(0.5, this.context.currentTime, 0.015)
     this.isPlaying = true
   }
 
   stop() {
     console.log("stopping osc")
-    gainNode.gain.setTargetAtTime(0, context.currentTime, 0.015)
-    this.oscillator.stop()
+    this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0.015)
     this.isPlaying = false
   }
 }
