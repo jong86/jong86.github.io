@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import './Plate.css'
 import { connect } from 'react-redux'
-import AngleDown from 'react-icons/lib/fa/angle-down';
+import AngleDown from 'react-icons/lib/fa/angle-down'
+import Sound from '../../utils/Sound.js'
 
 
 class Plate extends Component {
   constructor() {
     super()
     this.state = {
-      obfuscatedText: '',
+      scrambledText: '',
       plateHeight: {},
     }
     this.plateRef = null
@@ -18,6 +19,8 @@ class Plate extends Component {
     this.cssMinHeight = 192
     this.textThresholdOne = 200 // For text un-scrambling on the way in, and height should stop increasing here
     this.textThresholdTwo = 350 // For text scrambling on the way out
+
+    this.synth1 = null
   }
 
   componentWillMount = () => {
@@ -25,50 +28,50 @@ class Plate extends Component {
     this.setState({
       plateHeight: { height: viewPosition + this.cssMinHeight},
     })
+
+    if (!this.synth1) {
+      this.synth1 = new Sound(this.props.audioContext, 'sine')
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
     const { viewPosition } = nextProps
 
-    console.log('viewPosition:', viewPosition);
-
-    /*
-      For the text
-      ============
-    */
+    /*================
+      Scrambled Text
+    ================*/
     if (viewPosition < this.textThresholdOne || viewPosition > this.textThresholdTwo) {
-      let obfuscatedText = ''
+      let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
         if (letter === ' ' || letter === '\n') {
           // Keeps the spaces
-          obfuscatedText += letter
+          scrambledText += letter
         }
         else if (Math.random() > (viewPosition / this.textThresholdOne) && viewPosition < this.textThresholdOne) {
           /* First text scramble
             The 'if' evaluates as true less often as viewPosition increases, so causes scramble-amount to 'fade-out' */
-          obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
+          scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else if (Math.random() < ((viewPosition / this.textThresholdTwo) - 1) && viewPosition > this.textThresholdTwo) {
           /* Second text scramble
             The 'if' evaluates as true MORE often as viewPosition increases, when past 2nd viewPosition threshold */
-          obfuscatedText += this.chars[Math.floor(Math.random() * lenChars)]
+          scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else {
-          obfuscatedText += letter
+          scrambledText += letter
         }
       })
 
       this.setState({
-        obfuscatedText: obfuscatedText,
+        scrambledText: scrambledText,
       })
     }
 
 
-    /*
-      For the height of the plate
-      ===========================
-    */
+    /*=====================
+      Height of the plate
+    =====================*/
     this.setState({
       plateHeight: { height: viewPosition + this.cssMinHeight},
       // Max height of plate is determined by height of Section One element in App.css
@@ -80,6 +83,26 @@ class Plate extends Component {
       this.setState({
         plateHeight: { height: this.textThresholdOne + this.cssMinHeight },
       })
+    }
+
+
+    /*===============
+      Sound effects
+    ===============*/
+    const { isScrolling } = this.props
+
+    if (isScrolling) {
+      console.log('trying to play');
+      this.synth1.play(110)
+    }
+  }
+
+  componentDidUpdate = () => {
+    const { isScrolling } = this.props
+
+    if (!isScrolling) {
+      console.log('trying to stop');
+      this.synth1.stop()
     }
   }
 
@@ -99,8 +122,8 @@ class Plate extends Component {
         <div className="text">
           {
             this.props.viewPosition < this.textThresholdTwo ?
-              (this.props.viewPosition < this.textThresholdOne ? this.state.obfuscatedText : this.realText) :
-              (this.state.obfuscatedText)
+              (this.props.viewPosition < this.textThresholdOne ? this.state.scrambledText : this.realText) :
+              (this.state.scrambledText)
           }
         </div>
         <AngleDown size={48}/>
@@ -112,7 +135,8 @@ class Plate extends Component {
 function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
-    lastViewPosition: state.lastViewPosition,
+    audioContext: state.audioContext,
+    isScrolling: state.isScrolling,
   }
 }
 

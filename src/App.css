@@ -7,7 +7,7 @@
 
 .section-one {
   position: fixed;
-  height: 368px;
+  height: 392px;
   width: 48vw;
 
   display: flex;
@@ -18,8 +18,8 @@
 
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   .section-one {
-    width: 98vw;
+    width: 90vw;
   }
 }

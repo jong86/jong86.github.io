@@ -19,6 +19,9 @@ class App extends Component {
     this.sectionOneElmt = null
     this.sectionOneScrollThreshold = 225
     this.sectionOneVerticalCenter = null
+
+    this.timeoutScroll = null
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount = () => {
@@ -32,7 +35,6 @@ class App extends Component {
       // Center Section One on page load
       sectionOneStyle: {
         top: (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2),
-        left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
         opacity: 1.0,
       }
     })
@@ -50,7 +52,6 @@ class App extends Component {
       this.setState(prevState => ({
         sectionOneStyle: {
           top: this.sectionOneVerticalCenter,
-          left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
           opacity: 1.0,
         }
       }))
@@ -62,7 +63,6 @@ class App extends Component {
       this.setState(prevState => ({
         sectionOneStyle: {
           top: this.moveSectionOneVertically(viewPosition),
-          left: (window.innerWidth / 2) - (this.sectionOneElmt.clientWidth / 2),
           opacity: this.fadeOpacity(viewPosition),
         }
       }))
@@ -78,9 +78,22 @@ class App extends Component {
   }
 
   handleScroll = (event) => {
-    event.preventDefault()
-    const { setViewPosition } = this.props
+    const { setViewPosition, setIsScrolling } = this.props
+
     setViewPosition(document.documentElement.scrollTop)
+
+    // Saves scroll state in redux store
+    if (this.timeoutScroll) {
+      // If there is already a timeout in process then cancel it
+      clearTimeout(this.timeoutScroll)
+    }
+    this.timeoutScroll = setTimeout(() => {
+      this.timeoutScroll = null
+      setIsScrolling(false)
+    }, 100)
+    if (this.props.isScrolling !== true) {
+      setIsScrolling(true)
+    }
   }
 
   render = () => {
@@ -102,6 +115,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
+    isScrolling: state.isScrolling,
   }
 }
 
@@ -109,6 +123,9 @@ function mapDispatchToProps(dispatch) {
   return({
     setViewPosition: (viewPosition) => {
       dispatch(action('SET_VIEW_POSITION', { viewPosition: viewPosition }))
+    },
+    setIsScrolling: (boolean) => {
+      dispatch(action('SET_IS_SCROLLING', { boolean: boolean }))
     },
   })
 }
