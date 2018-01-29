@@ -21,18 +21,14 @@ export default class Sound {
 
     this.oscillator.frequency.value = freq
 
-    if (this.isPlaying === false) {
-      console.log("starting osc")
-      this.oscillator.start()
-      this.isPlaying = true
-    }
+    console.log("starting osc")
+    this.oscillator.start()
+    this.isPlaying = true
   }
 
   stop() {
-    if (this.isPlaying === true) {
-      console.log("stopping osc")
-      this.oscillator.stop(0.1)
-      this.isPlaying = false
-    }
+    console.log("stopping osc")
+    this.oscillator.stop()
+    this.isPlaying = false
   }
 }

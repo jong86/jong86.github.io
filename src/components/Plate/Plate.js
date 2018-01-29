@@ -11,6 +11,7 @@ class Plate extends Component {
     this.state = {
       scrambledText: '',
       plateHeight: {},
+      synth1IsPlaying: false,
     }
     this.plateRef = null
     this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
@@ -29,9 +30,7 @@ class Plate extends Component {
       plateHeight: { height: viewPosition + this.cssMinHeight},
     })
 
-    if (!this.synth1) {
-      this.synth1 = new Sound(this.props.audioContext, 'sine')
-    }
+    this.synth1 = new Sound(this.props.audioContext, 'sine')
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -91,18 +90,22 @@ class Plate extends Component {
     ===============*/
     const { isScrolling } = this.props
 
-    if (isScrolling) {
-      console.log('trying to play');
-      this.synth1.play(110)
+    if (isScrolling && !this.state.synth1IsPlaying) {
+      this.setState({ synth1IsPlaying: true }, () => {
+        console.log('trying to play');
+        this.synth1.play(100)
+      })
     }
   }
 
   componentDidUpdate = () => {
     const { isScrolling } = this.props
 
-    if (!isScrolling) {
-      console.log('trying to stop');
-      this.synth1.stop()
+    if (!isScrolling && this.state.synth1IsPlaying) {
+      this.setState({ synth1IsPlaying: false }, () => {
+        console.log('trying to stop');
+        this.synth1.stop()
+      })
     }
   }
 
