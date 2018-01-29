@@ -27,21 +27,21 @@ class Summary extends Component {
   }
 
   componentWillMount = () => {
-    const { viewPosition } = this.props
+    const { scrollPosition } = this.props
     this.setState({
-      summaryHeight: { height: viewPosition + this.cssMinHeight},
+      summaryHeight: { height: scrollPosition + this.cssMinHeight},
     })
 
     this.instantiateSynth()
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { viewPosition } = nextProps
+    const { scrollPosition } = nextProps
 
     /*================
       Scrambled Text
     ================*/
-    if (viewPosition < this.textThresholdOne || viewPosition > this.textThresholdTwo) {
+    if (scrollPosition < this.textThresholdOne || scrollPosition > this.textThresholdTwo) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -49,14 +49,14 @@ class Summary extends Component {
           // Keeps the spaces
           scrambledText += letter
         }
-        else if (Math.random() > (viewPosition / this.textThresholdOne) && viewPosition < this.textThresholdOne) {
+        else if (Math.random() > (scrollPosition / this.textThresholdOne) && scrollPosition < this.textThresholdOne) {
           /* First text scramble
-            The 'if' evaluates as true less often as viewPosition increases, so causes scramble-amount to 'fade-out' */
+            The 'if' evaluates as true less often as scrollPosition increases, so causes scramble-amount to 'fade-out' */
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
-        else if (Math.random() < ((viewPosition / this.textThresholdTwo) - 1) && viewPosition > this.textThresholdTwo) {
+        else if (Math.random() < ((scrollPosition / this.textThresholdTwo) - 1) && scrollPosition > this.textThresholdTwo) {
           /* Second text scramble
-            The 'if' evaluates as true MORE often as viewPosition increases, when past 2nd viewPosition threshold */
+            The 'if' evaluates as true MORE often as scrollPosition increases, when past 2nd scrollPosition threshold */
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else {
@@ -74,13 +74,13 @@ class Summary extends Component {
       Height of the summary
     =====================*/
     this.setState({
-      summaryHeight: { height: viewPosition + this.cssMinHeight},
+      summaryHeight: { height: scrollPosition + this.cssMinHeight},
       // Max height of summary is determined by height of Section One element in App.css
     })
 
     /* Edge case fix:
       Sets menu to full open if past textThreshold, because of bug with scrolling really fast */
-    if (viewPosition >= this.textThresholdOne) {
+    if (scrollPosition >= this.textThresholdOne) {
       this.setState({
         summaryHeight: { height: this.textThresholdOne + this.cssMinHeight },
       })
@@ -123,7 +123,7 @@ class Summary extends Component {
   }
 
   freqFunction = () => {
-    const { viewPosition: x } = this.props
+    const { scrollPosition: x } = this.props
     const { textThresholdOne: h } = this
     const d = x < h ? 5 : 25 // Makes rise in freq slower on the way out
     const freq = (((x - h) ** 2) / d) + 20
@@ -149,8 +149,8 @@ class Summary extends Component {
         </div>
         <div className="text">
           {
-            this.props.viewPosition < this.textThresholdTwo ?
-              (this.props.viewPosition < this.textThresholdOne ? this.state.scrambledText : this.realText) :
+            this.props.scrollPosition < this.textThresholdTwo ?
+              (this.props.scrollPosition < this.textThresholdOne ? this.state.scrambledText : this.realText) :
               (this.state.scrambledText)
           }
         </div>
@@ -162,7 +162,7 @@ class Summary extends Component {
 
 function mapStateToProps(state) {
   return {
-    viewPosition: state.viewPosition,
+    scrollPosition: state.scrollPosition,
     audioContext: state.audioContext,
     isScrolling: state.isScrolling,
     scrollRate: state.scrollRate,

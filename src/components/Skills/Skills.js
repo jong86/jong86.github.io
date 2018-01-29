@@ -25,7 +25,7 @@ class Skills extends Component {
 
 function mapStateToProps(state) {
   return {
-    viewPosition: state.viewPosition,
+    scrollPosition: state.scrollPosition,
     audioContext: state.audioContext,
     isScrolling: state.isScrolling,
     scrollRate: state.scrollRate,

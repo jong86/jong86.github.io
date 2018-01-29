@@ -3,10 +3,10 @@ import update from 'immutability-helper'
 
 const reducers = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_VIEW_POSITION':
-      const { viewPosition } = action
+    case 'SET_SCROLL_POSITION':
+      const { scrollPosition } = action
       return update(state, {
-        viewPosition: { $set: viewPosition }
+        scrollPosition: { $set: scrollPosition }
       })
 
     case 'SET_IS_SCROLLING':

@@ -30,7 +30,7 @@ class App extends Component {
 
     // For scroll rate
     this.lastTime = null
-    this.lastViewPosition = null
+    this.lastScrollPosition = null
 
     // For main component animation / movement
     this.sectionBreakpoints = [800]
@@ -57,18 +57,18 @@ class App extends Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    const { viewPosition: lastViewPosition } = this.props
-    const { viewPosition } = nextProps
+    const { scrollPosition: lastScrollPosition } = this.props
+    const { scrollPosition } = nextProps
     const { sectionBreakpoints } = this
 
 
     /*=======================
       SECTION ONE MOVEMENT
     =======================*/
-    if (viewPosition < sectionBreakpoints[0]) {
+    if (scrollPosition < sectionBreakpoints[0]) {
 
       // Re-centers Section One under threshold, because of bug with scrolling really fast
-      if (viewPosition < this.sectionOneScrollThreshold) {
+      if (scrollPosition < this.sectionOneScrollThreshold) {
         this.setState(prevState => ({
           sectionOneStyle: {
             top: this.sectionOneVerticalCenter,
@@ -78,8 +78,8 @@ class App extends Component {
       }
 
       // Regular scrolling behavior
-      if (Math.abs(viewPosition - lastViewPosition) > 0 &&
-        viewPosition > this.sectionOneScrollThreshold &&
+      if (Math.abs(scrollPosition - lastScrollPosition) > 0 &&
+        scrollPosition > this.sectionOneScrollThreshold &&
         this.sectionOneRef) {
 
         this.setState(prevState => ({
@@ -95,7 +95,7 @@ class App extends Component {
     /*=======================
       SECTION TWO MOVEMENT
     =======================*/
-    if (viewPosition >= sectionBreakpoints[0]) {
+    if (scrollPosition >= sectionBreakpoints[0]) {
       this.setState(prevState => ({
         sectionTwoStyle: {
           top: this.moveSectionOneVertically(),
@@ -107,11 +107,11 @@ class App extends Component {
   }
 
   fadeOpacity = () => {
-    return 1 - ((this.props.viewPosition / 800) ** 2)
+    return 1 - ((this.props.scrollPosition / 800) ** 2)
   }
 
   moveSectionOneVertically = () => {
-    return this.sectionOneVerticalCenter - (this.props.viewPosition - this.sectionOneScrollThreshold)
+    return this.sectionOneVerticalCenter - (this.props.scrollPosition - this.sectionOneScrollThreshold)
   }
 
   getComponentVerticalCenter = (ref) => {
@@ -124,9 +124,9 @@ class App extends Component {
 
 
   handleScroll = (event) => {
-    const { setViewPosition, setIsScrolling, viewPosition } = this.props
+    const { setScrollPosition, setIsScrolling, scrollPosition } = this.props
 
-    setViewPosition(document.documentElement.scrollTop)
+    setScrollPosition(document.documentElement.scrollTop)
 
     /*===================================
       Save scroll state in redux store
@@ -152,23 +152,23 @@ class App extends Component {
     const now = audioContext.currentTime
     if (!this.lastTime || (now - this.lastTime) > 0.025) {
       this.lastTime = audioContext.currentTime
-      this.lastViewPosition = viewPosition
+      this.lastScrollPosition = scrollPosition
     }
     const scrollRate = (
-      (Math.abs(viewPosition - this.lastViewPosition) / (now - this.lastTime)) + 40
+      (Math.abs(scrollPosition - this.lastScrollPosition) / (now - this.lastTime)) + 40
     )
     if (scrollRate) setScrollRate(scrollRate)
   }
 
   render = () => {
-    const { viewPosition } = this.props
+    const { scrollPosition } = this.props
     const { sectionBreakpoints } = this
 
     return (
       <div className="App">
         <BgSpaceNodes/>
 
-        { viewPosition < sectionBreakpoints[0] &&
+        { scrollPosition < sectionBreakpoints[0] &&
           <div
             className="section-one"
             style={this.state.sectionOneStyle}
@@ -178,7 +178,7 @@ class App extends Component {
           </div>
         }
 
-        { viewPosition >= sectionBreakpoints[0] &&
+        { scrollPosition >= sectionBreakpoints[0] &&
           <div
             className="section-two"
             style={this.state.sectionTwoStyle}
@@ -195,7 +195,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    viewPosition: state.viewPosition,
+    scrollPosition: state.scrollPosition,
     isScrolling: state.isScrolling,
     audioContext: state.audioContext,
   }
@@ -203,8 +203,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return({
-    setViewPosition: (viewPosition) => {
-      dispatch(action('SET_VIEW_POSITION', { viewPosition: viewPosition }))
+    setScrollPosition: (scrollPosition) => {
+      dispatch(action('SET_SCROLL_POSITION', { scrollPosition: scrollPosition }))
     },
     setIsScrolling: (boolean) => {
       dispatch(action('SET_IS_SCROLLING', { boolean: boolean }))

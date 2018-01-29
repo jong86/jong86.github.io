@@ -1,5 +1,5 @@
 const initialState = {
-  viewPosition: 0,
+  scrollPosition: 0,
   isScrolling: false,
   audioContext: new (window.AudioContext || window.webkitAudioContext)(),
   scrollRate: 0,
