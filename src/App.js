@@ -22,6 +22,9 @@ class App extends Component {
 
     this.timeoutScroll = null
     this.handleScroll = this.handleScroll.bind(this);
+
+    this.lastTime = null
+    this.lastViewPosition = null
   }
 
   componentDidMount = () => {
@@ -78,11 +81,13 @@ class App extends Component {
   }
 
   handleScroll = (event) => {
-    const { setViewPosition, setIsScrolling } = this.props
+    const { setViewPosition, setIsScrolling, viewPosition } = this.props
 
     setViewPosition(document.documentElement.scrollTop)
 
-    // Saves scroll state in redux store
+    /*===================================
+      Save scroll state in redux store
+    ===================================*/
     if (this.timeoutScroll) {
       // If there is already a timeout in process then cancel it
       clearTimeout(this.timeoutScroll)
@@ -94,6 +99,22 @@ class App extends Component {
     if (this.props.isScrolling !== true) {
       setIsScrolling(true)
     }
+
+
+    /*==================================
+      Save scroll rate in redux store
+    ==================================*/
+    const { audioContext, setScrollRate } = this.props
+
+    const now = audioContext.currentTime
+    if (!this.lastTime || (now - this.lastTime) > 0.1) {
+      this.lastTime = audioContext.currentTime
+      this.lastViewPosition = viewPosition
+    }
+    const scrollRate = (
+      (Math.abs(viewPosition - this.lastViewPosition) / (now - this.lastTime) / 10) + 60
+    )
+    if (scrollRate) setScrollRate(scrollRate)
   }
 
   render = () => {
@@ -116,6 +137,7 @@ function mapStateToProps(state) {
   return {
     viewPosition: state.viewPosition,
     isScrolling: state.isScrolling,
+    audioContext: state.audioContext,
   }
 }
 
@@ -127,6 +149,9 @@ function mapDispatchToProps(dispatch) {
     setIsScrolling: (boolean) => {
       dispatch(action('SET_IS_SCROLLING', { boolean: boolean }))
     },
+    setScrollRate: (scrollRate) => {
+      dispatch(action('SET_SCROLL_RATE', { scrollRate: scrollRate }))
+    }
   })
 }
 

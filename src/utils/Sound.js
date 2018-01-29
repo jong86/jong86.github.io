@@ -3,6 +3,8 @@ export default class Sound {
     this.context = context
     this.oscillator = this.context.createOscillator()
     this.gainNode = this.context.createGain()
+    this.filterLowPass = this.context.createBiquadFilter()
+    this.filterHiPass = this.context.createBiquadFilter()
     this.waveshape = waveshape
     this.isPlaying = false
   }
@@ -12,10 +14,18 @@ export default class Sound {
   }
 
   init() {
-    this.oscillator.connect(this.gainNode)
+    this.oscillator.connect(this.filterLowPass)
+    this.filterLowPass.connect(this.filterHiPass)
+    this.filterHiPass.connect(this.gainNode)
     this.gainNode.connect(this.context.destination)
 
     this.oscillator.type = this.waveshape
+
+    this.filterLowPass.type = 'lowpass'
+    this.filterLowPass.frequency.value = 300
+
+    this.filterHiPass.type = 'highpass'
+    this.filterHiPass.frequency.value = 4000
 
     this.isPlaying = false
   }
@@ -25,7 +35,6 @@ export default class Sound {
 
     this.oscillator.frequency.value = freq
 
-    console.log("starting osc")
     this.gainNode.gain.value = 0
     this.oscillator.start()
     this.gainNode.gain.setTargetAtTime(0.5, this.context.currentTime, 0.015)
@@ -33,7 +42,6 @@ export default class Sound {
   }
 
   stop() {
-    console.log("stopping osc")
     this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0.015)
     this.isPlaying = false
   }

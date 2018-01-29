@@ -30,7 +30,7 @@ class Plate extends Component {
       plateHeight: { height: viewPosition + this.cssMinHeight},
     })
 
-    this.instantiateSounds()
+    this.instantiateSynth()
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -88,18 +88,17 @@ class Plate extends Component {
     /*===============
       Sound effects
     ===============*/
-    const { isScrolling } = this.props
+    const { isScrolling, scrollRate } = this.props
 
     // To play the sound:
     if (isScrolling && !this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: true }, () => {
-        console.log('trying to play');
         this.synth1.play(viewPosition)
       })
     }
 
     // To change the pitch of sound, depending on viewPosition (later will change to view position change speed)
-    this.synth1.frequency = viewPosition
+    this.synth1.frequency = scrollRate
   }
 
   componentDidUpdate = () => {
@@ -108,16 +107,15 @@ class Plate extends Component {
     // To stop the sound:
     if (!isScrolling && this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: false }, () => {
-        console.log('trying to stop');
         this.synth1.stop()
         // Re-create the sound object as required by Web Audio API
-        this.instantiateSounds()
+        this.instantiateSynth()
       })
     }
   }
 
-  instantiateSounds = () => {
-    this.synth1 = new Sound(this.props.audioContext, 'sine')
+  instantiateSynth = () => {
+    this.synth1 = new Sound(this.props.audioContext, 'square')
   }
 
 
@@ -150,6 +148,7 @@ function mapStateToProps(state) {
     viewPosition: state.viewPosition,
     audioContext: state.audioContext,
     isScrolling: state.isScrolling,
+    scrollRate: state.scrollRate,
   }
 }
 

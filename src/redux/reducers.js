@@ -15,6 +15,12 @@ const reducers = (state = initialState, action) => {
         isScrolling: { $set: boolean }
       })
 
+    case 'SET_SCROLL_RATE':
+      const { scrollRate } = action
+      return update(state, {
+        scrollRate: { $set: scrollRate }
+      })
+
     default:
       return { ...state }
   }
