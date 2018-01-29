@@ -18,8 +18,8 @@ class Summary extends Component {
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.cssMinHeight = 192
-    this.textThresholdOne = 200 // For text un-scrambling on the way in, and height should stop increasing here
-    this.textThresholdTwo = 350 // For text scrambling on the way out
+    this.textBreakpointOne = 200 // For text un-scrambling on the way in, and height should stop increasing here
+    this.textBreakpointTwo = 350 // For text scrambling on the way out
 
     this.synth1 = null
 
@@ -41,7 +41,7 @@ class Summary extends Component {
     /*================
       Scrambled Text
     ================*/
-    if (scrollPosition < this.textThresholdOne || scrollPosition > this.textThresholdTwo) {
+    if (scrollPosition < this.textBreakpointOne || scrollPosition > this.textBreakpointTwo) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -49,14 +49,14 @@ class Summary extends Component {
           // Keeps the spaces
           scrambledText += letter
         }
-        else if (Math.random() > (scrollPosition / this.textThresholdOne) && scrollPosition < this.textThresholdOne) {
+        else if (Math.random() > (scrollPosition / this.textBreakpointOne) && scrollPosition < this.textBreakpointOne) {
           /* First text scramble
             The 'if' evaluates as true less often as scrollPosition increases, so causes scramble-amount to 'fade-out' */
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
-        else if (Math.random() < ((scrollPosition / this.textThresholdTwo) - 1) && scrollPosition > this.textThresholdTwo) {
+        else if (Math.random() < ((scrollPosition / this.textBreakpointTwo) - 1) && scrollPosition > this.textBreakpointTwo) {
           /* Second text scramble
-            The 'if' evaluates as true MORE often as scrollPosition increases, when past 2nd scrollPosition threshold */
+            The 'if' evaluates as true MORE often as scrollPosition increases, when past 2nd scrollPosition breakpoint */
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else {
@@ -79,10 +79,10 @@ class Summary extends Component {
     })
 
     /* Edge case fix:
-      Sets menu to full open if past textThreshold, because of bug with scrolling really fast */
-    if (scrollPosition >= this.textThresholdOne) {
+      Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast */
+    if (scrollPosition >= this.textBreakpointOne) {
       this.setState({
-        summaryHeight: { height: this.textThresholdOne + this.cssMinHeight },
+        summaryHeight: { height: this.textBreakpointOne + this.cssMinHeight },
       })
     }
 
@@ -124,7 +124,7 @@ class Summary extends Component {
 
   freqFunction = () => {
     const { scrollPosition: x } = this.props
-    const { textThresholdOne: h } = this
+    const { textBreakpointOne: h } = this
     const d = x < h ? 5 : 25 // Makes rise in freq slower on the way out
     const freq = (((x - h) ** 2) / d) + 20
     return freq <= 22050 ? freq : 22050
@@ -149,8 +149,8 @@ class Summary extends Component {
         </div>
         <div className="text">
           {
-            this.props.scrollPosition < this.textThresholdTwo ?
-              (this.props.scrollPosition < this.textThresholdOne ? this.state.scrambledText : this.realText) :
+            this.props.scrollPosition < this.textBreakpointTwo ?
+              (this.props.scrollPosition < this.textBreakpointOne ? this.state.scrambledText : this.realText) :
               (this.state.scrambledText)
           }
         </div>

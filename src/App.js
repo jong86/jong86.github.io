@@ -19,7 +19,7 @@ class App extends Component {
       sectionTwoStyle: {},
     }
     this.sectionOneRef = null
-    this.sectionOneScrollThreshold = 225
+    this.sectionOneScrollBreakpoint = 225
     this.sectionOneVerticalCenter = null
 
     this.sectionTwoRef = null
@@ -67,8 +67,8 @@ class App extends Component {
     =======================*/
     if (scrollPosition < sectionBreakpoints[0]) {
 
-      // Re-centers Section One under threshold, because of bug with scrolling really fast
-      if (scrollPosition < this.sectionOneScrollThreshold) {
+      // Re-centers Section One under breakpoint, because of bug with scrolling really fast
+      if (scrollPosition < this.sectionOneScrollBreakpoint) {
         this.setState(prevState => ({
           sectionOneStyle: {
             top: this.sectionOneVerticalCenter,
@@ -79,7 +79,7 @@ class App extends Component {
 
       // Regular scrolling behavior
       if (Math.abs(scrollPosition - lastScrollPosition) > 0 &&
-        scrollPosition > this.sectionOneScrollThreshold &&
+        scrollPosition > this.sectionOneScrollBreakpoint &&
         this.sectionOneRef) {
 
         this.setState(prevState => ({
@@ -111,7 +111,7 @@ class App extends Component {
   }
 
   moveSectionOneVertically = () => {
-    return this.sectionOneVerticalCenter - (this.props.scrollPosition - this.sectionOneScrollThreshold)
+    return this.sectionOneVerticalCenter - (this.props.scrollPosition - this.sectionOneScrollBreakpoint)
   }
 
   getComponentVerticalCenter = (ref) => {
