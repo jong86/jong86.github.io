@@ -30,7 +30,7 @@ class Plate extends Component {
       plateHeight: { height: viewPosition + this.cssMinHeight},
     })
 
-    this.synth1 = new Sound(this.props.audioContext, 'sine')
+    this.instantiateSounds()
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -90,25 +90,35 @@ class Plate extends Component {
     ===============*/
     const { isScrolling } = this.props
 
+    // To play the sound:
     if (isScrolling && !this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: true }, () => {
         console.log('trying to play');
-        this.synth1.play(100)
+        this.synth1.play(viewPosition)
       })
     }
+
+    // To change the pitch of sound, depending on viewPosition (later will change to view position change speed)
+    this.synth1.frequency = viewPosition
   }
 
   componentDidUpdate = () => {
     const { isScrolling } = this.props
 
+    // To stop the sound:
     if (!isScrolling && this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: false }, () => {
         console.log('trying to stop');
         this.synth1.stop()
+        // Re-create the sound object as required by Web Audio API
+        this.instantiateSounds()
       })
     }
   }
 
+  instantiateSounds = () => {
+    this.synth1 = new Sound(this.props.audioContext, 'sine')
+  }
 
 
   render = () => {

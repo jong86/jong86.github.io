@@ -90,7 +90,7 @@ class App extends Component {
     this.timeoutScroll = setTimeout(() => {
       this.timeoutScroll = null
       setIsScrolling(false)
-    }, 100)
+    }, 50)
     if (this.props.isScrolling !== true) {
       setIsScrolling(true)
     }
