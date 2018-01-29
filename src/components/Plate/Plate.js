@@ -22,6 +22,8 @@ class Plate extends Component {
     this.textThresholdTwo = 350 // For text scrambling on the way out
 
     this.synth1 = null
+
+    this.freqFunction = this.freqFunction.bind(this)
   }
 
   componentWillMount = () => {
@@ -89,17 +91,20 @@ class Plate extends Component {
       Sound effects
     ===============*/
     const { isScrolling, scrollRate } = this.props
+    const freq = this.freqFunction()
 
     // To play the sound:
     if (isScrolling && !this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: true }, () => {
-        this.synth1.play(viewPosition)
+        this.synth1.play(freq)
       })
     }
 
-    // To change the pitch of sound, depending on viewPosition (later will change to view position change speed)
-    this.synth1.frequency = scrollRate
+    // To adjust frequency
+    this.synth1.frequency = freq
+    console.log("freq:", freq)
   }
+
 
   componentDidUpdate = () => {
     const { isScrolling } = this.props
@@ -114,7 +119,15 @@ class Plate extends Component {
     }
   }
 
+  freqFunction = () => {
+    const { viewPosition: x } = this.props
+    const { textThresholdOne: h } = this
+    const freq = ((x - h) ** 2) / 5
+    return freq <= 22050 ? freq : 22050
+  }
+
   instantiateSynth = () => {
+    // This needs to happen to replay sound
     this.synth1 = new Sound(this.props.audioContext, 'square')
   }
 

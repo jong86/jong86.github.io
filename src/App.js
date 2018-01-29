@@ -107,12 +107,12 @@ class App extends Component {
     const { audioContext, setScrollRate } = this.props
 
     const now = audioContext.currentTime
-    if (!this.lastTime || (now - this.lastTime) > 0.1) {
+    if (!this.lastTime || (now - this.lastTime) > 0.025) {
       this.lastTime = audioContext.currentTime
       this.lastViewPosition = viewPosition
     }
     const scrollRate = (
-      (Math.abs(viewPosition - this.lastViewPosition) / (now - this.lastTime) / 10) + 60
+      (Math.abs(viewPosition - this.lastViewPosition) / (now - this.lastTime)) + 40
     )
     if (scrollRate) setScrollRate(scrollRate)
   }
