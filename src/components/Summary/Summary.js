@@ -18,8 +18,7 @@ class Summary extends Component {
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.cssMinHeight = 192
-    this.textBreakpointOne = 200 // For text un-scrambling on the way in, and height should stop increasing here
-    this.textBreakpointTwo = 350 // For text scrambling on the way out
+    this.textBreakpoints = [200, 350] // For text un-scramble / scramble
 
     this.synth1 = null
 
@@ -41,7 +40,7 @@ class Summary extends Component {
     /*================
       Scrambled Text
     ================*/
-    if (scrollPosition < this.textBreakpointOne || scrollPosition > this.textBreakpointTwo) {
+    if (scrollPosition < this.textBreakpoints[0] || scrollPosition > this.textBreakpoints[1]) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -49,14 +48,14 @@ class Summary extends Component {
           // Keeps the spaces
           scrambledText += letter
         }
-        else if (Math.random() > (scrollPosition / this.textBreakpointOne) && scrollPosition < this.textBreakpointOne) {
-          /* First text scramble
-            The 'if' evaluates as true less often as scrollPosition increases, so causes scramble-amount to 'fade-out' */
+        else if (Math.random() > (scrollPosition / this.textBreakpoints[0]) && scrollPosition < this.textBreakpoints[0]) {
+          // Text de-scrambling on the way in:
+          // The 'if' evaluates as true less often as scrollPosition increases, so causes scramble amount to 'fade-out'
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
-        else if (Math.random() < ((scrollPosition / this.textBreakpointTwo) - 1) && scrollPosition > this.textBreakpointTwo) {
-          /* Second text scramble
-            The 'if' evaluates as true MORE often as scrollPosition increases, when past 2nd scrollPosition breakpoint */
+        else if (Math.random() < ((scrollPosition / this.textBreakpoints[1]) - 1) && scrollPosition > this.textBreakpoints[1]) {
+          // Text re-scrambling on the way out:
+          // The 'if' evaluates as true MORE often as scrollPosition increases, when past 2nd scrollPosition breakpoint
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
         else {
@@ -70,19 +69,19 @@ class Summary extends Component {
     }
 
 
-    /*=====================
-      Height of the summary
-    =====================*/
+    /*================
+      Height change
+    ================*/
     this.setState({
       summaryHeight: { height: scrollPosition + this.cssMinHeight},
       // Max height of summary is determined by height of Section One element in App.css
     })
 
-    /* Edge case fix:
-      Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast */
-    if (scrollPosition >= this.textBreakpointOne) {
+    // Edge case fix
+    // Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast */
+    if (scrollPosition >= this.textBreakpoints[0]) {
       this.setState({
-        summaryHeight: { height: this.textBreakpointOne + this.cssMinHeight },
+        summaryHeight: { height: this.textBreakpoints[0] + this.cssMinHeight },
       })
     }
 
@@ -93,14 +92,14 @@ class Summary extends Component {
     const { isScrolling, scrollRate } = this.props
     const freq = this.freqFunction()
 
-    // To play the sound:
+    // To play the sound
     if (isScrolling && !this.state.synth1IsPlaying) {
       this.setState({ synth1IsPlaying: true }, () => {
         this.synth1.play(freq)
       })
     }
 
-    // To adjust frequency
+    // To adjust sound frequency
     this.synth1.frequency = freq
   }
 
@@ -124,7 +123,7 @@ class Summary extends Component {
 
   freqFunction = () => {
     const { scrollPosition: x } = this.props
-    const { textBreakpointOne: h } = this
+    const h = this.textBreakpoints[0]
     const d = x < h ? 5 : 25 // Makes rise in freq slower on the way out
     const freq = (((x - h) ** 2) / d) + 20
     return freq <= 22050 ? freq : 22050
@@ -149,8 +148,10 @@ class Summary extends Component {
         </div>
         <div className="text">
           {
-            this.props.scrollPosition < this.textBreakpointTwo ?
-              (this.props.scrollPosition < this.textBreakpointOne ? this.state.scrambledText : this.realText) :
+            this.props.scrollPosition < this.textBreakpoints[1] ?
+              // Text de-scrambling on the way in:
+              (this.props.scrollPosition < this.textBreakpoints[0] ? this.state.scrambledText : this.realText) :
+              // Text re-scrambling on the way out:
               (this.state.scrambledText)
           }
         </div>
