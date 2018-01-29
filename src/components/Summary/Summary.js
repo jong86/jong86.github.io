@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import './Plate.css'
+import './Summary.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
 import Sound from '../../utils/Sound.js'
 
 
-class Plate extends Component {
+class Summary extends Component {
   constructor() {
     super()
     this.state = {
       scrambledText: '',
-      plateHeight: {},
+      summaryHeight: {},
       synth1IsPlaying: false,
     }
-    this.plateRef = null
+    this.summaryRef = null
     this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
@@ -29,7 +29,7 @@ class Plate extends Component {
   componentWillMount = () => {
     const { viewPosition } = this.props
     this.setState({
-      plateHeight: { height: viewPosition + this.cssMinHeight},
+      summaryHeight: { height: viewPosition + this.cssMinHeight},
     })
 
     this.instantiateSynth()
@@ -71,18 +71,18 @@ class Plate extends Component {
 
 
     /*=====================
-      Height of the plate
+      Height of the summary
     =====================*/
     this.setState({
-      plateHeight: { height: viewPosition + this.cssMinHeight},
-      // Max height of plate is determined by height of Section One element in App.css
+      summaryHeight: { height: viewPosition + this.cssMinHeight},
+      // Max height of summary is determined by height of Section One element in App.css
     })
 
     /* Edge case fix:
       Sets menu to full open if past textThreshold, because of bug with scrolling really fast */
     if (viewPosition >= this.textThresholdOne) {
       this.setState({
-        plateHeight: { height: this.textThresholdOne + this.cssMinHeight },
+        summaryHeight: { height: this.textThresholdOne + this.cssMinHeight },
       })
     }
 
@@ -118,6 +118,10 @@ class Plate extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+    this.synth1.stop()
+  }
+
   freqFunction = () => {
     const { viewPosition: x } = this.props
     const { textThresholdOne: h } = this
@@ -134,7 +138,7 @@ class Plate extends Component {
 
   render = () => {
     return (
-      <div className="plate no-select" style={this.state.plateHeight}>
+      <div className="summary no-select" style={this.state.summaryHeight}>
         <div className="heading">
           <div className="name">
             Jon Gaspar
@@ -165,6 +169,6 @@ function mapStateToProps(state) {
   }
 }
 
-Plate = connect(mapStateToProps)(Plate)
+Summary = connect(mapStateToProps)(Summary)
 
-export default Plate
+export default Summary

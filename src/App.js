@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Plate from './components/Plate/Plate.js'
 import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
+import Summary from './components/Summary/Summary.js'
+import Skills from './components/Skills/Skills.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -15,17 +16,26 @@ class App extends Component {
     super()
     this.state = {
       sectionOneStyle: {},
+      sectionTwoStyle: {},
     }
-    this.sectionOneElmt = null
+    this.sectionOneRef = null
     this.sectionOneScrollThreshold = 225
     this.sectionOneVerticalCenter = null
 
+    this.sectionTwoRef = null
+
+    // For isScrolling detection
     this.timeoutScroll = null
     this.handleScroll = this.handleScroll.bind(this);
 
+    // For scroll rate
     this.lastTime = null
     this.lastViewPosition = null
+
+    // For main component animation / movement
+    this.sectionBreakpoints = [800]
   }
+
 
   componentDidMount = () => {
     // Scroll to top of page on load:
@@ -37,48 +47,81 @@ class App extends Component {
     this.setState({
       // Center Section One on page load
       sectionOneStyle: {
-        top: (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2),
+        top: (window.innerHeight / 2) - (this.sectionOneRef.clientHeight / 2),
         opacity: 1.0,
       }
     })
-    this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
+
+    this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneRef.clientHeight / 2)
   }
+
 
   componentWillReceiveProps = (nextProps) => {
     const { viewPosition: lastViewPosition } = this.props
     const { viewPosition } = nextProps
+    const { sectionBreakpoints } = this
 
 
-    /* Edge case fix:
-      Reinitializes Section One under threshold, because of bug with scrolling really fast */
-    if (viewPosition < this.sectionOneScrollThreshold) {
+    /*=======================
+      SECTION ONE MOVEMENT
+    =======================*/
+    if (viewPosition < sectionBreakpoints[0]) {
+
+      // Re-centers Section One under threshold, because of bug with scrolling really fast
+      if (viewPosition < this.sectionOneScrollThreshold) {
+        this.setState(prevState => ({
+          sectionOneStyle: {
+            top: this.sectionOneVerticalCenter,
+            opacity: 1.0,
+          }
+        }))
+      }
+
+      // Regular scrolling behavior
+      if (Math.abs(viewPosition - lastViewPosition) > 0 &&
+        viewPosition > this.sectionOneScrollThreshold &&
+        this.sectionOneRef) {
+
+        this.setState(prevState => ({
+          sectionOneStyle: {
+            top: this.moveSectionOneVertically(),
+            opacity: this.fadeOpacity(),
+          }
+        }))
+      }
+    }
+
+
+    /*=======================
+      SECTION TWO MOVEMENT
+    =======================*/
+    if (viewPosition >= sectionBreakpoints[0]) {
       this.setState(prevState => ({
-        sectionOneStyle: {
-          top: this.sectionOneVerticalCenter,
-          opacity: 1.0,
+        sectionTwoStyle: {
+          top: this.moveSectionOneVertically(),
+          opacity: this.fadeOpacity(),
         }
       }))
     }
 
-    // When scrolling
-    if (Math.abs(viewPosition - lastViewPosition) > 0 && viewPosition > this.sectionOneScrollThreshold) {
-      this.sectionOneVerticalCenter = (window.innerHeight / 2) - (this.sectionOneElmt.clientHeight / 2)
-      this.setState(prevState => ({
-        sectionOneStyle: {
-          top: this.moveSectionOneVertically(viewPosition),
-          opacity: this.fadeOpacity(viewPosition),
-        }
-      }))
-    }
   }
 
-  fadeOpacity = (viewPosition) => {
-    return 1 - ((viewPosition / 800) ** 2)
+  fadeOpacity = () => {
+    return 1 - ((this.props.viewPosition / 800) ** 2)
   }
 
-  moveSectionOneVertically = (viewPosition) => {
-    return this.sectionOneVerticalCenter - (viewPosition - this.sectionOneScrollThreshold)
+  moveSectionOneVertically = () => {
+    return this.sectionOneVerticalCenter - (this.props.viewPosition - this.sectionOneScrollThreshold)
   }
+
+  getComponentVerticalCenter = (ref) => {
+    return (window.innerHeight / 2) - (ref.clientHeight / 2)
+  }
+
+  moveComponentVertically = (ref) => {
+
+  }
+
 
   handleScroll = (event) => {
     const { setViewPosition, setIsScrolling, viewPosition } = this.props
@@ -118,16 +161,33 @@ class App extends Component {
   }
 
   render = () => {
+    const { viewPosition } = this.props
+    const { sectionBreakpoints } = this
+
     return (
       <div className="App">
         <BgSpaceNodes/>
-        <div
-          className="section-one"
-          style={this.state.sectionOneStyle}
-          ref={(el) => { this.sectionOneElmt = el }}
-        >
-          <Plate/>
-        </div>
+
+        { viewPosition < sectionBreakpoints[0] &&
+          <div
+            className="section-one"
+            style={this.state.sectionOneStyle}
+            ref={(ref) => { this.sectionOneRef = ref }}
+          >
+            <Summary/>
+          </div>
+        }
+
+        { viewPosition >= sectionBreakpoints[0] &&
+          <div
+            className="section-two"
+            style={this.state.sectionTwoStyle}
+            ref={(ref) => { this.sectionTwoRef = ref }}
+          >
+            <Skills/>
+          </div>
+        }
+
       </div>
     )
   }

@@ -1,10 +1,10 @@
-.plate {
-  color: var(--main-color);
+.summary {
+  color: var(--menu-color);
   font-size: 1.5em;
   background-color: var(--menu-bg-color);
   background-color: #121212d0;
-  border-radius: 4px;
-  border: 1px solid var(--main-color);
+  border-radius: var(--menu-border-radius);
+  border: 1px solid var(--menu-color);
 
   width: 100%;
   min-height: 192px;
@@ -19,18 +19,18 @@
   overflow: hidden;
 }
 
-.plate .heading {
+.summary .heading {
   width: 100%;
   margin-bottom: auto;
   background-color: var(--menu-bg-color);
-  border-bottom: 1px solid var(--main-color);
-  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid var(--menu-color);
+  border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
   z-index: 1;
 }
 
-.plate .name {
+.summary .name {
   font-family: 'Black Ops One';
-  color: var(--main-color);
+  color: var(--menu-color);
   font-size: 2em;
   width: 100%;
   display: flex;
@@ -39,7 +39,7 @@
   padding-bottom: 5px;
 }
 
-.plate .title {
+.summary .title {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -47,7 +47,7 @@
   margin-bottom: 1em;
 }
 
-.plate .text {
+.summary .text {
   color: white;
   font-size: 0.6em;
   position: absolute;
@@ -58,7 +58,7 @@
   white-space: pre-wrap;
 }
 
-.plate svg {
+.summary svg {
   position: absolute;
   margin: 0 auto;
   bottom: 0;
@@ -68,5 +68,5 @@
 
 @keyframes arrow-color {
   0% { color: transparent; }
-  100% { color: var(--main-color) }
+  100% { color: var(--menu-color) }
 }

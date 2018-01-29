@@ -1,6 +1,7 @@
 :root {
-  --main-color: lime;
+  --menu-color: lime;
   --menu-bg-color: #121212;
+  --menu-border-radius: 4px;
 }
 
 body {
