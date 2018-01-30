@@ -23,14 +23,14 @@ export const scrambleText = (origText, type, breakPt1, breakPt2, scrollPos) => {
   const allChars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
   let scrambledText = ''
   origText.split('').forEach(char => {
-    // Keep the spaces and new-lines
+    // Keep all spaces and new-lines
     if (char === ' ' || char === '\n') {
       scrambledText += char
     }
 
     // Text scrambling
     else if (type === 'scramble' && Math.random() < ((scrollPos - breakPt1) / (breakPt2 - breakPt1))) {
-      // The 'if' evaluates as true MORE often as scrollPos increases,
+      // The 'if' evaluates as true more often as scrollPos increases,
       scrambledText += allChars[Math.floor(Math.random() * allChars.length)]
     }
 
@@ -40,7 +40,7 @@ export const scrambleText = (origText, type, breakPt1, breakPt2, scrollPos) => {
       scrambledText += allChars[Math.floor(Math.random() * allChars.length)]
     }
 
-    // If the previous 'ifs' don't catch, append original character
+    // If the previous 'ifs' don't catch, concat original character
     else {
       scrambledText += char
     }
