@@ -28,10 +28,6 @@ class App extends Component {
     // For scroll rate
     this.lastTime = null
     this.lastScrollPosition = null
-
-    // For component animation / movement
-    // (Could store these in redux store))
-    this.scrollBreakpoints = [225, 800, 1200]
   }
 
 
@@ -57,26 +53,26 @@ class App extends Component {
 
 
   componentWillReceiveProps = (nextProps) => {
-    const { scrollPosition } = nextProps
-    const { scrollBreakpoints } = this.props
+    const { scrollPosition: scrollPos } = nextProps
+    const { scrollBreakpoints: breakPt } = this.props
 
     /*========================
       Section One Animation
     ========================*/
-    if (scrollPosition <= scrollBreakpoints[1]) {
+    if (scrollPos <= breakPt[1]) {
 
       // Regular behavior
-      if (scrollPosition > this.scrollBreakpoints[0]) {
+      if (scrollPos > breakPt[0]) {
         this.setState({
           sectionOneStyle: {
-            top: this.moveComponentVertically('50%', '-25%', scrollBreakpoints[0], scrollBreakpoints[1]),
-            opacity: fadeOpacity('out', this.scrollBreakpoints[0], scrollBreakpoints[1]),
+            top: this.moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1]),
+            opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
           }
         })
       }
 
       // Fix style if scrolled too fast
-      if (scrollPosition <= this.scrollBreakpoints[0]) {
+      if (scrollPos <= breakPt[0]) {
         this.setState({
           sectionOneStyle: {
             top: '50%',
@@ -97,7 +93,7 @@ class App extends Component {
     /*========================
       Section Two Animation
     ========================*/
-    if (scrollPosition > scrollBreakpoints[1] && scrollPosition <= scrollBreakpoints[2]) {
+    if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
 
       // Regular behavior
       this.setState({
@@ -106,14 +102,14 @@ class App extends Component {
           opacity: 0.0,
         },
         sectionTwoStyle: {
-          top: this.moveComponentVertically('125%', '50%', scrollBreakpoints[1], scrollBreakpoints[2]),
-          opacity: fadeOpacity('in', scrollBreakpoints[1], scrollBreakpoints[2]),
+          top: this.moveComponentVertically('125%', '50%', breakPt[1], breakPt[2]),
+          opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
         }
       })
     }
 
     // Fix style if scrolled too fast
-    if (scrollPosition > scrollBreakpoints[2]) {
+    if (scrollPos > breakPt[2]) {
       this.setState({
         sectionTwoStyle: {
           top: '50%',
@@ -122,17 +118,17 @@ class App extends Component {
       })
     }
 
-    if (scrollPosition > scrollBreakpoints[2]) {
+    if (scrollPos > breakPt[2]) {
       console.log("open section 2")
     }
   }
 
-  moveComponentVertically = (startPct, endPct, breakpoint1, breakpoint2) => {
-    const { scrollPosition } = this.props
-    const startInt = parseInt(startPct)
-    const endInt = parseInt(endPct)
+  moveComponentVertically = (startPct, endPct, breakPt1, breakPt2) => {
+    const { scrollPosition: scrollPos } = this.props
+    const startInt = parseInt(startPct, 10)
+    const endInt = parseInt(endPct, 10)
 
-    const output = startInt - ((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)) * (Math.abs(startInt - endInt))
+    const output = startInt - ((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * (Math.abs(startInt - endInt))
     return output + '%'
   }
 

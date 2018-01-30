@@ -1,15 +1,10 @@
-import { store } from '../redux/store.js'
-const state = store.getState()
-
-export const fadeOpacity = (direction, breakpoint1, breakpoint2) => {
+export const fadeOpacity = (direction, breakPt1, breakPt2, scrollPos) => {
   // Fades opacity in/out towards specified scrollPosition breakpoint
-  const { scrollPosition } = state
-
   switch (direction) {
     case 'out':
-      return 1 - ((((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1))) ** 2)
+      return 1 - ((((scrollPos - breakPt1) / (breakPt2 - breakPt1))) ** 2)
     case 'in':
-      return (scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)
+      return (scrollPos - breakPt1) / (breakPt2 - breakPt1)
     default:
       return
   }
