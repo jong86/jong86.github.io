@@ -15,18 +15,21 @@
   align-items: center;
 }
 
-@media only screen and (max-width: 1024px) {
-  .section-one {
-    width: 90vw;
-  }
-}
-
 .section-two {
   position: fixed;
-  height: 500px;
+  height: 392px;
   width: 48vw;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .section-one {
+    width: 90vw;
+  }
+  .section-two {
+    width: 90vw;
+  }
 }

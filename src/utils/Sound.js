@@ -25,7 +25,7 @@ export default class Sound {
     this.filterLowPass.frequency.value = 900
 
     this.filterHiPass.type = 'highpass'
-    this.filterHiPass.frequency.value = 60
+    this.filterHiPass.frequency.value = 400
 
     this.isPlaying = false
   }
