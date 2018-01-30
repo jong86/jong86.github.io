@@ -12,6 +12,9 @@ import { connect } from 'react-redux'
 
 import throttle from 'lodash.throttle'
 
+import Synth from './utils/Synth.js'
+import { freqExp } from './utils/soundMod.js'
+
 
 class App extends Component {
   constructor() {
@@ -31,7 +34,7 @@ class App extends Component {
   }
 
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     // Scroll to top of page on load:
     window.onbeforeunload = () => window.scrollTo(0,0)
 
@@ -49,12 +52,17 @@ class App extends Component {
         opacity: 0.0,
       }
     })
+
+    this.instantiateSynth()
   }
 
 
   componentWillReceiveProps = (nextProps) => {
-    const { scrollPosition: scrollPos } = nextProps
-    const { scrollBreakpoints: breakPt } = this.props
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+      isScrolling,
+    } = nextProps
 
     /*========================
       Section One Animation
@@ -118,6 +126,65 @@ class App extends Component {
         }
       })
     }
+
+
+
+
+    /*===============
+      Sound effect
+    ===============*/
+
+    // Adjust function for before / after breakPts
+    let direction, breakPt1, breakPt2
+    if (scrollPos <= breakPt[0]) {
+      direction = 'down'
+      breakPt1 = 0
+      breakPt2 = breakPt[0]
+    } else if (scrollPos > breakPt[0] && scrollPos <= breakPt[1]) {
+      direction = 'up'
+      breakPt1 = breakPt[0]
+      breakPt2 = breakPt[1]
+    } else if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
+      direction = 'down'
+      breakPt1 = breakPt[1]
+      breakPt2 = breakPt[2]
+    } else if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
+      direction = 'up'
+      breakPt1 = breakPt[2]
+      breakPt2 = breakPt[3]
+    }
+
+    // Pitch modulation:
+    const freq = freqExp(direction, breakPt1, breakPt2, 17000, 0, scrollPos)
+
+    // To play the sound
+    if (isScrolling && !this.synthIsPlaying) {
+      this.synthIsPlaying = true
+      this.synth.play(freq)
+    }
+
+    // To adjust sound frequency
+    this.synth.frequency = freq
+  }
+
+
+
+  componentDidUpdate = () => {
+    const { isScrolling } = this.props
+
+    // To stop the sound:
+    if (!isScrolling && this.synthIsPlaying) {
+      this.synthIsPlaying = false
+      this.synth.stop()
+      // Re-create the sound object as required by Web Audio API
+      this.instantiateSynth()
+    }
+  }
+
+
+  instantiateSynth = () => {
+    // This needs to happen to replay sound
+    this.synth = new Synth(this.props.audioContext, 'triangle', 900, 400)
   }
 
 
