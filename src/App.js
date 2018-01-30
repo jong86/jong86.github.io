@@ -18,9 +18,6 @@ class App extends Component {
       sectionOneStyle: {},
       sectionTwoStyle: {},
     }
-    this.sectionOneRef = null
-
-    this.sectionTwoRef = null
 
     // For isScrolling detection
     this.timeoutScroll = null
@@ -59,7 +56,7 @@ class App extends Component {
 
   componentWillReceiveProps = (nextProps) => {
     const { scrollPosition } = nextProps
-    const { scrollBreakpoints } = this
+    const { scrollBreakpoints } = this.props
 
     /*========================
       Section One Animation
@@ -122,6 +119,10 @@ class App extends Component {
         }
       })
     }
+
+    if (scrollPosition > scrollBreakpoints[2]) {
+      console.log("open section 2")
+    }
   }
 
   moveComponentVertically = (startPct, endPct, breakpoint1, breakpoint2) => {
@@ -130,7 +131,6 @@ class App extends Component {
     const endInt = parseInt(endPct)
 
     const output = startInt - ((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)) * (Math.abs(startInt - endInt))
-    console.log('int:', output, startInt, endInt, scrollPosition, breakpoint2);
     return output + '%'
   }
 
@@ -205,7 +205,6 @@ class App extends Component {
         <div
           className="section-one"
           style={this.state.sectionOneStyle}
-          ref={(ref) => { this.sectionOneRef = ref }}
         >
           <Summary/>
         </div>
@@ -213,7 +212,6 @@ class App extends Component {
         <div
           className="section-two"
           style={this.state.sectionTwoStyle}
-          ref={(ref) => { this.sectionTwoRef = ref }}
         >
           <Skills/>
         </div>
@@ -232,6 +230,7 @@ function mapStateToProps(state) {
     scrollPosition: state.scrollPosition,
     isScrolling: state.isScrolling,
     audioContext: state.audioContext,
+    scrollBreakpoints: state.scrollBreakpoints,
   }
 }
 

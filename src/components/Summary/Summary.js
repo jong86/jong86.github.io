@@ -11,16 +11,15 @@ class Summary extends Component {
     this.state = {
       scrambledText: '',
       summaryHeight: {},
-      synth1IsPlaying: false,
+      synthIsPlaying: false,
     }
-    this.summaryRef = null
     this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.cssMinHeight = 192
     this.textBreakpoints = [200, 350] // For text un-scramble / scramble
 
-    this.synth1 = null
+    this.synth = null
 
     this.freqFunction = this.freqFunction.bind(this)
   }
@@ -93,14 +92,14 @@ class Summary extends Component {
     const freq = this.freqFunction()
 
     // To play the sound
-    if (isScrolling && !this.state.synth1IsPlaying) {
-      this.setState({ synth1IsPlaying: true }, () => {
-        this.synth1.play(freq)
+    if (isScrolling && !this.state.synthIsPlaying) {
+      this.setState({ synthIsPlaying: true }, () => {
+        this.synth.play(freq)
       })
     }
 
     // To adjust sound frequency
-    this.synth1.frequency = freq
+    this.synth.frequency = freq
   }
 
 
@@ -108,9 +107,9 @@ class Summary extends Component {
     const { isScrolling } = this.props
 
     // To stop the sound:
-    if (!isScrolling && this.state.synth1IsPlaying) {
-      this.setState({ synth1IsPlaying: false }, () => {
-        this.synth1.stop()
+    if (!isScrolling && this.state.synthIsPlaying) {
+      this.setState({ synthIsPlaying: false }, () => {
+        this.synth.stop()
         // Re-create the sound object as required by Web Audio API
         this.instantiateSynth()
       })
@@ -118,7 +117,7 @@ class Summary extends Component {
   }
 
   componentWillUnmount = () => {
-    this.synth1.stop()
+    this.synth.stop()
   }
 
   freqFunction = () => {
@@ -133,7 +132,7 @@ class Summary extends Component {
 
   instantiateSynth = () => {
     // This needs to happen to replay sound
-    this.synth1 = new Sound(this.props.audioContext, 'sawtooth')
+    this.synth = new Sound(this.props.audioContext, 'sawtooth')
   }
 
 

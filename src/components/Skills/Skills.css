@@ -1,12 +1,33 @@
 .skills {
   height: 100%;
-  width: 100%;
-  border: 1px solid var(--menu-color);
+  width: 2px;
+  border: 1px solid var(--menu-color-yellow);
   border-radius: var(--menu-border-radius);
   color: white;
 
   position: relative;
   top: -50%;
+}
 
-  border: 1px dashed yellow;
+.skills .heading {
+  width: 100%;
+  margin-bottom: auto;
+  background-color: var(--menu-bg-color);
+  border-bottom: 1px solid var(--menu-color-yellow);
+  border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+  z-index: 1;
+}
+
+.skills .title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1em 0;
+  color: var(--menu-color-yellow);
+}
+
+.skills .text {
+  color: white;
+  font-size: 1em;
+  margin: 0 auto;
 }
