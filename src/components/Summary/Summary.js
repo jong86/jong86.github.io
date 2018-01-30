@@ -125,7 +125,9 @@ class Summary extends Component {
     const { scrollPosition: x } = this.props
     const h = this.textBreakpoints[0]
     const d = x < h ? 5 : 25 // Makes rise in freq slower on the way out
-    const freq = (((x - h) ** 2) / d) + 20
+    const cleanFreq = (((x - h) ** 2) / d) + 20
+    const drift = Math.ceil(Math.random() * cleanFreq / 50)
+    const freq = cleanFreq + drift
     return freq <= 22050 ? freq : 22050
   }
 
