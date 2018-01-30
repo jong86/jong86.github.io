@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './Summary.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
-import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
+import { fadeOpacity, moveComponentVertically, scrambleText } from '../../utils/animation.js'
 
 
 class Summary extends Component {
@@ -13,8 +13,7 @@ class Summary extends Component {
       wrapperStyle: {},
       sectionStyle: {},
     }
-    this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
-    this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
+    this.summary = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
 
     this.cssMinHeight = 192
 
@@ -94,43 +93,28 @@ class Summary extends Component {
     /*================
       Scrambled Text
     ================*/
+
+    // To allow gap between descramble/scramble
     const scrambleOutDiff = 150
 
-    if (scrollPos <= breakPt[0] || scrollPos > breakPt[0] + scrambleOutDiff) {
-      let scrambledText = ''
-      const lenChars = this.chars.length
-      this.realText.split('').forEach(letter => {
-        if (letter === ' ' || letter === '\n') {
-          // Keeps the spaces
-          scrambledText += letter
-        }
-        else if (Math.random() > (scrollPos /  breakPt[0]) && scrollPos < breakPt[0]) {
-          // Text de-scrambling on the way in:
-          // The 'if' evaluates as true less often as scrollPos increases, so causes scramble amount to 'fade-out'
-          scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
-        }
-        else if (Math.random() < ((scrollPos / breakPt[0] + scrambleOutDiff) - 1) && scrollPos > breakPt[0] + scrambleOutDiff) {
-          // Text re-scrambling on the way out:
-          // The 'if' evaluates as true MORE often as scrollPos increases, when past 2nd scrollPos breakpoint
-          scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
-        }
-        else {
-          scrambledText += letter
-        }
-      })
-
+    // Breakpoints where text scrambling should happen
+    if (scrollPos <= breakPt[0]) {
       this.setState({
-        displayedText: scrambledText,
+        displayedText: scrambleText(this.summary, 'descramble', 0, breakPt[0], scrollPos),
+      })
+    } else if (scrollPos > breakPt[0] + scrambleOutDiff) {
+      this.setState({
+        displayedText: scrambleText(this.summary, 'scramble', breakPt[0] + scrambleOutDiff, breakPt[0] + scrambleOutDiff + 200, scrollPos),
       })
     }
 
+    // Display the original text for a bit
     if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + scrambleOutDiff) {
       this.setState({
-        displayedText: this.realText,
+        displayedText: this.summary,
       })
     }
   }
-
 
 
   render = () => {
