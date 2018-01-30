@@ -31,9 +31,9 @@ class Skills extends Component {
     } = nextProps
 
 
-    /*===========================
-      Skills section animation
-    ===========================*/
+    /*============
+      Animation
+    ============*/
 
     // Before coming into view
     if (scrollPos <= breakPt[1]) {

@@ -41,9 +41,12 @@ class Summary extends Component {
     } = nextProps
 
 
-    /*============================
-      Summary section animation
-    ============================*/
+    /*============
+      Animation
+    ============*/
+
+    // To allow gap between descramble/scramble
+    const scrambleOutDiff = 150
 
     // When centered in view, opening up
     if (scrollPos <= breakPt[0]) {
@@ -57,6 +60,22 @@ class Summary extends Component {
           // Max height of summary is determined by height of wrapper
           height: scrollPos + this.cssMinHeight
         },
+        // Descramble text
+        displayedText: scrambleText(this.summary, 'descramble', 0, breakPt[0], scrollPos),
+      })
+    }
+
+    // Display the original text for a bit
+    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + scrambleOutDiff) {
+      this.setState({
+        displayedText: this.summary,
+      })
+    }
+
+    // Scramble text on the way out
+    if (scrollPos > breakPt[0] + scrambleOutDiff) {
+      this.setState({
+        displayedText: scrambleText(this.summary, 'scramble', breakPt[0] + scrambleOutDiff, breakPt[0] + scrambleOutDiff + 200, scrollPos),
       })
     }
 
@@ -86,32 +105,6 @@ class Summary extends Component {
           top: '-25%',
           opacity: 0.0,
         },
-      })
-    }
-
-
-    /*================
-      Scrambled Text
-    ================*/
-
-    // To allow gap between descramble/scramble
-    const scrambleOutDiff = 150
-
-    // Breakpoints where text scrambling should happen
-    if (scrollPos <= breakPt[0]) {
-      this.setState({
-        displayedText: scrambleText(this.summary, 'descramble', 0, breakPt[0], scrollPos),
-      })
-    } else if (scrollPos > breakPt[0] + scrambleOutDiff) {
-      this.setState({
-        displayedText: scrambleText(this.summary, 'scramble', breakPt[0] + scrambleOutDiff, breakPt[0] + scrambleOutDiff + 200, scrollPos),
-      })
-    }
-
-    // Display the original text for a bit
-    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + scrambleOutDiff) {
-      this.setState({
-        displayedText: this.summary,
       })
     }
   }
