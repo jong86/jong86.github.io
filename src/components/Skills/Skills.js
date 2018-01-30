@@ -3,6 +3,7 @@ import './Skills.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
 import Synth from '../../utils/Synth.js'
+import { freqLowerMod } from '../../utils/soundMod.js'
 import { fadeOpacity } from '../../utils/animation.js'
 
 
@@ -15,11 +16,12 @@ class Skills extends Component {
       textStyle: {},
     }
 
+    this.synthIsPlaying = false
     this.synth = null
   }
 
   componentWillMount = () => {
-
+    this.instantiateSynth()
   }
 
   componentWillReceiveProps = () => {
@@ -57,7 +59,49 @@ class Skills extends Component {
         },
       })
     }
+
+
+    /*===============
+      Sound effect
+    ===============*/
+    if (scrollPos > breakPt[1]) {
+      const { isScrolling, scrollRate } = this.props
+
+      // Pitch modulation:
+      const freq = freqLowerMod(scrollPos)
+
+      // To play the sound
+      if (isScrolling && !this.synthIsPlaying) {
+        this.synthIsPlaying = true
+        this.synth.play(freq)
+      }
+
+      // To adjust sound frequency
+      this.synth.frequency = freq
+    }
   }
+
+  componentDidUpdate = () => {
+    const { isScrolling, scrollPosition: scrollPos, scrollBreakpoints: breakPt } = this.props
+
+    // To stop the sound:
+    if (!isScrolling && this.synthIsPlaying) {
+      this.synthIsPlaying = false
+      this.synth.stop()
+      // Re-create the sound object as required by Web Audio API
+      this.instantiateSynth()
+    }
+  }
+
+  componentWillUnmount = () => {
+    this.synth.stop()
+  }
+
+  instantiateSynth = () => {
+    // This needs to happen to replay sound
+    this.synth = new Synth(this.props.audioContext, 'triangle', 600, 700)
+  }
+
 
   setWidthWithScrollPosition = (breakPt1, breakPt2) => {
     const { scrollPosition: scrollPos} = this.props

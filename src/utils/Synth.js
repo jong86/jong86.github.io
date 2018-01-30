@@ -1,11 +1,15 @@
 export default class Synth {
-  constructor(context, waveshape) {
+  constructor(context, waveshape, lowpassFreq, hipassFreq) {
     this.context = context
+    this.waveshape = waveshape
+    this.lowpassFreq = lowpassFreq
+    this.hipassFreq = hipassFreq
+
     this.oscillator = this.context.createOscillator()
     this.gainNode = this.context.createGain()
     this.filterLowPass = this.context.createBiquadFilter()
     this.filterHiPass = this.context.createBiquadFilter()
-    this.waveshape = waveshape
+
     this.isPlaying = false
   }
 
@@ -22,10 +26,10 @@ export default class Synth {
     this.oscillator.type = this.waveshape
 
     this.filterLowPass.type = 'lowpass'
-    this.filterLowPass.frequency.value = 900
+    this.filterLowPass.frequency.value = this.lowpassFreq
 
     this.filterHiPass.type = 'highpass'
-    this.filterHiPass.frequency.value = 400
+    this.filterHiPass.frequency.value = this.hipassFreq
 
     this.isPlaying = false
   }

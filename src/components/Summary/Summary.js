@@ -12,7 +12,6 @@ class Summary extends Component {
     this.state = {
       scrambledText: '',
       summaryHeight: {},
-      synthIsPlaying: false,
     }
     this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
@@ -21,6 +20,7 @@ class Summary extends Component {
     this.textBreakpoints = [200, 350] // For text un-scramble / scramble
 
     this.synth = null
+    this.synthIsPlaying = false
   }
 
   componentWillMount = () => {
@@ -86,17 +86,20 @@ class Summary extends Component {
 
 
     /*===============
-      Sound effects
+      Sound effect
     ===============*/
     const { isScrolling, scrollRate } = this.props
+
+    // Adjust speed of rise before/after breakPt
+    const freqDivisor = scrollPos < txtBreakPt[0] ? 5 : 25
+
     // Pitch modulation:
-    const freq = freqExp(txtBreakPt[0], null, scrollPos)
+    const freq = freqExp(txtBreakPt[0], freqDivisor, scrollPos)
 
     // To play the sound
-    if (isScrolling && !this.state.synthIsPlaying) {
-      this.setState({ synthIsPlaying: true }, () => {
-        this.synth.play(freq)
-      })
+    if (isScrolling && !this.synthIsPlaying) {
+      this.synthIsPlaying = true
+      this.synth.play(freq)
     }
 
     // To adjust sound frequency
@@ -108,12 +111,11 @@ class Summary extends Component {
     const { isScrolling } = this.props
 
     // To stop the sound:
-    if (!isScrolling && this.state.synthIsPlaying) {
-      this.setState({ synthIsPlaying: false }, () => {
-        this.synth.stop()
-        // Re-create the sound object as required by Web Audio API
-        this.instantiateSynth()
-      })
+    if (!isScrolling && this.synthIsPlaying) {
+      this.synthIsPlaying = false
+      this.synth.stop()
+      // Re-create the sound object as required by Web Audio API
+      this.instantiateSynth()
     }
   }
 
@@ -123,7 +125,7 @@ class Summary extends Component {
 
   instantiateSynth = () => {
     // This needs to happen to replay sound
-    this.synth = new Synth(this.props.audioContext, 'sawtooth')
+    this.synth = new Synth(this.props.audioContext, 'sawtooth', 900, 400)
   }
 
 
