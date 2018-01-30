@@ -5,6 +5,8 @@
   border-radius: var(--menu-border-radius);
   color: white;
 
+  background-color: #121212d0;
+
   position: relative;
   top: -50%;
 
@@ -34,4 +36,8 @@
   margin: 0 auto;
   overflow: hidden;
   white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

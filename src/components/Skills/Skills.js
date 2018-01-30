@@ -32,6 +32,8 @@ class Skills extends Component {
       audioContext
     } = this.props
 
+
+    // While moving in
     if (scrollPos <= breakPt[2]) {
       this.setState({
         titleStyle: {
@@ -46,6 +48,7 @@ class Skills extends Component {
       })
     }
 
+    // Opening up
     if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
       this.setState({
         skillsStyle: {
@@ -56,6 +59,21 @@ class Skills extends Component {
         },
         titleStyle: {
           opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
+        },
+      })
+    }
+
+    // Ensure max opened past breakPt3
+    if (scrollPos > breakPt[3]) {
+      this.setState({
+        skillsStyle: {
+          width: '100%',
+        },
+        textStyle: {
+          opacity: 1.0,
+        },
+        titleStyle: {
+          opacity: 1.0,
         },
       })
     }
@@ -73,7 +91,7 @@ class Skills extends Component {
         direction = 'down'
         breakPt1 = breakPt[1]
         breakPt2 = breakPt[2]
-      } else if (scrollPos > breakPt[2]) {
+      } else if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
         direction = 'up'
         breakPt1 = breakPt[2]
         breakPt2 = breakPt[3]

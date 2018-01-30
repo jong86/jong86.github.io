@@ -59,6 +59,17 @@ class App extends Component {
     /*========================
       Section One Animation
     ========================*/
+    if (scrollPos <= breakPt[0]) {
+
+      // Fix style if scrolled too fast
+      this.setState({
+        sectionOneStyle: {
+          top: '50%',
+          opacity: 1.0,
+        },
+      })
+    }
+
     if (scrollPos <= breakPt[1]) {
 
       // Regular behavior
@@ -72,16 +83,6 @@ class App extends Component {
       }
 
       // Fix style if scrolled too fast
-      if (scrollPos <= breakPt[0]) {
-        this.setState({
-          sectionOneStyle: {
-            top: '50%',
-            opacity: 1.0,
-          },
-        })
-      }
-
-      // Fix opacity if scrolled too fast
       this.setState({
         sectionTwoStyle: {
           opacity: 0.0,
@@ -116,10 +117,6 @@ class App extends Component {
           opacity: 1.0,
         }
       })
-    }
-
-    if (scrollPos > breakPt[2]) {
-      // console.log("open section 2")
     }
   }
 

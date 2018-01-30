@@ -32,12 +32,18 @@ class Summary extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { scrollPosition: scrollPos, isScrolling, scrollBreakpoints: breakPt } = nextProps
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+      isScrolling,
+    } = nextProps
 
     /*================
       Scrambled Text
     ================*/
-    if (scrollPos <= breakPt[0] || scrollPos > breakPt[0] + 150) {
+    const scrambleOutDiff = 150
+
+    if (scrollPos <= breakPt[0] || scrollPos > breakPt[0] + scrambleOutDiff) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -50,7 +56,7 @@ class Summary extends Component {
           // The 'if' evaluates as true less often as scrollPos increases, so causes scramble amount to 'fade-out'
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
-        else if (Math.random() < ((scrollPos / breakPt[0] + 150) - 1) && scrollPos > breakPt[0] + 150) {
+        else if (Math.random() < ((scrollPos / breakPt[0] + scrambleOutDiff) - 1) && scrollPos > breakPt[0] + scrambleOutDiff) {
           // Text re-scrambling on the way out:
           // The 'if' evaluates as true MORE often as scrollPos increases, when past 2nd scrollPos breakpoint
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
@@ -65,7 +71,7 @@ class Summary extends Component {
       })
     }
 
-    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + 150) {
+    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + scrambleOutDiff) {
       this.setState({
         displayedText: this.realText,
       })
