@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './Skills.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
-import Sound from '../../utils/Sound.js'
-import { fadeOpacity } from '../../utils/Animation.js'
+import Synth from '../../utils/Synth.js'
+import { fadeOpacity } from '../../utils/animation.js'
 
 
 class Skills extends Component {
@@ -44,7 +44,7 @@ class Skills extends Component {
       })
     }
 
-    if (scrollPos > breakPt[2] && scrollPos <= breakPt[3])
+    if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
       this.setState({
         skillsStyle: {
           width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
@@ -56,6 +56,7 @@ class Skills extends Component {
           opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
         },
       })
+    }
   }
 
   setWidthWithScrollPosition = (breakPt1, breakPt2) => {
@@ -72,7 +73,10 @@ class Skills extends Component {
           </div>
         </div>
         <div className="text" style={this.state.textStyle}>
-          Teh skills
+          Languages: Javascript, Python, Ruby<br/>
+          Front-End: React, React-Native, Redux, Vue, JQuery, CSS/SCSS<br/>
+          Back-End: Node, Express, Ruby on Rails, SQL, MongoDB, Web Sockets<br/>
+          Other: Photoshop, Google Maps API, Web Audio API<br/>
         </div>
       </div>
     )

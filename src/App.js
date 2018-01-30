@@ -5,7 +5,7 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 
-import { fadeOpacity, moveComponentVertically } from './utils/Animation.js'
+import { fadeOpacity, moveComponentVertically } from './utils/animation.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'

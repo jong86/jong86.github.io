@@ -1,4 +1,4 @@
-export default class Sound {
+export default class Synth {
   constructor(context, waveshape) {
     this.context = context
     this.oscillator = this.context.createOscillator()
