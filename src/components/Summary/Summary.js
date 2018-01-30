@@ -10,7 +10,7 @@ class Summary extends Component {
   constructor() {
     super()
     this.state = {
-      scrambledText: '',
+      displayedText: '',
       summaryHeight: {},
     }
     this.realText = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
@@ -39,7 +39,7 @@ class Summary extends Component {
     /*================
       Scrambled Text
     ================*/
-    if (scrollPos < txtBreakPt[0] || scrollPos > txtBreakPt[1]) {
+    if (scrollPos <= txtBreakPt[0] || scrollPos > txtBreakPt[1]) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -63,7 +63,13 @@ class Summary extends Component {
       })
 
       this.setState({
-        scrambledText: scrambledText,
+        displayedText: scrambledText,
+      })
+    }
+
+    if (scrollPos > txtBreakPt[0] && scrollPos <= txtBreakPt[1]) {
+      this.setState({
+        displayedText: this.realText,
       })
     }
 
@@ -138,7 +144,7 @@ class Summary extends Component {
 
 
   render = () => {
-    const { textBreakpoints: txtBreakPt } = this
+    const { displayedText } = this.state
 
     return (
       <div className="summary no-select" style={this.state.summaryHeight}>
@@ -151,13 +157,7 @@ class Summary extends Component {
           </div>
         </div>
         <div className="text">
-          {
-            this.props.scrollPos < txtBreakPt[1] ?
-              // Text de-scrambling on the way in:
-              (this.props.scrollPos < txtBreakPt[0] ? this.state.scrambledText : this.realText) :
-              // Text re-scrambling on the way out:
-              (this.state.scrambledText)
-          }
+          { displayedText }
         </div>
         <AngleDown size={48}/>
       </div>
