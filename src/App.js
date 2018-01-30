@@ -20,7 +20,6 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      sectionOneStyle: {},
       sectionTwoStyle: {},
     }
 
@@ -43,10 +42,6 @@ class App extends Component {
 
     this.setState({
       // Center Section One on page load
-      sectionOneStyle: {
-        top: '50%',
-        opacity: 1.0,
-      },
       sectionTwoStyle: {
         top: '125%',
         opacity: 0.0,
@@ -64,39 +59,6 @@ class App extends Component {
       isScrolling,
     } = nextProps
 
-    /*========================
-      Section One Animation
-    ========================*/
-    if (scrollPos <= breakPt[0]) {
-
-      // Fix style if scrolled too fast
-      this.setState({
-        sectionOneStyle: {
-          top: '50%',
-          opacity: 1.0,
-        },
-      })
-    }
-
-    if (scrollPos <= breakPt[1]) {
-
-      // Regular behavior
-      if (scrollPos > breakPt[0]) {
-        this.setState({
-          sectionOneStyle: {
-            top: moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1], scrollPos),
-            opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
-          }
-        })
-      }
-
-      // Fix style if scrolled too fast
-      this.setState({
-        sectionTwoStyle: {
-          opacity: 0.0,
-        }
-      })
-    }
 
 
     /*========================
@@ -154,7 +116,7 @@ class App extends Component {
       breakPt2 = breakPt[3]
     }
 
-    // Pitch modulation:
+    // Pitch modulation function
     const freq = freqExp(direction, breakPt1, breakPt2, 17000, 0, scrollPos)
 
     // To play the sound
@@ -163,10 +125,9 @@ class App extends Component {
       this.synth.play(freq)
     }
 
-    // To adjust sound frequency
+    // Continuously set sound frequency
     this.synth.frequency = freq
   }
-
 
 
   componentDidUpdate = () => {
@@ -241,12 +202,7 @@ class App extends Component {
       <div className="App">
         <BgSpaceNodes/>
 
-        <div
-          className="section-one"
-          style={this.state.sectionOneStyle}
-        >
-          <Summary/>
-        </div>
+        <Summary/>
 
         <div
           className="section-two"
