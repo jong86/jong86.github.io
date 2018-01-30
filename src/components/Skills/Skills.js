@@ -3,6 +3,7 @@ import './Skills.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
 import Sound from '../../utils/Sound.js'
+import { fadeOpacity } from '../../utils/Animation.js'
 
 
 class Skills extends Component {
@@ -24,12 +25,12 @@ class Skills extends Component {
   componentWillReceiveProps = () => {
     const {
       scrollPosition: scrollPos,
-      scrollBreakpoints: bp,
+      scrollBreakpoints: breakPt,
       isScrolling,
       audioContext
     } = this.props
 
-    if (scrollPos <= bp[2]) {
+    if (scrollPos <= breakPt[2]) {
       this.setState({
         titleStyle: {
           opacity: 0.0,
@@ -43,17 +44,23 @@ class Skills extends Component {
       })
     }
 
-    if (scrollPos > bp[2] && scrollPos <= bp[3])
+    if (scrollPos > breakPt[2] && scrollPos <= breakPt[3])
       this.setState({
         skillsStyle: {
-          width: this.setWidthWithScrollPosition(bp[2], bp[3])
-        }
+          width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
+        },
+        textStyle: {
+          opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
+        },
       })
   }
 
-  setWidthWithScrollPosition = (bp1, bp2) => {
+  setWidthWithScrollPosition = (breakPt1, breakPt2) => {
     const { scrollPosition: scrollPos} = this.props
-    return (((scrollPos - bp1) / (bp2 - bp1)) * 100) + '%'
+    return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
   }
 
   render = () => {

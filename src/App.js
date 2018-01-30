@@ -119,7 +119,7 @@ class App extends Component {
     }
 
     if (scrollPos > breakPt[2]) {
-      console.log("open section 2")
+      // console.log("open section 2")
     }
   }
 
