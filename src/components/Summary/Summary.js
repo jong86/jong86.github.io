@@ -17,7 +17,6 @@ class Summary extends Component {
     this.chars = `!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`
 
     this.cssMinHeight = 192
-    this.textBreakpoints = [200, 350] // For text un-scramble / scramble
 
     this.synth = null
     this.synthIsPlaying = false
@@ -33,13 +32,12 @@ class Summary extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { scrollPosition: scrollPos, isScrolling, scrollBreakpoints: scrBreakPt } = nextProps
-    const { textBreakpoints: txtBreakPt } = this
+    const { scrollPosition: scrollPos, isScrolling, scrollBreakpoints: breakPt } = nextProps
 
     /*================
       Scrambled Text
     ================*/
-    if (scrollPos <= txtBreakPt[0] || scrollPos > txtBreakPt[1]) {
+    if (scrollPos <= breakPt[0] || scrollPos > breakPt[0] + 150) {
       let scrambledText = ''
       const lenChars = this.chars.length
       this.realText.split('').forEach(letter => {
@@ -47,12 +45,12 @@ class Summary extends Component {
           // Keeps the spaces
           scrambledText += letter
         }
-        else if (Math.random() > (scrollPos / txtBreakPt[0]) && scrollPos < txtBreakPt[0]) {
+        else if (Math.random() > (scrollPos /  breakPt[0]) && scrollPos < breakPt[0]) {
           // Text de-scrambling on the way in:
           // The 'if' evaluates as true less often as scrollPos increases, so causes scramble amount to 'fade-out'
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
         }
-        else if (Math.random() < ((scrollPos / txtBreakPt[1]) - 1) && scrollPos > txtBreakPt[1]) {
+        else if (Math.random() < ((scrollPos / breakPt[0] + 150) - 1) && scrollPos > breakPt[0] + 150) {
           // Text re-scrambling on the way out:
           // The 'if' evaluates as true MORE often as scrollPos increases, when past 2nd scrollPos breakpoint
           scrambledText += this.chars[Math.floor(Math.random() * lenChars)]
@@ -67,7 +65,7 @@ class Summary extends Component {
       })
     }
 
-    if (scrollPos > txtBreakPt[0] && scrollPos <= txtBreakPt[1]) {
+    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + 150) {
       this.setState({
         displayedText: this.realText,
       })
@@ -84,9 +82,9 @@ class Summary extends Component {
 
     // Edge case fix
     // Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast
-    if (scrollPos >= txtBreakPt[0]) {
+    if (scrollPos >= breakPt[0]) {
       this.setState({
-        summaryHeight: { height: txtBreakPt[0] + this.cssMinHeight },
+        summaryHeight: { height: breakPt[0] + this.cssMinHeight },
       })
     }
 
@@ -95,16 +93,16 @@ class Summary extends Component {
       Sound effect
     ===============*/
 
-    // Adjust function for before / after
+    // Adjust function for before / after breakPts
     let direction, breakPt1, breakPt2
-    if (scrollPos <= txtBreakPt[0]) {
+    if (scrollPos <= breakPt[0]) {
       direction = 'down'
       breakPt1 = 0
-      breakPt2 = txtBreakPt[0]
-    } else if (scrollPos > txtBreakPt[0]) {
+      breakPt2 = breakPt[0]
+    } else if (scrollPos > breakPt[0]) {
       direction = 'up'
-      breakPt1 = txtBreakPt[0]
-      breakPt2 = scrBreakPt[1]
+      breakPt1 = breakPt[0]
+      breakPt2 = breakPt[1]
     }
 
     // Pitch modulation:
