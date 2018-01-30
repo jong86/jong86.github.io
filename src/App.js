@@ -19,9 +19,6 @@ import { freqExp } from './utils/soundMod.js'
 class App extends Component {
   constructor() {
     super()
-    this.state = {
-      sectionTwoStyle: {},
-    }
 
     // For isScrolling detection
     this.timeoutScroll = null
@@ -30,6 +27,8 @@ class App extends Component {
     // For scroll rate
     this.lastTime = null
     this.lastScrollPosition = null
+
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
   }
 
 
@@ -50,6 +49,7 @@ class App extends Component {
       scrollBreakpoints: breakPt,
       isScrolling,
     } = nextProps
+
 
     /*===============
       Sound effect
@@ -96,15 +96,15 @@ class App extends Component {
     if (!isScrolling && this.synthIsPlaying) {
       this.synthIsPlaying = false
       this.synth.stop()
-      // Re-create the sound object as required by Web Audio API
+      // Re-create the sound object
       this.instantiateSynth()
     }
   }
 
 
   instantiateSynth = () => {
-    // This needs to happen to replay sound
-    this.synth = new Synth(this.props.audioContext, 'triangle', 900, 400)
+    // This is required to replay the sound
+    this.synth = new Synth(this.audioContext, 'triangle', 900, 400)
   }
 
 
@@ -134,22 +134,6 @@ class App extends Component {
     if (this.props.isScrolling !== true) {
       setIsScrolling(true)
     }
-
-
-    /*==================================
-      Save scroll rate in redux store
-    ==================================*/
-    const { audioContext, setScrollRate } = this.props
-
-    const now = audioContext.currentTime
-    if (!this.lastTime || (now - this.lastTime) > 0.025) {
-      this.lastTime = audioContext.currentTime
-      this.lastScrollPosition = scrollPosition
-    }
-    const scrollRate = (
-      (Math.abs(scrollPosition - this.lastScrollPosition) / (now - this.lastTime)) + 40
-    )
-    if (scrollRate) setScrollRate(scrollRate)
   }
 
 
@@ -163,7 +147,6 @@ class App extends Component {
         <BgSpaceNodes/>
 
         <Summary/>
-
         <Skills/>
 
       </div>
@@ -179,7 +162,6 @@ function mapStateToProps(state) {
   return {
     scrollPosition: state.scrollPosition,
     isScrolling: state.isScrolling,
-    audioContext: state.audioContext,
     scrollBreakpoints: state.scrollBreakpoints,
   }
 }
@@ -192,9 +174,6 @@ function mapDispatchToProps(dispatch) {
     setIsScrolling: (boolean) => {
       dispatch(action('SET_IS_SCROLLING', { boolean: boolean }))
     },
-    setScrollRate: (scrollRate) => {
-      dispatch(action('SET_SCROLL_RATE', { scrollRate: scrollRate }))
-    }
   })
 }
 

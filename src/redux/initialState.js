@@ -1,8 +1,6 @@
 const initialState = {
   scrollPosition: 0,
-  scrollRate: 0,
   isScrolling: false,
-  audioContext: new (window.AudioContext || window.webkitAudioContext)(),
   scrollBreakpoints: [200, 600, 800, 1000]
 }
 
