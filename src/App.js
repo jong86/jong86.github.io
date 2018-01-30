@@ -23,6 +23,7 @@ class App extends Component {
     this.sectionOneVerticalCenter = null
 
     this.sectionTwoRef = null
+    this.sectionTwoVerticalCenter = null
 
     // For isScrolling detection
     this.timeoutScroll = null
@@ -33,7 +34,7 @@ class App extends Component {
     this.lastScrollPosition = null
 
     // For main component animation / movement
-    this.sectionBreakpoints = [800]
+    this.sectionBreakpoints = [800, 1200]
   }
 
 
@@ -42,13 +43,17 @@ class App extends Component {
     window.onbeforeunload = () => window.scrollTo(0,0)
 
     // Add scroll listener
-    window.addEventListener('scroll', throttle(this.handleScroll, 1));
+    window.addEventListener('scroll', throttle(this.handleScroll, 32));
 
     this.setState({
       // Center Section One on page load
       sectionOneStyle: {
         top: (window.innerHeight / 2) - (this.sectionOneRef.clientHeight / 2),
         opacity: 1.0,
+      },
+      sectionTwoStyle: {
+        top: (window.innerHeight / 2) - (this.sectionTwoRef.clientHeight / 2),
+        opacity: 0.0,
       }
     })
 
@@ -69,59 +74,73 @@ class App extends Component {
 
       // Re-centers Section One under breakpoint, because of bug with scrolling really fast
       if (scrollPosition < this.sectionOneScrollBreakpoint) {
-        this.setState(prevState => ({
+        this.setState({
           sectionOneStyle: {
             top: this.sectionOneVerticalCenter,
             opacity: 1.0,
+          },
+          sectionTwoStyle: {
+            opacity: 0.0,
           }
-        }))
+        })
       }
 
       // Regular scrolling behavior
-      if (Math.abs(scrollPosition - lastScrollPosition) > 0 &&
-        scrollPosition > this.sectionOneScrollBreakpoint &&
-        this.sectionOneRef) {
+      if (Math.abs(scrollPosition - lastScrollPosition) > 0 && scrollPosition > this.sectionOneScrollBreakpoint) {
 
-        this.setState(prevState => ({
+        this.setState({
           sectionOneStyle: {
             top: this.moveSectionOneVertically(),
-            opacity: this.fadeOpacity(),
+            opacity: this.fadeOpacity('out', 0, sectionBreakpoints[0]),
           }
-        }))
+        })
       }
     }
+
 
 
     /*=======================
       SECTION TWO MOVEMENT
     =======================*/
-    if (scrollPosition >= sectionBreakpoints[0]) {
-      this.setState(prevState => ({
-        sectionTwoStyle: {
-          top: this.moveSectionOneVertically(),
-          opacity: this.fadeOpacity(),
-        }
-      }))
-    }
+    if (scrollPosition >= sectionBreakpoints[0] && scrollPosition <= sectionBreakpoints[1]) {
 
+      console.log('sec2 top', this.moveComponentVerticallyIn(this.sectionTwoRef));
+      this.setState({
+        sectionOneStyle: {
+          opacity: 0.0,
+        },
+        sectionTwoStyle: {
+          top: this.moveComponentVerticallyIn(this.sectionTwoRef),
+          opacity: this.fadeOpacity('in', sectionBreakpoints[0], sectionBreakpoints[1]),
+        }
+      })
+    }
   }
 
-  fadeOpacity = () => {
-    return 1 - ((this.props.scrollPosition / 800) ** 2)
+  fadeOpacity = (direction, breakpoint1, breakpoint2) => {
+    // Fades opacity in/out towards specified scrollPosition breakpoint
+    const { scrollPosition } = this.props
+    switch (direction) {
+      case 'out':
+        return 1 - (((scrollPosition - breakpoint1) / breakpoint2 - breakpoint1) ** 2)
+      case 'in':
+        return ((scrollPosition - breakpoint1) / breakpoint2)
+      default:
+        return
+    }
   }
 
   moveSectionOneVertically = () => {
     return this.sectionOneVerticalCenter - (this.props.scrollPosition - this.sectionOneScrollBreakpoint)
   }
 
-  getComponentVerticalCenter = (ref) => {
-    return (window.innerHeight / 2) - (ref.clientHeight / 2)
+  moveComponentVerticallyIn = (ref) => {
+    return this.getComponentTopAtBottom(ref) - (this.props.scrollPosition)
   }
 
-  moveComponentVertically = (ref) => {
-
+  getComponentTopAtBottom = (ref) => {
+    return window.innerHeight + ref.clientHeight
   }
-
 
   handleScroll = (event) => {
     const { setScrollPosition, setIsScrolling, scrollPosition } = this.props
@@ -168,25 +187,21 @@ class App extends Component {
       <div className="App">
         <BgSpaceNodes/>
 
-        { scrollPosition < sectionBreakpoints[0] &&
-          <div
-            className="section-one"
-            style={this.state.sectionOneStyle}
-            ref={(ref) => { this.sectionOneRef = ref }}
-          >
-            <Summary/>
-          </div>
-        }
+        <div
+          className="section-one"
+          style={this.state.sectionOneStyle}
+          ref={(ref) => { this.sectionOneRef = ref }}
+        >
+          <Summary/>
+        </div>
 
-        { scrollPosition >= sectionBreakpoints[0] &&
-          <div
-            className="section-two"
-            style={this.state.sectionTwoStyle}
-            ref={(ref) => { this.sectionTwoRef = ref }}
-          >
-            <Skills/>
-          </div>
-        }
+        <div
+          className="section-two"
+          style={this.state.sectionTwoStyle}
+          ref={(ref) => { this.sectionTwoRef = ref }}
+        >
+          <Skills/>
+        </div>
 
       </div>
     )
