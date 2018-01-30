@@ -79,9 +79,6 @@ class App extends Component {
             top: this.sectionOneVerticalCenter,
             opacity: 1.0,
           },
-          sectionTwoStyle: {
-            opacity: 0.0,
-          }
         })
       }
 
@@ -91,10 +88,16 @@ class App extends Component {
         this.setState({
           sectionOneStyle: {
             top: this.moveSectionOneVertically(),
-            opacity: this.fadeOpacity('out', 0, sectionBreakpoints[0]),
+            opacity: this.fadeOpacity('out', this.sectionOneScrollBreakpoint, sectionBreakpoints[0]),
           }
         })
       }
+
+      this.setState({
+        sectionTwoStyle: {
+          opacity: 0.0,
+        }
+      })
     }
 
 
@@ -104,7 +107,6 @@ class App extends Component {
     =======================*/
     if (scrollPosition >= sectionBreakpoints[0] && scrollPosition <= sectionBreakpoints[1]) {
 
-      console.log('sec2 top', this.moveComponentVerticallyIn(this.sectionTwoRef));
       this.setState({
         sectionOneStyle: {
           opacity: 0.0,
@@ -119,12 +121,15 @@ class App extends Component {
 
   fadeOpacity = (direction, breakpoint1, breakpoint2) => {
     // Fades opacity in/out towards specified scrollPosition breakpoint
+
     const { scrollPosition } = this.props
+    console.log((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1));
+
     switch (direction) {
       case 'out':
-        return 1 - (((scrollPosition - breakpoint1) / breakpoint2 - breakpoint1) ** 2)
+        return 1 - ((((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1))) ** 2)
       case 'in':
-        return ((scrollPosition - breakpoint1) / breakpoint2)
+        return (scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)
       default:
         return
     }
