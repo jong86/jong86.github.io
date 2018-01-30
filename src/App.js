@@ -5,7 +5,7 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 
-import { fadeOpacity } from './utils/Animation.js'
+import { fadeOpacity, moveComponentVertically } from './utils/Animation.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -65,7 +65,7 @@ class App extends Component {
       if (scrollPos > breakPt[0]) {
         this.setState({
           sectionOneStyle: {
-            top: this.moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1]),
+            top: moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1], scrollPos),
             opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
           }
         })
@@ -102,7 +102,7 @@ class App extends Component {
           opacity: 0.0,
         },
         sectionTwoStyle: {
-          top: this.moveComponentVertically('125%', '50%', breakPt[1], breakPt[2]),
+          top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
           opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
         }
       })
@@ -121,15 +121,6 @@ class App extends Component {
     if (scrollPos > breakPt[2]) {
       console.log("open section 2")
     }
-  }
-
-  moveComponentVertically = (startPct, endPct, breakPt1, breakPt2) => {
-    const { scrollPosition: scrollPos } = this.props
-    const startInt = parseInt(startPct, 10)
-    const endInt = parseInt(endPct, 10)
-
-    const output = startInt - ((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * (Math.abs(startInt - endInt))
-    return output + '%'
   }
 
 
