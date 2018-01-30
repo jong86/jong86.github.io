@@ -1,3 +1,13 @@
+.section-wrapper {
+  position: fixed;
+  height: 392px;
+  width: 48vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .skills {
   height: 100%;
   width: 2px;
