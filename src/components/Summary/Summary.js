@@ -5,8 +5,6 @@ import AngleDown from 'react-icons/lib/fa/angle-down'
 import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
 
 
-
-
 class Summary extends Component {
   constructor() {
     super()
@@ -44,50 +42,45 @@ class Summary extends Component {
     } = nextProps
 
 
-
     /*============================
       Summary section animation
     ============================*/
-    // Set height
-    this.setState({
-      sectionStyle: { height: scrollPos + this.cssMinHeight},
-      // Max height of summary is determined by height of wrapper
-    })
 
-
+    // When centered in view, opening up
     if (scrollPos <= breakPt[0]) {
-
-      // Fix style if scrolled too fast
+      // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
           top: '50%',
           opacity: 1.0,
         },
+        sectionStyle: {
+          // Max height of summary is determined by height of wrapper
+          height: scrollPos + this.cssMinHeight
+        },
       })
     }
 
-    if (scrollPos <= breakPt[1]) {
-
-      // Regular behavior
-      if (scrollPos > breakPt[0]) {
-        this.setState({
-          wrapperStyle: {
-            top: moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1], scrollPos),
-            opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
-          }
-        })
-      }
-
+    // When moving up and out of view
+    if (scrollPos > breakPt[0] && scrollPos <= breakPt[1]) {
+      this.setState({
+        wrapperStyle: {
+          top: moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1], scrollPos),
+          opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
+        }
+      })
     }
 
-    // Sets menu to full open if past breakPt, because of bug with scrolling really fast
+    // When should be fully open
     if (scrollPos > breakPt[0]) {
       this.setState({
-        sectionStyle: { height: breakPt[0] + this.cssMinHeight },
+        sectionStyle: {
+          height: breakPt[0] + this.cssMinHeight
+        },
       })
     }
 
-    // When it should be out of view
+    // When should be out of view
     if (scrollPos > breakPt[1]) {
       this.setState({
         wrapperStyle: {

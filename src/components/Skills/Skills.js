@@ -34,8 +34,10 @@ class Skills extends Component {
     /*===========================
       Skills section animation
     ===========================*/
+
+    // Before coming into view
     if (scrollPos <= breakPt[1]) {
-      // Fix style if scrolled too fast
+      // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
           opacity: 0.0,
@@ -43,19 +45,25 @@ class Skills extends Component {
       })
     }
 
-
+    // Moving into view
     if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
-      // Regular behavior
       this.setState({
         wrapperStyle: {
           top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
           opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
-        }
+        },
+        sectionStyle: {
+          width: '2px',
+        },
+        textStyle: {
+          opacity: 0.0,
+        },
       })
     }
 
+    // When centered in view
     if (scrollPos > breakPt[2]) {
-      // Fix style if scrolled too fast
+      // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
           top: '50%',
@@ -64,19 +72,7 @@ class Skills extends Component {
       })
     }
 
-    // While moving into view
-    if (scrollPos <= breakPt[2]) {
-      this.setState({
-        textStyle: {
-          opacity: 0.0,
-        },
-        sectionStyle: {
-          width: '2px',
-        },
-      })
-    }
-
-    // Opening up
+    // When centered in view, and opening up
     if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
       this.setState({
         sectionStyle: {
@@ -88,8 +84,9 @@ class Skills extends Component {
       })
     }
 
-    // Ensure max opened past breakPt3
+    // When centered in view, and fully opened
     if (scrollPos > breakPt[3]) {
+      // Style fix if moved too fast
       this.setState({
         sectionStyle: {
           width: '100%',
