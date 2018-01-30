@@ -33,7 +33,7 @@ class Summary extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    const { scrollPosition: scrollPos } = nextProps
+    const { scrollPosition: scrollPos, isScrolling, scrollBreakpoints: scrBreakPt } = nextProps
     const { textBreakpoints: txtBreakPt } = this
 
     /*================
@@ -77,7 +77,7 @@ class Summary extends Component {
     })
 
     // Edge case fix
-    // Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast */
+    // Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast
     if (scrollPos >= txtBreakPt[0]) {
       this.setState({
         summaryHeight: { height: txtBreakPt[0] + this.cssMinHeight },
@@ -88,13 +88,21 @@ class Summary extends Component {
     /*===============
       Sound effect
     ===============*/
-    const { isScrolling, scrollRate } = this.props
 
-    // Adjust speed of rise before/after breakPt
-    const freqDivisor = scrollPos < txtBreakPt[0] ? 5 : 25
+    // Adjust function for before / after
+    let direction, breakPt1, breakPt2
+    if (scrollPos <= txtBreakPt[0]) {
+      direction = 'down'
+      breakPt1 = 0
+      breakPt2 = txtBreakPt[0]
+    } else if (scrollPos > txtBreakPt[0]) {
+      direction = 'up'
+      breakPt1 = txtBreakPt[0]
+      breakPt2 = scrBreakPt[1]
+    }
 
     // Pitch modulation:
-    const freq = freqExp(txtBreakPt[0], freqDivisor, scrollPos)
+    const freq = freqExp(direction, breakPt1, breakPt2, 22050, 0, scrollPos)
 
     // To play the sound
     if (isScrolling && !this.synthIsPlaying) {
@@ -125,7 +133,7 @@ class Summary extends Component {
 
   instantiateSynth = () => {
     // This needs to happen to replay sound
-    this.synth = new Synth(this.props.audioContext, 'sawtooth', 900, 400)
+    this.synth = new Synth(this.props.audioContext, 'triangle', 900, 400)
   }
 
 
@@ -163,6 +171,7 @@ function mapStateToProps(state) {
     audioContext: state.audioContext,
     isScrolling: state.isScrolling,
     scrollRate: state.scrollRate,
+    scrollBreakpoints: state.scrollBreakpoints
   }
 }
 

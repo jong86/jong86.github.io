@@ -3,7 +3,7 @@ import './Skills.css'
 import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
 import Synth from '../../utils/Synth.js'
-import { freqLowerMod } from '../../utils/soundMod.js'
+import { freqExp } from '../../utils/soundMod.js'
 import { fadeOpacity } from '../../utils/animation.js'
 
 
@@ -67,8 +67,20 @@ class Skills extends Component {
     if (scrollPos > breakPt[1]) {
       const { isScrolling, scrollRate } = this.props
 
+      // Adjust function for before / after breakPts
+      let direction, breakPt1, breakPt2
+      if (scrollPos <= breakPt[2]) {
+        direction = 'down'
+        breakPt1 = breakPt[1]
+        breakPt2 = breakPt[2]
+      } else if (scrollPos > breakPt[2]) {
+        direction = 'up'
+        breakPt1 = breakPt[2]
+        breakPt2 = breakPt[3]
+      }
+
       // Pitch modulation:
-      const freq = freqLowerMod(scrollPos)
+      const freq = freqExp(direction, breakPt1, breakPt2, 5000, 0, scrollPos)
 
       // To play the sound
       if (isScrolling && !this.synthIsPlaying) {

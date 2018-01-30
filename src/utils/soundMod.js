@@ -1,14 +1,18 @@
-export const freqExp = (breakPtMin, divisor, scrollPos) => {
-  const x = scrollPos
-  const h = breakPtMin // Absolute minimum (where it starts to rise again)
-  const d = divisor // Adjusts speed of modulation (wideness of function)
+export const freqExp = (direction, breakPt1, breakPt2, maxFreq, minFreq, scrollPos) => {
+  const x = scrollPos - breakPt1
+  const bPtDiff = Math.abs(breakPt1 - breakPt2) // Where we require y = 0
 
-  const cleanFreq = (((x - h) ** 2) / d) + 20
+  const d = (bPtDiff ** 2) / maxFreq
+
+  const h = direction === 'up' ? 0 : bPtDiff
+
+  const cleanFreq = ((x - h) ** 2) / d
+
   const drift = Math.sin(scrollPos / 10) * 30 // Adds slight randomness
   const freq = cleanFreq + drift
   return freq <= 22050 ? freq : 22050
 }
 
 export const freqLowerMod = (scrollPos) => {
-  return (Math.sin(Date.now() / 25) * 50) + 100
+  return 5
 }
