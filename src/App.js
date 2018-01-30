@@ -40,14 +40,6 @@ class App extends Component {
     // Add scroll listener
     window.addEventListener('scroll', throttle(this.handleScroll, 8));
 
-    this.setState({
-      // Center Section One on page load
-      sectionTwoStyle: {
-        top: '125%',
-        opacity: 0.0,
-      }
-    })
-
     this.instantiateSynth()
   }
 
@@ -58,39 +50,6 @@ class App extends Component {
       scrollBreakpoints: breakPt,
       isScrolling,
     } = nextProps
-
-
-
-    /*========================
-      Section Two Animation
-    ========================*/
-    if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
-
-      // Regular behavior
-      this.setState({
-        sectionOneStyle: {
-          top: '-25%', // Positioned out of view
-          opacity: 0.0,
-        },
-        sectionTwoStyle: {
-          top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
-          opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
-        }
-      })
-    }
-
-    // Fix style if scrolled too fast
-    if (scrollPos > breakPt[2]) {
-      this.setState({
-        sectionTwoStyle: {
-          top: '50%',
-          opacity: 1.0,
-        }
-      })
-    }
-
-
-
 
     /*===============
       Sound effect
@@ -125,7 +84,7 @@ class App extends Component {
       this.synth.play(freq)
     }
 
-    // Continuously set sound frequency
+    // Continuously set sound frequency as scrollPos (props) changes
     this.synth.frequency = freq
   }
 
@@ -200,16 +159,12 @@ class App extends Component {
   render = () => {
     return (
       <div className="App">
+
         <BgSpaceNodes/>
 
         <Summary/>
 
-        <div
-          className="section-two"
-          style={this.state.sectionTwoStyle}
-        >
-          <Skills/>
-        </div>
+        <Skills/>
 
       </div>
     )

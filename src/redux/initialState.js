@@ -3,7 +3,7 @@ const initialState = {
   scrollRate: 0,
   isScrolling: false,
   audioContext: new (window.AudioContext || window.webkitAudioContext)(),
-  scrollBreakpoints: [200, 600, 800, 900]
+  scrollBreakpoints: [200, 600, 800, 1000]
 }
 
 export default initialState

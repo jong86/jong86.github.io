@@ -45,10 +45,9 @@ class Summary extends Component {
 
 
 
-    /*========================
-      Section One Animation
-    ========================*/
-
+    /*============================
+      Summary section animation
+    ============================*/
     // Set height
     this.setState({
       sectionStyle: { height: scrollPos + this.cssMinHeight},
@@ -79,19 +78,22 @@ class Summary extends Component {
         })
       }
 
-      // Fix style if scrolled too fast
-      this.setState({ // TO DO: move this to Skills.js
-        sectionTwoStyle: {
-          opacity: 0.0,
-        }
-      })
     }
 
-    // Edge case fix
-    // Sets menu to full open if past textBreakpoint, because of bug with scrolling really fast
+    // Sets menu to full open if past breakPt, because of bug with scrolling really fast
     if (scrollPos > breakPt[0]) {
       this.setState({
         sectionStyle: { height: breakPt[0] + this.cssMinHeight },
+      })
+    }
+
+    // When it should be out of view
+    if (scrollPos > breakPt[1]) {
+      this.setState({
+        wrapperStyle: {
+          top: '-25%',
+          opacity: 0.0,
+        },
       })
     }
 
