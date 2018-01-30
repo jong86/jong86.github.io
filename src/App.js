@@ -70,7 +70,7 @@ class App extends Component {
       if (scrollPosition > this.scrollBreakpoints[0]) {
         this.setState({
           sectionOneStyle: {
-            top: this.moveComponentVertically('50%', scrollBreakpoints[0], scrollBreakpoints[1]),
+            top: this.moveComponentVertically('50%', '-25%', scrollBreakpoints[0], scrollBreakpoints[1]),
             opacity: this.fadeOpacity('out', this.scrollBreakpoints[0], scrollBreakpoints[1]),
           }
         })
@@ -103,11 +103,11 @@ class App extends Component {
       // Regular behavior
       this.setState({
         sectionOneStyle: {
-          top: "-25%", // Positioned out of view
+          top: '-25%', // Positioned out of view
           opacity: 0.0,
         },
         sectionTwoStyle: {
-          top: this.moveComponentVertically('150%', scrollBreakpoints[1], scrollBreakpoints[2]),
+          top: this.moveComponentVertically('125%', '50%', scrollBreakpoints[1], scrollBreakpoints[2]),
           opacity: this.fadeOpacity('in', scrollBreakpoints[1], scrollBreakpoints[2]),
         }
       })
@@ -117,19 +117,21 @@ class App extends Component {
     if (scrollPosition > scrollBreakpoints[2]) {
       this.setState({
         sectionTwoStyle: {
-          top: "50%",
+          top: '50%',
           opacity: 1.0,
         }
       })
     }
   }
 
-  moveComponentVertically = (initialPct, breakpoint1, breakpoint2) => {
+  moveComponentVertically = (startPct, endPct, breakpoint1, breakpoint2) => {
     const { scrollPosition } = this.props
-    let int = parseInt(initialPct)
-    int -= ((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)) * 100
-    // console.log('int:', int, scrollPosition, breakpoint2);
-    return int + '%'
+    const startInt = parseInt(startPct)
+    const endInt = parseInt(endPct)
+
+    const output = startInt - ((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)) * (Math.abs(startInt - endInt))
+    console.log('int:', output, startInt, endInt, scrollPosition, breakpoint2);
+    return output + '%'
   }
 
   fadeOpacity = (direction, breakpoint1, breakpoint2) => {
