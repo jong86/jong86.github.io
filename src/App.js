@@ -5,6 +5,8 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 
+import { fadeOpacity } from './utils/Animation.js'
+
 import action from './redux/action.js'
 import { connect } from 'react-redux'
 
@@ -68,7 +70,7 @@ class App extends Component {
         this.setState({
           sectionOneStyle: {
             top: this.moveComponentVertically('50%', '-25%', scrollBreakpoints[0], scrollBreakpoints[1]),
-            opacity: this.fadeOpacity('out', this.scrollBreakpoints[0], scrollBreakpoints[1]),
+            opacity: fadeOpacity('out', this.scrollBreakpoints[0], scrollBreakpoints[1]),
           }
         })
       }
@@ -105,7 +107,7 @@ class App extends Component {
         },
         sectionTwoStyle: {
           top: this.moveComponentVertically('125%', '50%', scrollBreakpoints[1], scrollBreakpoints[2]),
-          opacity: this.fadeOpacity('in', scrollBreakpoints[1], scrollBreakpoints[2]),
+          opacity: fadeOpacity('in', scrollBreakpoints[1], scrollBreakpoints[2]),
         }
       })
     }
@@ -132,20 +134,6 @@ class App extends Component {
 
     const output = startInt - ((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)) * (Math.abs(startInt - endInt))
     return output + '%'
-  }
-
-  fadeOpacity = (direction, breakpoint1, breakpoint2) => {
-    // Fades opacity in/out towards specified scrollPosition breakpoint
-    const { scrollPosition } = this.props
-
-    switch (direction) {
-      case 'out':
-        return 1 - ((((scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1))) ** 2)
-      case 'in':
-        return (scrollPosition - breakpoint1) / (breakpoint2 - breakpoint1)
-      default:
-        return
-    }
   }
 
 
