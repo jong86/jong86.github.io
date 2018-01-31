@@ -1,5 +1,4 @@
 export const fadeOpacity = (direction, breakPt1, breakPt2, scrollPos) => {
-  console.log('in here', breakPt1);
   // Fades opacity in/out towards specified scrollPosition breakpoint
   switch (direction) {
     case 'out':

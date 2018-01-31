@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import './Skills.css'
 import { connect } from 'react-redux'
 import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
-import { skillsData } from './skillsData.js';
+import { skillsData } from './skillsData.js'
+
+import AngleDown from 'react-icons/lib/fa/angle-down'
 
 import uuidv4 from 'uuid/v4'
 
@@ -20,13 +22,12 @@ class Skills extends Component {
     this.skillsData = skillsData
 
     this.initialWrapperHeight = '600px'
-    this.wrapperMinHeight = '4px'
+    this.wrapperMinHeight = '1px'
   }
 
   componentWillMount = () => {
     this.setState({
       wrapperStyle: {
-        top: '125%',
         opacity: 0.0,
       }
     })
@@ -48,6 +49,7 @@ class Skills extends Component {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
+          top: '125%',
           height: this.initialWrapperHeight,
           minHeight: this.wrapperMinHeight,
           opacity: 0.0,
@@ -90,6 +92,7 @@ class Skills extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           height: this.initialWrapperHeight,
+          top: '50%',
         },
         sectionStyle: {
           width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
@@ -119,9 +122,6 @@ class Skills extends Component {
         sectionStyle: {
           width: '100%',
         },
-        // titleStyle: {
-        //   opacity: 1.0,
-        // },
         textStyle: {
           opacity: 1.0,
         },
@@ -133,13 +133,18 @@ class Skills extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
+          opacity: 1.0,
+          top: '50%',
           height: this.decHeightWithScrollPosition(breakPt[3], breakPt[4]),
         },
+        sectionStyle: {
+          width: '100%',
+        },
         textStyle: {
-          opacity: fadeOpacity('out', breakPt[3], breakPt[4], scrollPos),
+          opacity: fadeOpacity('out', breakPt[3], breakPt[4] - 100, scrollPos),
         },
         titleStyle: {
-          opacity: fadeOpacity('out', breakPt[3], breakPt[4], scrollPos),
+          opacity: fadeOpacity('out', breakPt[3], breakPt[4] - 100, scrollPos),
         },
       })
     }
@@ -160,16 +165,21 @@ class Skills extends Component {
   }
 
   decHeightWithScrollPosition = (breakPt1, breakPt2) => {
-    const { scrollPosition: scrollPos} = this.props
-    const int = parseInt(this.initialWrapperHeight) - (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 1000)
-    console.log(int);
-    return int + 'px'
+    const { scrollPosition: scrollPos } = this.props
+    const diff1 = scrollPos - breakPt1
+    const diff2 = breakPt2 - breakPt1
+
+    const output = (1 - (diff1 / diff2)) * parseInt(this.initialWrapperHeight)
+    return output < 1 ? '1px' : output + 'px'
   }
 
   render = () => {
     const { wrapperStyle, sectionStyle, titleStyle, textStyle } = this.state
-
-    // console.log(this.skillsData)
+    const {
+      scrollToBreakPoint,
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt
+    } = this.props
 
     const renderSkills = this.skillsData.map((section, i) =>
       <div key={uuidv4()}>
@@ -194,6 +204,7 @@ class Skills extends Component {
           </div>
           <div className="text" style={textStyle}>
             { renderSkills }
+            { scrollPos <= breakPt[3] + 10 && <AngleDown size={56} onClick={() => scrollToBreakPoint(5, 500)}/>}
           </div>
         </div>
       </div>

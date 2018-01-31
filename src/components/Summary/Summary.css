@@ -15,14 +15,14 @@
 }
 
 .summary {
-  color: var(--menu-color-green);
+  color: var(--menu-color-summary);
   font-size: 1.5em;
 
   background-color: var(--menu-bg-color);
   background-color: var(--menu-bg-transparent);
 
   border-radius: var(--menu-border-radius);
-  border: 1px solid var(--menu-color-green);
+  border: 1px solid var(--menu-color-summary);
 
   width: 100%;
 
@@ -44,7 +44,7 @@
 
   background-color: var(--menu-bg-color);
 
-  border-bottom: 1px solid var(--menu-color-green);
+  border-bottom: 1px solid var(--menu-color-summary);
   border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
 
   z-index: 2;
@@ -54,7 +54,7 @@
   width: 100%;
 
   font-family: 'Black Ops One';
-  color: var(--menu-color-green);
+  color: var(--menu-color-summary);
   font-size: 2em;
 
   display: flex;
@@ -110,5 +110,5 @@
 
 @keyframes arrow-color {
   0% { color: transparent; }
-  100% { color: var(--menu-color-green) }
+  100% { color: var(--menu-color-summary) }
 }

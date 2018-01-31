@@ -4,6 +4,7 @@ import './App.css';
 import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
+import Projects from './components/Projects/Projects.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -74,6 +75,14 @@ class App extends Component {
       direction = 'up'
       breakPt1 = breakPt[2]
       breakPt2 = breakPt[3]
+    } else if (scrollPos > breakPt[3] && scrollPos <= breakPt[4]) {
+      direction = 'down'
+      breakPt1 = breakPt[3]
+      breakPt2 = breakPt[4]
+    } else if (scrollPos > breakPt[4] && scrollPos <= breakPt[5]) {
+      direction = 'up'
+      breakPt1 = breakPt[4]
+      breakPt2 = breakPt[5]
     }
 
     // Pitch modulation function
@@ -134,10 +143,12 @@ class App extends Component {
   }
 
 
-  scrollToBreakPoint = (specified) => {
-    if (specified < 0) return scroll.scrollTo(0)
+  scrollToBreakPoint = (specifiedBreakPt, specifiedDuration) => {
+    let duration = 1000
+    if (specifiedDuration) duration = specifiedDuration
+    if (specifiedBreakPt < 0) return scroll.scrollTo(0, { smooth: true, duration: duration })
     const { scrollBreakpoints: breakPt } = this.props
-    return scroll.scrollTo(breakPt[specified])
+    return scroll.scrollTo(breakPt[specifiedBreakPt], { smooth: true, duration: duration })
   }
 
 
@@ -145,14 +156,18 @@ class App extends Component {
     Render
   =========*/
   render = () => {
+    const { scrollPosition: scrollPos, scrollBreakpoints: breakPt } = this.props
+
     return (
       <div className="App">
 
         <BgSpaceNodes/>
 
         <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
-        <Skills scrollToBreakPoint={this.scrollToBreakPoint}/>
-
+        { scrollPos <= breakPt[4] ?
+          (<Skills scrollToBreakPoint={this.scrollToBreakPoint}/>) :
+          (<Projects scrollToBreakPoint={this.scrollToBreakPoint}/>)
+        }
       </div>
     )
   }

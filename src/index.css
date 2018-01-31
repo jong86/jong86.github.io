@@ -1,6 +1,7 @@
 :root {
-  --menu-color-green: lime;
-  --menu-color-yellow: yellow;
+  --menu-color-summary: lime;
+  --menu-color-skills: yellow;
+  --menu-color-projects: cyan;
   --menu-bg-color: #121212;
   --menu-bg-transparent: #121212d0;
 
