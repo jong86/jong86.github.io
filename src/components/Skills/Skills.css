@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* z-index: 2; */
 }
 
 .skills {
@@ -33,7 +35,7 @@
   border-bottom: 1px solid var(--menu-color-skills);
   border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
 
-  z-index: 1;
+  z-index: 2;
 }
 
 .skills .title {
@@ -118,4 +120,11 @@
   bottom: 0;
   width: 100%;
   /* border: 1px dashed red; */
+  animation: btn-skills-color var(--btn-flash-speed) infinite;
+  animation-timing-function: ease-out;
+}
+
+@keyframes btn-skills-color {
+  0% { color: transparent; }
+  100% { color: var(--menu-color-skills) }
 }

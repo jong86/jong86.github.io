@@ -36,7 +36,7 @@ class App extends Component {
 
   componentWillMount = () => {
     // Scroll to top of page on load:
-    window.onbeforeunload = () => window.scrollTo(0,0)
+    window.onbeforeunload = () => window.scrollTo(0,2201)
 
     // Add scroll listener
     window.addEventListener('scroll', throttle(this.handleScroll, 8));
@@ -163,10 +163,14 @@ class App extends Component {
 
         <BgSpaceNodes/>
 
-        <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
-        { scrollPos <= breakPt[4] ?
-          (<Skills scrollToBreakPoint={this.scrollToBreakPoint}/>) :
-          (<Projects scrollToBreakPoint={this.scrollToBreakPoint}/>)
+        { scrollPos <= breakPt[1] &&
+          <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
+        ||
+          scrollPos > breakPt[1] && scrollPos <= breakPt[4] &&
+          <Skills scrollToBreakPoint={this.scrollToBreakPoint}/>
+        ||
+          scrollPos > breakPt[4] &&
+          <Projects scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
       </div>
     )

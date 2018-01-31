@@ -6,6 +6,8 @@
   --menu-bg-transparent: #121212d0;
 
   --menu-border-radius: 4px;
+
+  --btn-flash-speed: 1s;
 }
 
 body {

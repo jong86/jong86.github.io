@@ -104,11 +104,11 @@
   margin: 0 auto;
   bottom: 0;
 
-  animation: arrow-color 1s infinite;
+  animation: btn-summary-color var(--btn-flash-speed) infinite;
   animation-timing-function: ease-out;
 }
 
-@keyframes arrow-color {
+@keyframes btn-summary-color {
   0% { color: transparent; }
   100% { color: var(--menu-color-summary) }
 }

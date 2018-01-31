@@ -49,68 +49,41 @@
   justify-content: center;
 
   padding: 1em 0;
-
 }
 
 
-.projects .text {
+.projects .content {
   color: white;
 
   font-size: 1em;
 
-  margin: 0 auto;
-  margin-top: 0.25em;
+  border: 1px dashed red;
+}
 
-  overflow: hidden;
-  white-space: nowrap;
-
+.projects .content .row {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  border: 1px dashed lime;
 }
 
-
-.projects .text > div {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin-bottom: 0.25em;
-  padding-top: 1em;
-
-  /* border: 1px dashed blue; */
+.projects .content .row .photo {
+  flex: 0.4;
+  /* width: 50%; */
+  /* display: inline-block; */
+  border: 1px dashed lime;
 }
 
-.projects .text .label {
-  width: 100%;
-
-  font-weight: bold;
-  font-size: 1.2em;
-  color: var(--menu-color-projects);
-  text-align: center;
-  /* padding-right: 1em; */
-
-  /* border: 1px dashed red; */
+.projects .content .row .description {
+  flex: 0.6;
+  /* width: 50%; */
+  /* display: inline-block; */
+  border: 1px dashed yellow;
 }
 
-.projects .text ul {
-  width: 100%;
-
-  margin-top: 0.5em;
-  padding: 0;
+.projects .content .row .description ul {
   list-style-type: none;
-  text-align: center;
-
-  /* border: 1px dashed pink; */
+  padding-left: 0.5em;
 }
 
-.projects .text ul li {
-  color: white;
-  margin: 0;
-
-  /* border: 1px dashed white; */
+.projects .content .row .description ul li {
+  margin-bottom: 0.2em;
 }

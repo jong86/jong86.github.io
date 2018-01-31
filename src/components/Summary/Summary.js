@@ -27,17 +27,32 @@ class Summary extends Component {
   }
 
   componentWillMount = () => {
-    const { scrollPosition: scrollPos } = this.props
+    const { scrollPosition: scrollPos, scrollBreakpoints: breakPt } = this.props
     const { topStartPct } = this
-    this.setState({
-      wrapperStyle: {
-        top: topStartPct,
-        opacity: 1.0,
-      },
-      sectionStyle: {
-        height: scrollPos + this.cssMinHeight
-      },
-    })
+
+    // If coming from later in animation progression
+    if (scrollPos > breakPt[0]) {
+      this.setState({
+        wrapperStyle: {
+          top: '-25%',
+          opacity: 0,
+        },
+        sectionStyle: {
+          height: scrollPos + this.cssMinHeight
+        },
+      })
+    // If starting from scrollPos 0
+    } else {
+      this.setState({
+        wrapperStyle: {
+          top: topStartPct,
+          opacity: 1.0,
+        },
+        sectionStyle: {
+          height: scrollPos + this.cssMinHeight
+        },
+      })
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {

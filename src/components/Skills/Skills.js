@@ -181,13 +181,13 @@ class Skills extends Component {
       scrollBreakpoints: breakPt
     } = this.props
 
-    const renderSkills = this.skillsData.map((section, i) =>
+    const renderSkills = this.skillsData.map(section =>
       <div key={uuidv4()}>
         <div className="label" key={uuidv4()}>
           { section.label }
         </div>
         <ul className="list" key={uuidv4()}>
-          { section.items.map((item, j) =>
+          { section.items.map(item =>
             <li key={uuidv4()}>{ item }</li>
           )}
         </ul>
@@ -197,7 +197,7 @@ class Skills extends Component {
     return (
       <div className="skills-wrapper" style={wrapperStyle}>
         <div className="skills no-select" style={sectionStyle}>
-          <div className="heading">
+          <div className="heading" onClick={() => scrollToBreakPoint(0, 500)}>
             <div className="title" style={titleStyle}>
               SKILLS
             </div>

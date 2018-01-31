@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Projects.css'
 import { connect } from 'react-redux'
 import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
+import { projectsData } from './projectsData.js'
 
 import uuidv4 from 'uuid/v4'
 
@@ -14,14 +15,23 @@ class Projects extends Component {
       wrapperStyle: {},
       sectionStyle: {},
       titleStyle: {},
-      textStyle: {},
+      contentStyle: {},
+
+      projectsPage: 0,
     }
 
+    this.projectsData = projectsData
+
     this.initialWrapperHeight = '1px'
-    this.wrapperMaxHeight = '600px'
+    this.wrapperMaxHeight = '800px'
   }
 
   componentWillMount = () => {
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+    } = this.props
+
     this.setState({
       wrapperStyle: {
         top: '50%',
@@ -32,6 +42,17 @@ class Projects extends Component {
         width: '100%',
       },
     })
+
+    // For dev purposes to show this section on page load:
+    if (scrollPos > breakPt[5]) {
+      this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          top: '50%',
+          height: this.wrapperMaxHeight,
+        }
+      })
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -51,7 +72,7 @@ class Projects extends Component {
           ...this.state.wrapperStyle,
           height: this.incHeightWithScrollPosition(breakPt[4], breakPt[5]),
         },
-        textStyle: {
+        contentStyle: {
           opacity: fadeOpacity('in', breakPt[4], breakPt[5], scrollPos),
         },
         titleStyle: {
@@ -59,6 +80,13 @@ class Projects extends Component {
         },
       })
     }
+  }
+
+
+  loadAndAnimatePageChange = (page) => {
+    // Make width go to 1px, change displayed projects, then open back up again
+
+
   }
 
   incHeightWithScrollPosition = (breakPt1, breakPt2) => {
@@ -71,17 +99,40 @@ class Projects extends Component {
   }
 
   render = () => {
-    const { wrapperStyle, sectionStyle, titleStyle, textStyle } = this.state
+    const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
+    const { scrollToBreakPoint } = this.props
+
+    const projects = this.projectsData.map(project =>
+      (
+        <div className="row" key={uuidv4()}>
+          <div className="photo" key={uuidv4()}>
+            this is the photo
+          </div>
+          <div className="description" key={uuidv4()}>
+            <div className="title" key={uuidv4()}>
+              { project.title }
+            </div>
+            <ul>
+              { project.bulletPoints.map((bulletPoint, j) =>
+                <li key={uuidv4()}>{ bulletPoint }</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      )
+    )
 
     return (
       <div className="projects-wrapper" style={wrapperStyle}>
         <div className="projects no-select" style={sectionStyle}>
-          <div className="heading">
+          <div className="heading" onClick={() => scrollToBreakPoint(3, 500)}>
             <div className="title" style={titleStyle}>
               PROJECTS
             </div>
           </div>
-          <div className="text" style={textStyle}>
+          <div className="content" style={contentStyle}>
+
+            { projects }
 
           </div>
         </div>
