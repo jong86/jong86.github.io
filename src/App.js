@@ -5,8 +5,6 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 
-import { fadeOpacity, moveComponentVertically } from './utils/animation.js'
-
 import action from './redux/action.js'
 import { connect } from 'react-redux'
 
@@ -14,6 +12,9 @@ import throttle from 'lodash.throttle'
 
 import Synth from './utils/Synth.js'
 import { freqExp } from './utils/soundMod.js'
+
+import Scroll from 'react-scroll'
+const scroll = Scroll.animateScroll
 
 
 class App extends Component {
@@ -76,7 +77,7 @@ class App extends Component {
     }
 
     // Pitch modulation function
-    const freq = freqExp(direction, breakPt1, breakPt2, 17000, 0, scrollPos)
+    const freq = freqExp(direction, breakPt1, breakPt2, 22050, 30, scrollPos)
 
     // To play the sound
     if (isScrolling && !this.synthIsPlaying) {
@@ -112,17 +113,13 @@ class App extends Component {
     Scroll event handler
   =======================*/
   handleScroll = (event) => {
-    const { setScrollPosition, setIsScrolling, scrollPosition } = this.props
+    const { setScrollPosition, setIsScrolling } = this.props
 
-    /*======================================
-      Save scroll position in redux store
-    ======================================*/
+    // Save scroll position in redux store
     setScrollPosition(document.documentElement.scrollTop)
 
 
-    /*===================================
-      Save scroll state in redux store
-    ===================================*/
+    // Get scroll state and save in redux store
     if (this.timeoutScroll) {
       // If there is already a timeout in process then cancel it
       clearTimeout(this.timeoutScroll)
@@ -137,6 +134,13 @@ class App extends Component {
   }
 
 
+  scrollToBreakPoint = (specified) => {
+    if (specified < 0) return scroll.scrollTo(0)
+    const { scrollBreakpoints: breakPt } = this.props
+    return scroll.scrollTo(breakPt[specified])
+  }
+
+
   /*=========
     Render
   =========*/
@@ -146,8 +150,8 @@ class App extends Component {
 
         <BgSpaceNodes/>
 
-        <Summary/>
-        <Skills/>
+        <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
+        <Skills scrollToBreakPoint={this.scrollToBreakPoint}/>
 
       </div>
     )

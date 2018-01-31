@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import './Skills.css'
 import { connect } from 'react-redux'
-import AngleDown from 'react-icons/lib/fa/angle-down'
 import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
+import { skillsData } from './skillsData.js';
+
+import uuidv4 from 'uuid/v4'
+
 
 
 class Skills extends Component {
@@ -11,8 +14,10 @@ class Skills extends Component {
     this.state = {
       wrapperStyle: {},
       sectionStyle: {},
+      titleStyle: {},
       textStyle: {},
     }
+    this.skillsData = skillsData
   }
 
   componentWillMount = () => {
@@ -78,21 +83,33 @@ class Skills extends Component {
         sectionStyle: {
           width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
         },
-        textStyle: {
+        titleStyle: {
           opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
+        },
+        textStyle: {
+          opacity: 0,
         },
       })
     }
 
-    // When centered in view, and fully opened
+    // When should be centered and fully opened
     if (scrollPos > breakPt[3]) {
       // Style fix if moved too fast
       this.setState({
         sectionStyle: {
           width: '100%',
         },
-        textStyle: {
+        titleStyle: {
           opacity: 1.0,
+        },
+      })
+    }
+
+    // Fade in text just before component's width maxes out
+    if (scrollPos > breakPt[3] - 100 && scrollPos <= breakPt[3]) {
+      this.setState({
+        textStyle: {
+          opacity: fadeOpacity('in', breakPt[3] - 100, breakPt[3], scrollPos),
         },
       })
     }
@@ -104,21 +121,33 @@ class Skills extends Component {
   }
 
   render = () => {
-    const { wrapperStyle, sectionStyle, textStyle } = this.state
+    const { wrapperStyle, sectionStyle, titleStyle, textStyle } = this.state
+
+    // console.log(this.skillsData)
+
+    const renderSkills = this.skillsData.map((section, i) =>
+      <div key={uuidv4()}>
+        <div className="label" key={uuidv4()}>
+          { section.label }
+        </div>
+        <ul className="list" key={uuidv4()}>
+          { section.items.map((item, j) =>
+            <li key={uuidv4()}>{ item }</li>
+          )}
+        </ul>
+      </div>
+    )
 
     return (
-      <div className="section-wrapper" style={wrapperStyle}>
+      <div className="skills-wrapper" style={wrapperStyle}>
         <div className="skills no-select" style={sectionStyle}>
           <div className="heading">
-            <div className="title" style={textStyle}>
+            <div className="title" style={titleStyle}>
               SKILLS
             </div>
           </div>
           <div className="text" style={textStyle}>
-            Languages: Javascript, Python, Ruby<br/>
-            Front-End: React, React-Native, Redux, Vue, JQuery, CSS/SCSS<br/>
-            Back-End: Node, Express, Ruby on Rails, SQL, MongoDB, Web Sockets<br/>
-            Other: Photoshop, Google Maps API, Web Audio API<br/>
+            { renderSkills }
           </div>
         </div>
       </div>

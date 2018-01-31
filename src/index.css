@@ -1,6 +1,6 @@
 :root {
   --menu-color-green: lime;
-  --menu-color-yellow: rgb(255, 255, 68);
+  --menu-color-yellow: yellow;
   --menu-bg-color: #121212;
   --menu-border-radius: 4px;
 }
@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-family: 'Anonymous Pro', monospace;
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 .no-select {

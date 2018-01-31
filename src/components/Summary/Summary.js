@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import './Summary.css'
 import { connect } from 'react-redux'
+
 import AngleDown from 'react-icons/lib/fa/angle-down'
+import AngleUp from 'react-icons/lib/fa/angle-up'
+
 import { fadeOpacity, moveComponentVertically, scrambleText } from '../../utils/animation.js'
+
 
 
 class Summary extends Component {
@@ -15,7 +19,8 @@ class Summary extends Component {
     }
     this.summary = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
 
-    this.cssMinHeight = 192
+    this.topStartPct = '40%'
+    this.cssMinHeight = 200
 
     this.synth = null
     this.synthIsPlaying = false
@@ -23,9 +28,10 @@ class Summary extends Component {
 
   componentWillMount = () => {
     const { scrollPosition: scrollPos } = this.props
+    const { topStartPct } = this
     this.setState({
       wrapperStyle: {
-        top: '50%',
+        top: topStartPct,
         opacity: 1.0,
       },
       sectionStyle: {
@@ -40,6 +46,7 @@ class Summary extends Component {
       scrollBreakpoints: breakPt,
     } = nextProps
 
+    const { topStartPct } = this
 
     /*============
       Animation
@@ -53,11 +60,10 @@ class Summary extends Component {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
-          top: '50%',
+          top: topStartPct,
           opacity: 1.0,
         },
         sectionStyle: {
-          // Max height of summary is determined by height of wrapper
           height: scrollPos + this.cssMinHeight
         },
         // Descramble text
@@ -83,7 +89,7 @@ class Summary extends Component {
     if (scrollPos > breakPt[0] && scrollPos <= breakPt[1]) {
       this.setState({
         wrapperStyle: {
-          top: moveComponentVertically('50%', '-25%', breakPt[0], breakPt[1], scrollPos),
+          top: moveComponentVertically(topStartPct, '-25%', breakPt[0], breakPt[1], scrollPos),
           opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
         }
       })
@@ -110,13 +116,30 @@ class Summary extends Component {
   }
 
 
+
   render = () => {
-    const { displayedText, wrapperStyle, sectionStyle } = this.state
+    const {
+      displayedText,
+      wrapperStyle,
+      sectionStyle,
+    } = this.state
+
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+      scrollToBreakPoint,
+    } = this.props
+
+    const button = (scrollPos < breakPt[0]) ? (
+      (<AngleDown size={48} onClick={() => scrollToBreakPoint(0)}/>)
+    ) : (
+      (<AngleUp size={48} onClick={() => scrollToBreakPoint(3)}/>)
+    )
 
     return (
-      <div className="section-wrapper" style={wrapperStyle}>
+      <div className="summary-wrapper" style={wrapperStyle}>
         <div className="summary no-select" style={sectionStyle}>
-          <div className="heading">
+          <div className="heading" onClick={() => scrollToBreakPoint(-1)}>
             <div className="name">
               Jon Gaspar
             </div>
@@ -127,7 +150,7 @@ class Summary extends Component {
           <div className="text">
             { displayedText }
           </div>
-          <AngleDown size={48}/>
+          { button }
         </div>
       </div>
     );
