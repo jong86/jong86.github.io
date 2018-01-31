@@ -8,11 +8,7 @@ export const freqExp = (direction, breakPt1, breakPt2, maxFreq, minFreq, scrollP
 
   const cleanFreq = ((x - h) ** 2) / d
 
-  const drift = Math.sin(scrollPos / 10) * 30 // Adds slight randomness
+  const drift = Math.sin(scrollPos / 10) * 50 // Adds slight randomness
   const freq = cleanFreq + drift
   return freq <= 22050 ? freq : 22050
-}
-
-export const freqLowerMod = (scrollPos) => {
-  return 5
 }

@@ -57,32 +57,21 @@ class App extends Component {
       Sound effect
     ===============*/
 
-    // Adjust function for before / after breakPts
+    // Set breakPts and direction for sound frequency function
     let direction, breakPt1, breakPt2
-    if (scrollPos <= breakPt[0]) {
+    if (scrollPos < breakPt[0]) {
       direction = 'down'
       breakPt1 = 0
       breakPt2 = breakPt[0]
-    } else if (scrollPos > breakPt[0] && scrollPos <= breakPt[1]) {
-      direction = 'up'
-      breakPt1 = breakPt[0]
-      breakPt2 = breakPt[1]
-    } else if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
-      direction = 'down'
-      breakPt1 = breakPt[1]
-      breakPt2 = breakPt[2]
-    } else if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
-      direction = 'up'
-      breakPt1 = breakPt[2]
-      breakPt2 = breakPt[3]
-    } else if (scrollPos > breakPt[3] && scrollPos <= breakPt[4]) {
-      direction = 'down'
-      breakPt1 = breakPt[3]
-      breakPt2 = breakPt[4]
-    } else if (scrollPos > breakPt[4] && scrollPos <= breakPt[5]) {
-      direction = 'up'
-      breakPt1 = breakPt[4]
-      breakPt2 = breakPt[5]
+    } else {
+      for (let i = 0; i < breakPt.length; i++) {
+        if (scrollPos > breakPt[i] && scrollPos <= breakPt[i + 1]) {
+          direction = (i % 2 === 0 || i === 0) ? 'up' : 'down'
+          breakPt1 = breakPt[i]
+          breakPt2 = breakPt[i + 1]
+          break
+        }
+      }
     }
 
     // Pitch modulation function

@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import './Skills.css'
 import { connect } from 'react-redux'
-import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
+import {
+  fadeOpacity,
+  moveComponentVertically,
+  decHeightWithScrollPosition,
+  incWidthWithScrollPosition,
+} from '../../utils/animation.js'
 import { skillsData } from './skillsData.js'
 
 import AngleDown from 'react-icons/lib/fa/angle-down'
@@ -95,7 +100,7 @@ class Skills extends Component {
           top: '50%',
         },
         sectionStyle: {
-          width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
+          width: incWidthWithScrollPosition(breakPt[2], breakPt[3], scrollPos)
         },
         titleStyle: {
           opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
@@ -135,7 +140,7 @@ class Skills extends Component {
           ...this.state.wrapperStyle,
           opacity: 1.0,
           top: '50%',
-          height: this.decHeightWithScrollPosition(breakPt[3], breakPt[4]),
+          height: decHeightWithScrollPosition(this.initialWrapperHeight, breakPt[3], breakPt[4], scrollPos),
         },
         sectionStyle: {
           width: '100%',
@@ -159,19 +164,6 @@ class Skills extends Component {
     }
   }
 
-  setWidthWithScrollPosition = (breakPt1, breakPt2) => {
-    const { scrollPosition: scrollPos} = this.props
-    return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
-  }
-
-  decHeightWithScrollPosition = (breakPt1, breakPt2) => {
-    const { scrollPosition: scrollPos } = this.props
-    const diff1 = scrollPos - breakPt1
-    const diff2 = breakPt2 - breakPt1
-
-    const output = (1 - (diff1 / diff2)) * parseInt(this.initialWrapperHeight)
-    return output < 1 ? '1px' : output + 'px'
-  }
 
   render = () => {
     const { wrapperStyle, sectionStyle, titleStyle, textStyle } = this.state

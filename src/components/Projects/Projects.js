@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import './Projects.css'
 import { connect } from 'react-redux'
-import { fadeOpacity, moveComponentVertically } from '../../utils/animation.js'
+import {
+  fadeOpacity,
+  moveComponentVertically,
+  incHeightWithScrollPosition,
+  decWidthWithScrollPosition,
+  incWidthWithScrollPosition,
+} from '../../utils/animation.js'
 import { projectsData } from './projectsData.js'
 
 import uuidv4 from 'uuid/v4'
@@ -65,44 +71,87 @@ class Projects extends Component {
     /*============
       Animation
     ============*/
+    let breakPt1, breakPt2
+
     // When expanding in height
-    if (scrollPos > breakPt[4] && scrollPos <= breakPt[5]) {
+    breakPt1 = breakPt[4]
+    breakPt2 = breakPt[5]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          height: this.incHeightWithScrollPosition(breakPt[4], breakPt[5]),
+          height: incHeightWithScrollPosition(this.wrapperMaxHeight, breakPt1, breakPt2, scrollPos),
         },
         contentStyle: {
-          opacity: fadeOpacity('in', breakPt[4], breakPt[5], scrollPos),
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
         titleStyle: {
-          opacity: fadeOpacity('in', breakPt[4], breakPt[5], scrollPos),
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
+        projectsPage: 0,
+      })
+    }
+
+    // When closing first page
+    breakPt1 = breakPt[5]
+    breakPt2 = breakPt[6]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
+      this.setState({
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
+        },
+        projectsPage: 0,
+      })
+    }
+
+    // When opening second page
+    breakPt1 = breakPt[6]
+    breakPt2 = breakPt[7]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
+      this.setState({
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          width: incWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
+        },
+        projectsPage: 1,
+      })
+    }
+
+    // When closing second page
+    breakPt1 = breakPt[7]
+    breakPt2 = breakPt[8]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
+      this.setState({
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
+        },
+        projectsPage: 1,
+      })
+    }
+
+    // When opening third page
+    breakPt1 = breakPt[8]
+    breakPt2 = breakPt[9]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
+      this.setState({
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          width: incWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
+        },
+        projectsPage: 1,
       })
     }
   }
 
 
-  loadAndAnimatePageChange = (page) => {
-    // Make width go to 1px, change displayed projects, then open back up again
-
-
-  }
-
-  incHeightWithScrollPosition = (breakPt1, breakPt2) => {
-    const { scrollPosition: scrollPos } = this.props
-    const diff1 = scrollPos - breakPt1
-    const diff2 = breakPt2 - breakPt1
-
-    const output = (diff1 / diff2) * parseInt(this.wrapperMaxHeight)
-    return output < 1 ? '1px' : output + 'px'
-  }
-
   render = () => {
     const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
     const { scrollToBreakPoint } = this.props
 
-    const projects = this.projectsData.map(project =>
+    const startPrj = this.state.projectsPage * 3
+    const projects = this.projectsData.slice(startPrj, startPrj + 3).map(project =>
       (
         <div className="row" key={uuidv4()}>
           <div className="photo" key={uuidv4()}>
@@ -127,7 +176,7 @@ class Projects extends Component {
         <div className="projects no-select" style={sectionStyle}>
           <div className="heading" onClick={() => scrollToBreakPoint(3, 500)}>
             <div className="title" style={titleStyle}>
-              PROJECTS
+              PROJECTS { this.state.projectsPage + 1 }
             </div>
           </div>
           <div className="content" style={contentStyle}>
