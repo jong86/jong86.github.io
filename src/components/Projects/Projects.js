@@ -10,6 +10,9 @@ import {
 } from '../../utils/animation.js'
 import { projectsData } from './projectsData.js'
 
+import AngleRight from 'react-icons/lib/fa/angle-right'
+import AngleLeft from 'react-icons/lib/fa/angle-left'
+
 import uuidv4 from 'uuid/v4'
 
 
@@ -23,7 +26,7 @@ class Projects extends Component {
       titleStyle: {},
       contentStyle: {},
 
-      projectsPage: 0,
+      currentPage: 0,
     }
 
     this.projectsData = projectsData
@@ -73,7 +76,7 @@ class Projects extends Component {
     ============*/
     let breakPt1, breakPt2
 
-    // When expanding in height
+    // Open first page
     breakPt1 = breakPt[4]
     breakPt2 = breakPt[5]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -88,11 +91,11 @@ class Projects extends Component {
         titleStyle: {
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
-        projectsPage: 0,
+        currentPage: 0,
       })
     }
 
-    // When closing first page
+    // Close first page
     breakPt1 = breakPt[5]
     breakPt2 = breakPt[6]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -101,11 +104,17 @@ class Projects extends Component {
           ...this.state.sectionStyle,
           width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
         },
-        projectsPage: 0,
+        contentStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        currentPage: 0,
       })
     }
 
-    // When opening second page
+    // Open second page
     breakPt1 = breakPt[6]
     breakPt2 = breakPt[7]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -114,11 +123,17 @@ class Projects extends Component {
           ...this.state.sectionStyle,
           width: incWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
         },
-        projectsPage: 1,
+        contentStyle: {
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
+        },
+        currentPage: 1,
       })
     }
 
-    // When closing second page
+    // Close second page
     breakPt1 = breakPt[7]
     breakPt2 = breakPt[8]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -127,11 +142,17 @@ class Projects extends Component {
           ...this.state.sectionStyle,
           width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
         },
-        projectsPage: 1,
+        contentStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        currentPage: 1,
       })
     }
 
-    // When opening third page
+    // Open third page
     breakPt1 = breakPt[8]
     breakPt2 = breakPt[9]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -140,7 +161,13 @@ class Projects extends Component {
           ...this.state.sectionStyle,
           width: incWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
         },
-        projectsPage: 1,
+        contentStyle: {
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
+        },
+        currentPage: 2,
       })
     }
   }
@@ -150,7 +177,7 @@ class Projects extends Component {
     const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
     const { scrollToBreakPoint } = this.props
 
-    const startPrj = this.state.projectsPage * 3
+    const startPrj = this.state.currentPage * 3
     const projects = this.projectsData.slice(startPrj, startPrj + 3).map(project =>
       (
         <div className="row" key={uuidv4()}>
@@ -171,18 +198,49 @@ class Projects extends Component {
       )
     )
 
+    // Set next/last breakpoints for the pages
+    let breakPtLast, breakPtNext
+    switch (this.state.currentPage) {
+      case 0:
+        breakPtLast = null
+        breakPtNext = 7
+        break
+      case 1:
+        breakPtLast = 5
+        breakPtNext = 9
+        break
+      case 2:
+        breakPtLast = 7
+        breakPtNext = 11
+        break
+      default:
+        break
+    }
+
     return (
       <div className="projects-wrapper" style={wrapperStyle}>
         <div className="projects no-select" style={sectionStyle}>
           <div className="heading" onClick={() => scrollToBreakPoint(3, 500)}>
             <div className="title" style={titleStyle}>
-              PROJECTS { this.state.projectsPage + 1 }
+              PROJECTS { this.state.currentPage + 1 }
             </div>
           </div>
           <div className="content" style={contentStyle}>
 
             { projects }
 
+            <div className="button-wrapper">
+              <AngleLeft
+                style={{ visibility: this.state.currentPage > 0 ? 'visible' : 'hidden' }}
+                size={56}
+                onClick={() => scrollToBreakPoint(breakPtLast, 500)}
+              />
+              <AngleRight
+                className="btn-right"
+                size={56}
+                onClick={() => scrollToBreakPoint(breakPtNext, 500)}
+              />
+            </div>
           </div>
         </div>
       </div>

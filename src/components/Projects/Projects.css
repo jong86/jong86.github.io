@@ -87,3 +87,25 @@
 .projects .content .row .description ul li {
   margin-bottom: 0.2em;
 }
+
+.projects .button-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+.projects svg {
+  width: 50%;
+  animation: btn-projects-color var(--btn-flash-speed) infinite;
+  animation-timing-function: ease-out;
+}
+
+.projects .button-wrapper svg.btn-right {
+  margin-left: auto;
+}
+
+@keyframes btn-projects-color {
+  0% { color: transparent; }
+  100% { color: var(--menu-color-projects) }
+}
