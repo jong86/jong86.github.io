@@ -130,10 +130,11 @@ class Summary extends Component {
       scrollToBreakPoint,
     } = this.props
 
+    const btnSize = 56
     const button = (scrollPos < breakPt[0]) ? (
-      (<AngleDown size={48} onClick={() => scrollToBreakPoint(0)}/>)
+      (<AngleDown size={btnSize} onClick={() => scrollToBreakPoint(0)}/>)
     ) : (
-      (<AngleUp size={48} onClick={() => scrollToBreakPoint(3)}/>)
+      (<AngleUp size={btnSize} onClick={() => scrollToBreakPoint(3)}/>)
     )
 
     return (

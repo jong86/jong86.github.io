@@ -18,6 +18,9 @@ class Skills extends Component {
       textStyle: {},
     }
     this.skillsData = skillsData
+
+    this.initialWrapperHeight = '600px'
+    this.wrapperMinHeight = '4px'
   }
 
   componentWillMount = () => {
@@ -45,6 +48,8 @@ class Skills extends Component {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
+          height: this.initialWrapperHeight,
+          minHeight: this.wrapperMinHeight,
           opacity: 0.0,
         }
       })
@@ -54,6 +59,7 @@ class Skills extends Component {
     if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
       this.setState({
         wrapperStyle: {
+          ...this.state.wrapperStyle,
           top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
           opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
         },
@@ -71,6 +77,7 @@ class Skills extends Component {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
+          ...this.state.wrapperStyle,
           top: '50%',
           opacity: 1.0,
         }
@@ -80,6 +87,10 @@ class Skills extends Component {
     // When centered in view, and opening up
     if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
       this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          height: this.initialWrapperHeight,
+        },
         sectionStyle: {
           width: this.setWidthWithScrollPosition(breakPt[2], breakPt[3])
         },
@@ -92,19 +103,6 @@ class Skills extends Component {
       })
     }
 
-    // When should be centered and fully opened
-    if (scrollPos > breakPt[3]) {
-      // Style fix if moved too fast
-      this.setState({
-        sectionStyle: {
-          width: '100%',
-        },
-        titleStyle: {
-          opacity: 1.0,
-        },
-      })
-    }
-
     // Fade in text just before component's width maxes out
     if (scrollPos > breakPt[3] - 100 && scrollPos <= breakPt[3]) {
       this.setState({
@@ -113,11 +111,59 @@ class Skills extends Component {
         },
       })
     }
+
+    // When should be centered and fully opened
+    if (scrollPos > breakPt[3] && scrollPos <= breakPt[3] + 1)  {
+      // Style fix if moved too fast
+      this.setState({
+        sectionStyle: {
+          width: '100%',
+        },
+        // titleStyle: {
+        //   opacity: 1.0,
+        // },
+        textStyle: {
+          opacity: 1.0,
+        },
+      })
+    }
+
+    // When shrinking in height
+    if (scrollPos > breakPt[3] && scrollPos <= breakPt[4]) {
+      this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          height: this.decHeightWithScrollPosition(breakPt[3], breakPt[4]),
+        },
+        textStyle: {
+          opacity: fadeOpacity('out', breakPt[3], breakPt[4], scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('out', breakPt[3], breakPt[4], scrollPos),
+        },
+      })
+    }
+
+    if (scrollPos > breakPt[4]) {
+      this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          height: this.wrapperMinHeight,
+        }
+      })
+    }
   }
 
   setWidthWithScrollPosition = (breakPt1, breakPt2) => {
     const { scrollPosition: scrollPos} = this.props
     return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
+  }
+
+  decHeightWithScrollPosition = (breakPt1, breakPt2) => {
+    const { scrollPosition: scrollPos} = this.props
+    const int = parseInt(this.initialWrapperHeight) - (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 1000)
+    console.log(int);
+    return int + 'px'
   }
 
   render = () => {

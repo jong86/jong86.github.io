@@ -1,6 +1,5 @@
 .skills-wrapper {
   position: fixed;
-  height: 600px;
   width: 90vw;
   max-width: 600px;
 
@@ -16,7 +15,7 @@
   border-radius: var(--menu-border-radius);
   color: white;
 
-  background-color: #121212d0;
+  background-color: var(--menu-bg-transparent);
 
   position: relative;
   top: -50%;
