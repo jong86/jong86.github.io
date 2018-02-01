@@ -5,6 +5,7 @@ import { store } from './redux/store.js'
 import App from './App'
 require('./index.css')
 
+
 render(
   <Provider store={store}>
     <App />

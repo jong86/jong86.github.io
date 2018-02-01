@@ -1,7 +1,22 @@
 const initialState = {
   scrollPosition: 0,
   isScrolling: false,
-  scrollBreakpoints: [200, 600, 1000, 1400, 1800, 2200, 2600, 3000, 3400, 3800]
+  scrollBreakpoints: [
+    200, // 0
+    600, // 1
+    1000, // 2
+    1400, // 3
+    1800, // 4
+    2200, // 5
+    2600, // 6
+    3000, // 7
+    3400, // 8
+    3800, // 9
+    4200, // 10
+    4600, // 11
+    5000, // 12
+    5400, // 13
+  ]
 }
 
 export default initialState

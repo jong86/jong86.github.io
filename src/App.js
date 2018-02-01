@@ -5,6 +5,7 @@ import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 import Projects from './components/Projects/Projects.js'
+import Education from './components/Education/Education.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -15,6 +16,10 @@ import Synth from './utils/Synth.js'
 import { freqExp } from './utils/soundMod.js'
 
 import Scroll from 'react-scroll'
+
+import disableScroll from 'disable-scroll';
+disableScroll.on(document.scrollingElement, { disableScroll: false });
+
 const scroll = Scroll.animateScroll
 
 
@@ -36,7 +41,7 @@ class App extends Component {
 
   componentWillMount = () => {
     // Scroll to top of page on load:
-    window.onbeforeunload = () => window.scrollTo(0,2201)
+    window.onbeforeunload = () => window.scrollTo(0, 0)
 
     // Add scroll listener
     window.addEventListener('scroll', throttle(this.handleScroll, 8));
@@ -59,7 +64,7 @@ class App extends Component {
 
     // Set breakPts and direction for sound frequency function
     let direction, breakPt1, breakPt2
-    if (scrollPos < breakPt[0]) {
+    if (scrollPos <= breakPt[0]) {
       direction = 'down'
       breakPt1 = 0
       breakPt2 = breakPt[0]
@@ -75,7 +80,7 @@ class App extends Component {
     }
 
     // Pitch modulation function
-    const freq = freqExp(direction, breakPt1, breakPt2, 22050, 30, scrollPos)
+    const freq = freqExp(direction, breakPt1, breakPt2, 22050, 0, scrollPos)
 
     // To play the sound
     if (isScrolling && !this.synthIsPlaying) {
@@ -158,8 +163,11 @@ class App extends Component {
           scrollPos > breakPt[1] && scrollPos <= breakPt[4] &&
           <Skills scrollToBreakPoint={this.scrollToBreakPoint}/>
         ||
-          scrollPos > breakPt[4] &&
+          scrollPos > breakPt[4] && scrollPos <= breakPt[10] &&
           <Projects scrollToBreakPoint={this.scrollToBreakPoint}/>
+        ||
+          scrollPos > breakPt[10] &&
+          <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
       </div>
     )

@@ -41,8 +41,8 @@ class Summary extends Component {
           height: scrollPos + this.cssMinHeight
         },
       })
-    // If starting from scrollPos 0
     } else {
+      // If starting from scrollPos 0
       this.setState({
         wrapperStyle: {
           top: topStartPct,

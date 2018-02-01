@@ -57,26 +57,26 @@
 
   font-size: 1em;
 
-  border: 1px dashed red;
+  /* border: 1px dashed red; */
 }
 
 .projects .content .row {
   display: flex;
-  border: 1px dashed lime;
+  /* border: 1px dashed lime; */
 }
 
 .projects .content .row .photo {
   flex: 0.4;
   /* width: 50%; */
   /* display: inline-block; */
-  border: 1px dashed lime;
+  /* border: 1px dashed lime; */
 }
 
 .projects .content .row .description {
   flex: 0.6;
   /* width: 50%; */
   /* display: inline-block; */
-  border: 1px dashed yellow;
+  /* border: 1px dashed yellow; */
 }
 
 .projects .content .row .description ul {

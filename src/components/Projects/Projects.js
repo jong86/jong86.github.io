@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   fadeOpacity,
   moveComponentVertically,
+  decHeightWithScrollPosition,
   incHeightWithScrollPosition,
   decWidthWithScrollPosition,
   incWidthWithScrollPosition,
@@ -41,25 +42,29 @@ class Projects extends Component {
       scrollBreakpoints: breakPt,
     } = this.props
 
-    this.setState({
-      wrapperStyle: {
-        top: '50%',
-        opacity: 1.0,
-        height: this.initialWrapperHeight,
-      },
-      sectionStyle: {
-        width: '100%',
-      },
-    })
-
-    // For dev purposes to show this section on page load:
-    if (scrollPos > breakPt[5]) {
+    // For going backwards in animation progression
+    if (scrollPos > breakPt[10] - 100) {
       this.setState({
         wrapperStyle: {
-          ...this.state.wrapperStyle,
           top: '50%',
-          height: this.wrapperMaxHeight,
-        }
+          opacity: 1.0,
+          height: '1px',
+        },
+        sectionStyle: {
+          width: '1px',
+        },
+      })
+    } else {
+      // For going forward in animation progression
+      this.setState({
+        wrapperStyle: {
+          top: '50%',
+          opacity: 1.0,
+          height: this.initialWrapperHeight,
+        },
+        sectionStyle: {
+          width: '100%',
+        },
       })
     }
   }
@@ -168,6 +173,30 @@ class Projects extends Component {
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
         currentPage: 2,
+      })
+    }
+
+
+    // Close third page
+    breakPt1 = breakPt[9]
+    breakPt2 = breakPt[10]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
+      this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          height: decHeightWithScrollPosition(this.wrapperMaxHeight, breakPt1, breakPt2, scrollPos)
+        },
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
+        },
+        contentStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        titleStyle: {
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        currentPage: 1,
       })
     }
   }

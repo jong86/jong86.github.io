@@ -1,7 +1,9 @@
 :root {
   --menu-color-summary: lime;
-  --menu-color-skills: yellow;
+  --menu-color-skills: red;
   --menu-color-projects: cyan;
+  --menu-color-education: yellow;
+
   --menu-bg-color: #121212;
   --menu-bg-transparent: #121212d0;
 
@@ -15,7 +17,9 @@ body {
   padding: 0;
   font-family: sans-serif;
   font-family: 'Ubuntu Mono', monospace;
+  overflow: hidden; /* To hide scroll bars */
 }
+
 
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
