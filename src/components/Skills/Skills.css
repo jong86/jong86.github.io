@@ -15,8 +15,7 @@
   color: white;
   background-color: var(--menu-bg-transparent);
   position: relative;
-  top: -50%;
-  overflow: hidden; }
+  top: -50%; }
 
 .skills .heading {
   width: 100%;

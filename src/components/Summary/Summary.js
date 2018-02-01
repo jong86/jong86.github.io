@@ -9,6 +9,7 @@ import { fadeOpacity, moveComponentVertically, scrambleText } from '../../utils/
 
 
 
+
 class Summary extends Component {
   constructor() {
     super()

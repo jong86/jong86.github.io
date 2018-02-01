@@ -1,5 +1,7 @@
 .App {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  height: 6000px; }
+  flex-direction: column; }
+
+.space-maker {
+  height: 6000vh; }

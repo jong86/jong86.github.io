@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "disable-scroll": "^0.4.0",
     "immutability-helper": "^2.6.4",
     "lodash.throttle": "^4.1.1",
     "node-sass-chokidar": "^0.0.3",

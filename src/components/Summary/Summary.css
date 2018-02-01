@@ -25,57 +25,55 @@
   top: -50%;
   z-index: 1;
   overflow: hidden; }
-
-.summary .heading {
-  width: 100%;
-  margin-bottom: auto;
-  background-color: var(--menu-bg-color);
-  border-bottom: 1px solid var(--menu-color-summary);
-  border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
-  z-index: 2; }
-
-.summary .name {
-  width: 100%;
-  font-family: 'Black Ops One';
-  color: var(--menu-color-summary);
-  font-size: 2em;
-  display: flex;
-  justify-content: center;
-  padding-top: 5px;
-  padding-bottom: 5px; }
-
-.summary .title {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 1em;
-  margin-bottom: 1em; }
-
-.summary .text {
-  color: white;
-  font-size: 0.6em;
-  position: absolute;
-  bottom: 5em;
-  margin: 0 auto;
-  padding: 0 6em;
-  word-break: keep-all;
-  white-space: pre-wrap; }
+  .summary .heading {
+    width: 100%;
+    margin-bottom: auto;
+    background-color: var(--menu-bg-color);
+    border-bottom: 1px solid var(--menu-color-summary);
+    border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+    z-index: 2; }
+  .summary .name {
+    width: 100%;
+    font-family: 'Black Ops One';
+    color: var(--menu-color-summary);
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+  .summary .title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+    margin-bottom: 1em; }
+  .summary .text {
+    color: white;
+    font-size: 0.6em;
+    position: absolute;
+    bottom: 5em;
+    margin: 0 auto;
+    padding: 0 6em;
+    word-break: keep-all;
+    white-space: pre-wrap; }
+  .summary svg {
+    width: 100%;
+    position: absolute;
+    margin: 0 auto;
+    bottom: 0;
+    width: 48px;
+    animation: btn-summary-color var(--btn-flash-speed) infinite;
+    animation-timing-function: ease-out;
+    cursor: pointer;
+    border: 1px dashed purple; }
 
 @media only screen and (max-width: 600px) {
+  .summary .heading {
+    height: min-content; }
   .summary .text {
+    height: 1000px;
     padding: 0 5%;
     font-size: 0.575em; } }
-
-.summary svg {
-  min-height: min-content;
-  width: 100%;
-  position: absolute;
-  margin: 0 auto;
-  bottom: 0;
-  animation: btn-summary-color var(--btn-flash-speed) infinite;
-  -webkit-animation: btn-summary-color var(--btn-flash-speed) infinite;
-  animation-timing-function: ease-out;
-  -webkit-animation-timing-function: ease-out; }
 
 @keyframes btn-summary-color {
   0% {

@@ -17,8 +17,8 @@ import { freqExp } from './utils/soundMod.js'
 
 import Scroll from 'react-scroll'
 
-import disableScroll from 'disable-scroll';
-disableScroll.on(document.scrollingElement, { disableScroll: false });
+// import disableScroll from 'disable-scroll';
+// disableScroll.on(document.scrollingElement, { disableScroll: false });
 
 const scroll = Scroll.animateScroll
 
@@ -29,7 +29,7 @@ class App extends Component {
 
     // For isScrolling detection
     this.timeoutScroll = null
-    this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = this.handleScroll.bind(this)
 
     // For scroll rate
     this.lastTime = null
@@ -40,7 +40,10 @@ class App extends Component {
 
 
   componentWillMount = () => {
+    const { scrollBreakpoints: breakPt } = this.props
+
     // Scroll to top of page on load:
+    // window.onbeforeunload = () => window.scrollTo(0, breakPt[1])
     window.onbeforeunload = () => window.scrollTo(0, 0)
 
     // Add scroll listener
@@ -169,6 +172,7 @@ class App extends Component {
           scrollPos > breakPt[10] &&
           <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
+        <div className="space-maker"></div>
       </div>
     )
   }

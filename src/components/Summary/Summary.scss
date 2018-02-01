@@ -35,79 +35,104 @@
   z-index: 1;
 
   overflow: hidden;
-}
 
-.summary .heading {
-  width: 100%;
 
-  margin-bottom: auto;
+  .heading {
+    width: 100%;
 
-  background-color: var(--menu-bg-color);
+    margin-bottom: auto;
 
-  border-bottom: 1px solid var(--menu-color-summary);
-  border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+    background-color: var(--menu-bg-color);
 
-  z-index: 2;
-}
+    border-bottom: 1px solid var(--menu-color-summary);
+    border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
 
-.summary .name {
-  width: 100%;
+    z-index: 2;
+  }
 
-  font-family: 'Black Ops One';
-  color: var(--menu-color-summary);
-  font-size: 2em;
 
-  display: flex;
-  justify-content: center;
+  .name {
+    width: 100%;
 
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
+    font-family: 'Black Ops One';
+    color: var(--menu-color-summary);
+    font-size: 2em;
 
-.summary .title {
-  width: 100%;
+    display: flex;
+    justify-content: center;
 
-  display: flex;
-  justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
 
-.summary .text {
-  color: white;
-  font-size: 0.6em;
+  .title {
+    width: 100%;
 
-  position: absolute;
-  bottom: 5em;
+    display: flex;
+    justify-content: center;
 
-  margin: 0 auto;
-  padding: 0 6em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
 
-  word-break: keep-all;
-  white-space: pre-wrap;
-}
 
-@media only screen and (max-width: 600px) {
-  .summary .text {
-      padding: 0 5%;
-      font-size: 0.575em;
+  .text {
+    color: white;
+    font-size: 0.6em;
+
+    position: absolute;
+    bottom: 5em;
+
+    margin: 0 auto;
+    padding: 0 6em;
+
+    word-break: keep-all;
+    white-space: pre-wrap;
+  }
+
+
+  svg {
+    width: 100%;
+
+    position: absolute;
+
+    margin: 0 auto;
+    bottom: 0;
+
+    width: 48px;
+
+    animation: btn-summary-color var(--btn-flash-speed) infinite;
+    animation-timing-function: ease-out;
+
+    cursor: pointer;
+    
+
+    border: 1px dashed purple;
   }
 }
 
-.summary svg {
-  min-height: min-content;
-  width: 100%;
+@media only screen and (max-width: 600px) {
+  .summary-wrapper {
+    // border: 1px dashed yellow;
+  }
 
-  position: absolute;
+  .summary {
+    // border: 1px dashed red;
 
-  margin: 0 auto;
-  bottom: 0;
+    .heading {
+      height: min-content;
+    }
 
-  animation: btn-summary-color var(--btn-flash-speed) infinite;
-  -webkit-animation: btn-summary-color var(--btn-flash-speed) infinite;
-  animation-timing-function: ease-out;
-  -webkit-animation-timing-function: ease-out;
+    .text {
+      height: 1000px;
+      padding: 0 5%;
+      font-size: 0.575em;
+    }
+
+    svg {
+    }
+  }
 }
 
 @keyframes btn-summary-color {
