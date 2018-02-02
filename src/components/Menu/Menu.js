@@ -13,6 +13,7 @@ import AngleLeft from 'react-icons/lib/fa/angle-left'
 
 import uuidv4 from 'uuid/v4'
 
+
 class Menu extends Component {
   render = () => {
     let {

@@ -16,7 +16,6 @@ import uuidv4 from 'uuid/v4'
 import Menu from '../Menu/Menu.js'
 
 
-
 class Projects extends Component {
   constructor() {
     super()

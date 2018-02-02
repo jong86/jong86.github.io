@@ -10,13 +10,9 @@ import {
   incWidthWithScrollPosition,
 } from '../../utils/animation.js'
 
-import AngleRight from 'react-icons/lib/fa/angle-right'
-import AngleLeft from 'react-icons/lib/fa/angle-left'
-
 import uuidv4 from 'uuid/v4'
 
 import Menu from '../Menu/Menu.js'
-
 
 
 class Other extends Component {
