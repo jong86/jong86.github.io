@@ -1,6 +1,5 @@
 .wrapper {
-  position: fixed;
-  width: 90vw;
+  width: 99vw;
   max-width: 600px;
 
   display: flex;
@@ -16,9 +15,6 @@
     color: white;
 
     background-color: var(--menu-bg-transparent);
-
-    position: relative;
-    top: -50%;
 
 
     .heading {

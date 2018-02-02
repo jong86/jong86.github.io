@@ -1,6 +1,5 @@
 .wrapper {
-  position: fixed;
-  width: 90vw;
+  width: 99vw;
   max-width: 600px;
   display: flex;
   flex-direction: column;
@@ -10,9 +9,7 @@
     width: 2px;
     border-radius: var(--menu-border-radius);
     color: white;
-    background-color: var(--menu-bg-transparent);
-    position: relative;
-    top: -50%; }
+    background-color: var(--menu-bg-transparent); }
     .wrapper .menu .heading {
       width: 100%;
       margin-bottom: auto;
