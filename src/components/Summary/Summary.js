@@ -50,7 +50,7 @@ class Summary extends Component {
           opacity: 1.0,
         },
         sectionStyle: {
-          height: scrollPos + this.cssMinHeight
+          // height: scrollPos + this.cssMinHeight
         },
       })
     }
@@ -161,7 +161,7 @@ class Summary extends Component {
               Jon Gaspar
             </div>
             <div className="title">
-              WEB DEVELOPER
+              WEB DEVELOPER { scrollPos }
             </div>
           </div>
           <div className="text">

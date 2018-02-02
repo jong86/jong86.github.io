@@ -172,7 +172,6 @@ class App extends Component {
           scrollPos > breakPt[10] &&
           <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
-        <div className="space-maker"></div>
       </div>
     )
   }
