@@ -24,11 +24,16 @@ class Menu extends Component {
       titleStyle,
       contentStyle,
       sectionColor,
+      breakPtPrev,
+      breakPtNext,
     } = this.props
 
 
     // Set specifics:
-    sectionStyle.border = `1px solid ${sectionColor}`
+    sectionStyle = {
+      ...sectionStyle,
+      border: `1px solid ${sectionColor}`
+    }
 
     const headingStyle = {}
     headingStyle.borderBottom = `1px solid ${sectionColor}`
@@ -38,11 +43,11 @@ class Menu extends Component {
       <div className="wrapper" style={wrapperStyle}>
         <div className="menu no-select" style={sectionStyle}>
           <div className="heading" style={headingStyle}>
-            <AngleLeft size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(0)}/>
+            <AngleLeft size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(breakPtPrev)}/>
             <div className="title" style={titleStyle}>
               { this.props.title }
             </div>
-            <AngleRight size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(5)}/>
+            <AngleRight size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(breakPtNext)}/>
           </div>
           <div className="content" style={contentStyle}>
             { this.props.renderContent }

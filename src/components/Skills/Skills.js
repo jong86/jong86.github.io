@@ -12,7 +12,7 @@ import { skillsData } from './skillsData.js'
 
 import uuidv4 from 'uuid/v4'
 
-import Menu from '../Menu/Menu.js';
+import Menu from '../Menu/Menu.js'
 
 
 
@@ -194,6 +194,8 @@ class Skills extends Component {
         contentStyle={contentStyle}
         scrollToBreakPoint={scrollToBreakPoint}
         sectionColor='red'
+        breakPtPrev={0}
+        breakPtNext={5}
       />
     )
   }
