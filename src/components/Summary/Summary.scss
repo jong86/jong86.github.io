@@ -10,8 +10,6 @@
   align-items: center;
 
   z-index: 2;
-
-  /* border: 1px dashed yellow; */
 }
 
 .summary {
@@ -107,20 +105,11 @@
     animation-timing-function: ease-out;
 
     cursor: pointer;
-    
-
-    border: 1px dashed purple;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  .summary-wrapper {
-    // border: 1px dashed yellow;
-  }
-
   .summary {
-    // border: 1px dashed red;
-
     .heading {
       height: min-content;
     }
@@ -129,9 +118,6 @@
       height: 1000px;
       padding: 0 5%;
       font-size: 0.575em;
-    }
-
-    svg {
     }
   }
 }

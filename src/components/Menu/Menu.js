@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Skills.css'
+import './Menu.css'
 import { connect } from 'react-redux'
 import {
   fadeOpacity,
@@ -7,199 +7,45 @@ import {
   decHeightWithScrollPosition,
   incWidthWithScrollPosition,
 } from '../../utils/animation.js'
-import { skillsData } from './skillsData.js'
 
-import AngleDown from 'react-icons/lib/fa/angle-down'
 import AngleRight from 'react-icons/lib/fa/angle-right'
 import AngleLeft from 'react-icons/lib/fa/angle-left'
 
 import uuidv4 from 'uuid/v4'
 
-
-
-class Skills extends Component {
-  constructor() {
-    super()
-    this.state = {
-      wrapperStyle: {},
-      sectionStyle: {},
-      titleStyle: {},
-      contentStyle: {},
-    }
-    this.skillsData = skillsData
-
-    this.initialWrapperHeight = '600px'
-    this.wrapperMinHeight = '1px'
-  }
-
-  componentWillMount = () => {
-    this.setState({
-      wrapperStyle: {
-        opacity: 0.0,
-      }
-    })
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    const {
-      scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt,
-    } = nextProps
-
-
-    /*============
-      Animation
-    ============*/
-
-    // Before coming into view
-    if (scrollPos <= breakPt[1]) {
-      // Style fix if scrolled too fast
-      this.setState({
-        wrapperStyle: {
-          top: '125%',
-          height: this.initialWrapperHeight,
-          minHeight: this.wrapperMinHeight,
-          opacity: 0.0,
-        }
-      })
-    }
-
-    // Moving into view
-    if (scrollPos > breakPt[1] && scrollPos <= breakPt[2]) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
-          opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
-        },
-        sectionStyle: {
-          width: '2px',
-        },
-        contentStyle: {
-          opacity: 0.0,
-        },
-      })
-    }
-
-    // When centered in view
-    if (scrollPos > breakPt[2]) {
-      // Style fix if scrolled too fast
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          top: '50%',
-          opacity: 1.0,
-        }
-      })
-    }
-
-    // When centered in view, and opening up
-    if (scrollPos > breakPt[2] && scrollPos <= breakPt[3]) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          height: this.initialWrapperHeight,
-          top: '50%',
-        },
-        sectionStyle: {
-          width: incWidthWithScrollPosition(breakPt[2], breakPt[3], scrollPos)
-        },
-        titleStyle: {
-          opacity: fadeOpacity('in', breakPt[2], breakPt[3], scrollPos),
-        },
-        contentStyle: {
-          opacity: 0,
-        },
-      })
-    }
-
-    // Fade in content just before component's width maxes out
-    if (scrollPos > breakPt[3] - 100 && scrollPos <= breakPt[3]) {
-      this.setState({
-        contentStyle: {
-          opacity: fadeOpacity('in', breakPt[3] - 100, breakPt[3], scrollPos),
-        },
-      })
-    }
-
-    // When should be centered and fully opened
-    if (scrollPos > breakPt[3] && scrollPos <= breakPt[3] + 1)  {
-      // Style fix if moved too fast
-      this.setState({
-        sectionStyle: {
-          width: '100%',
-        },
-        contentStyle: {
-          opacity: 1.0,
-        },
-      })
-    }
-
-    // When shrinking in height
-    if (scrollPos > breakPt[3] && scrollPos <= breakPt[4]) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          opacity: 1.0,
-          top: '50%',
-          height: decHeightWithScrollPosition(this.initialWrapperHeight, breakPt[3], breakPt[4], scrollPos),
-        },
-        sectionStyle: {
-          width: '100%',
-        },
-        contentStyle: {
-          opacity: fadeOpacity('out', breakPt[3], breakPt[4] - 100, scrollPos),
-        },
-        titleStyle: {
-          opacity: fadeOpacity('out', breakPt[3], breakPt[4] - 100, scrollPos),
-        },
-      })
-    }
-
-    if (scrollPos > breakPt[4]) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          height: this.wrapperMinHeight,
-        }
-      })
-    }
-  }
-
-
+class Menu extends Component {
   render = () => {
-    const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
-    const {
+    let {
       scrollToBreakPoint,
-      scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt
+      title,
+      renderContent,
+      wrapperStyle,
+      sectionStyle,
+      titleStyle,
+      contentStyle,
+      sectionColor,
     } = this.props
 
-    const renderSkills = this.skillsData.map(section =>
-      <div key={uuidv4()}>
-        <div className="label" key={uuidv4()}>
-          { section.label }
-        </div>
-        <ul className="list" key={uuidv4()}>
-          { section.items.map(item =>
-            <li key={uuidv4()}>{ item }</li>
-          )}
-        </ul>
-      </div>
-    )
+
+    // Set specifics:
+    sectionStyle.border = `1px solid ${sectionColor}`
+
+    const headingStyle = {}
+    headingStyle.borderBottom = `1px solid ${sectionColor}`
+
 
     return (
-      <div className="skills-wrapper" style={wrapperStyle}>
-        <div className="skills no-select" style={sectionStyle}>
-          <div className="heading" onClick={() => scrollToBreakPoint(0, 500)}>
-            <AngleLeft className="btn-left" size={56} onClick={() => scrollToBreakPoint(3, 500)}/>
-            <AngleRight className="btn-right" size={56} onClick={() => scrollToBreakPoint(5, 500)}/>
+      <div className="wrapper" style={wrapperStyle}>
+        <div className="menu no-select" style={sectionStyle}>
+          <div className="heading" style={headingStyle}>
+            <AngleLeft size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(0)}/>
             <div className="title" style={titleStyle}>
-              SKILLS
+              { this.props.title }
             </div>
+            <AngleRight size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(5)}/>
           </div>
           <div className="content" style={contentStyle}>
-            { renderSkills }
+            { this.props.renderContent }
           </div>
         </div>
       </div>
@@ -207,13 +53,12 @@ class Skills extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    scrollPosition: state.scrollPosition,
     scrollBreakpoints: state.scrollBreakpoints,
   }
 }
 
-Skills = connect(mapStateToProps)(Skills)
+Menu = connect(mapStateToProps)(Menu)
 
-export default Skills
+export default Menu

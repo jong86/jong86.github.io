@@ -9,11 +9,10 @@ import {
 } from '../../utils/animation.js'
 import { skillsData } from './skillsData.js'
 
-import AngleDown from 'react-icons/lib/fa/angle-down'
-import AngleRight from 'react-icons/lib/fa/angle-right'
-import AngleLeft from 'react-icons/lib/fa/angle-left'
 
 import uuidv4 from 'uuid/v4'
+
+import Menu from '../Menu/Menu.js';
 
 
 
@@ -56,6 +55,7 @@ class Skills extends Component {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
+          ...this.state.wrapperStyle,
           top: '125%',
           height: this.initialWrapperHeight,
           minHeight: this.wrapperMinHeight,
@@ -169,14 +169,10 @@ class Skills extends Component {
 
   render = () => {
     const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
-    const {
-      scrollToBreakPoint,
-      scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt
-    } = this.props
+    const { scrollToBreakPoint } = this.props
 
     const renderSkills = this.skillsData.map(section =>
-      <div key={uuidv4()}>
+      <div className='skills-content' key={uuidv4()}>
         <div className="label" key={uuidv4()}>
           { section.label }
         </div>
@@ -189,25 +185,21 @@ class Skills extends Component {
     )
 
     return (
-      <div className="skills-wrapper" style={wrapperStyle}>
-        <div className="skills no-select" style={sectionStyle}>
-          <div className="heading" onClick={() => scrollToBreakPoint(0, 500)}>
-            <AngleLeft className="btn-left" size={56} onClick={() => scrollToBreakPoint(3, 500)}/>
-            <AngleRight className="btn-right" size={56} onClick={() => scrollToBreakPoint(5, 500)}/>
-            <div className="title" style={titleStyle}>
-              SKILLS
-            </div>
-          </div>
-          <div className="content" style={contentStyle}>
-            { renderSkills }
-          </div>
-        </div>
-      </div>
+      <Menu
+        title='Skills'
+        renderContent={renderSkills}
+        wrapperStyle={wrapperStyle}
+        sectionStyle={sectionStyle}
+        titleStyle={titleStyle}
+        contentStyle={contentStyle}
+        scrollToBreakPoint={scrollToBreakPoint}
+        sectionColor='red'
+      />
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     scrollPosition: state.scrollPosition,
     scrollBreakpoints: state.scrollBreakpoints,
@@ -215,5 +207,6 @@ function mapStateToProps(state) {
 }
 
 Skills = connect(mapStateToProps)(Skills)
+
 
 export default Skills

@@ -1,128 +1,36 @@
-.skills-wrapper {
-  position: fixed;
-  width: 90vw;
-  max-width: 600px;
+.skills-content {
+  width: 100%;
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
+  margin-bottom: 0.25em;
+  padding-top: 1em;
 
-  .skills {
-    height: 100%;
-    width: 2px;
-    border: 1px solid var(--menu-color-skills);
-    border-radius: var(--menu-border-radius);
-    color: white;
+  .label {
+    width: 100%;
 
-    background-color: var(--menu-bg-transparent);
+    font-weight: bold;
+    font-size: 1.2em;
+    color: red;
+    text-align: center;
+  }
 
-    position: relative;
-    top: -50%;
+  ul {
+    width: 100%;
 
+    margin-top: 0.5em;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
 
-    .heading {
-      width: 100%;
-
-      margin-bottom: auto;
-
-      background-color: var(--menu-bg-color);
-
-      border-bottom: 1px solid var(--menu-color-skills);
-      border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
-
-      z-index: 2;
-    }
-
-
-    .title {
-      width: 100%;
-
-      font-size: 1.5em;
-
-      color: var(--menu-color-skills);
-
-      display: flex;
-      justify-content: center;
-
-      padding: 1em 0;
-    }
-
-
-    .content {
+    li {
       color: white;
-
-      font-size: 1em;
-
-      margin: 0 auto;
-      margin-top: 0.25em;
-
-      overflow: hidden;
-      white-space: nowrap;
-
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-
-
-      div {
-        width: 100%;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        margin-bottom: 0.25em;
-        padding-top: 1em;
-      }
-
-
-      .label {
-        width: 100%;
-
-        font-weight: bold;
-        font-size: 1.2em;
-        color: var(--menu-color-skills);
-        text-align: center;
-      }
-
-
-      ul {
-        width: 100%;
-
-        margin-top: 0.5em;
-        padding: 0;
-        list-style-type: none;
-        text-align: center;
-
-        li {
-          color: white;
-          margin: 0;
-        }
-      }
-    }
-
-
-    svg {
-      animation: btn-skills-color var(--btn-flash-speed) infinite;
-      animation-timing-function: ease-out;
-
-      border: 1px dashed pink;
-
-      @keyframes btn-skills-color {
-        0% { color: transparent; }
-        100% { color: var(--menu-color-skills) }
-      }
-
-      &.btn-left {
-        float: left;
-      }
-
-      &.btn-right {
-        float: right;
-      }
+      margin: 0;
     }
   }
 }
+
+
