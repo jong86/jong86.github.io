@@ -14,7 +14,7 @@ export default class Synth {
   }
 
   set frequency(value) {
-    this.oscillator.frequency.setTargetAtTime(value, this.context.currentTime, 0.015)
+    this.oscillator.frequency.setTargetAtTime(value, this.context.currentTime, 0.05)
   }
 
   init() {

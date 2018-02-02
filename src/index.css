@@ -12,14 +12,11 @@ html {
   height: fit-content; }
 
 body {
-  height: 6000px;
-  overflow: auto;
-  border: 1px dashed orange;
-  position: relative;
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-family: 'Ubuntu Mono', monospace; }
+  font-family: 'Ubuntu Mono', monospace;
+  background: black; }
 
 .no-select {
   -webkit-touch-callout: none;

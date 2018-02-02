@@ -65,7 +65,6 @@ class Education extends Component {
     // Open Education component
     breakPt1 = breakPt[10]
     breakPt2 = breakPt[11]
-    console.log('in here');
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
       this.setState({
         wrapperStyle: {

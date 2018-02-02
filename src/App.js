@@ -29,7 +29,7 @@ class App extends Component {
 
     // For isScrolling detection
     this.timeoutScroll = null
-    this.handleScroll = this.handleScroll.bind(this)
+    // this.handleScroll = this.handleScroll.bind(this)
 
     // For scroll rate
     this.lastTime = null
@@ -47,7 +47,7 @@ class App extends Component {
     window.onbeforeunload = () => window.scrollTo(0, 0)
 
     // Add scroll listener
-    window.addEventListener('scroll', throttle(this.handleScroll, 8));
+    // window.addEventListener('scroll', throttle(this.handleScroll, 8));
 
     this.instantiateSynth()
   }
@@ -118,34 +118,73 @@ class App extends Component {
   /*=======================
     Scroll event handler
   =======================*/
-  handleScroll = (event) => {
-    const { setScrollPosition, setIsScrolling } = this.props
+  // handleScroll = (event) => {
+  //   const { setScrollPosition, setIsScrolling } = this.props
 
-    // Save scroll position in redux store
-    setScrollPosition(document.documentElement.scrollTop)
+  //   // Save scroll position in redux store
+  //   setScrollPosition(document.documentElement.scrollTop)
 
 
-    // Get scroll state and save in redux store
-    if (this.timeoutScroll) {
-      // If there is already a timeout in process then cancel it
-      clearTimeout(this.timeoutScroll)
-    }
-    this.timeoutScroll = setTimeout(() => {
-      this.timeoutScroll = null
-      setIsScrolling(false)
-    }, 60)
-    if (this.props.isScrolling !== true) {
-      setIsScrolling(true)
-    }
+  //   // Get scroll state and save in redux store
+  //   if (this.timeoutScroll) {
+  //     // If there is already a timeout in process then cancel it
+  //     clearTimeout(this.timeoutScroll)
+  //   }
+  //   this.timeoutScroll = setTimeout(() => {
+  //     this.timeoutScroll = null
+  //     setIsScrolling(false)
+  //   }, 60)
+  //   if (this.props.isScrolling !== true) {
+  //     setIsScrolling(true)
+  //   }
+  // }
+
+
+  scrollToBreakPoint = (specifiedBreakPt) => {
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+      setIsScrolling
+    } = this.props
+
+    const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+
+    // Diff between current scrollPos and specifiedBreakPt
+    this.posDiff = Math.abs(scrollPos - breakPt[specifiedBreakPt])
+
+    setIsScrolling(true)
+    this.req = requestAnimationFrame(() => this.doStuff(specifiedBreakPt))
   }
 
 
-  scrollToBreakPoint = (specifiedBreakPt, specifiedDuration) => {
-    let duration = 1000
-    if (specifiedDuration) duration = specifiedDuration
-    if (specifiedBreakPt < 0) return scroll.scrollTo(0, { smooth: true, duration: duration })
-    const { scrollBreakpoints: breakPt } = this.props
-    return scroll.scrollTo(breakPt[specifiedBreakPt], { smooth: true, duration: duration })
+  doStuff = (specifiedBreakPt) => {
+    const {
+      scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
+      setScrollPosition,
+      setIsScrolling
+    } = this.props
+
+    var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+    // To determine if animation is going forward or backward
+    const directionMod = scrollPos < breakPt[specifiedBreakPt] ? 1 : -1
+
+    // Divide by 30 for half a second per transition (60 for full second)
+    const amtPerFrame = this.posDiff / 30
+
+    if (Math.abs(scrollPos - breakPt[specifiedBreakPt]) < amtPerFrame) {
+      // If within less than one movement unit, make scrollPos the breakPt
+      setScrollPosition(breakPt[specifiedBreakPt])
+      setIsScrolling(false)
+      cancelAnimationFrame(this.req)
+
+    } else if (Math.abs(scrollPos - breakPt[specifiedBreakPt]) > 0) {
+      // Regular behavior
+      setScrollPosition(scrollPos + ((amtPerFrame) * directionMod))
+      this.req = requestAnimationFrame(() => this.doStuff(specifiedBreakPt))
+    }
   }
 
 
@@ -158,7 +197,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <BgSpaceNodes/>
+        {/* <BgSpaceNodes/> */}
 
         { scrollPos <= breakPt[1] &&
           <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>

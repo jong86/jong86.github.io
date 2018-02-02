@@ -161,7 +161,7 @@ class Summary extends Component {
               Jon Gaspar
             </div>
             <div className="title">
-              WEB DEVELOPER { scrollPos }
+              WEB DEVELOPER
             </div>
           </div>
           <div className="text">
