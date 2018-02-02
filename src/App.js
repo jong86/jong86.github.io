@@ -197,8 +197,6 @@ class App extends Component {
     return (
       <div className="App">
 
-        {/* <BgSpaceNodes/> */}
-
         { scrollPos <= breakPt[1] &&
           <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
         ||
@@ -211,6 +209,7 @@ class App extends Component {
           scrollPos > breakPt[10] &&
           <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
+
       </div>
     )
   }
