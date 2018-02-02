@@ -225,7 +225,7 @@ class Projects extends Component {
 
     return (
       <Menu
-        title='Projects'
+        title={`Projects ${currentPage + 1}`}
         renderContent={renderProjects}
         wrapperStyle={wrapperStyle}
         sectionStyle={sectionStyle}

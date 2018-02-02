@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import BgSpaceNodes from './components/BgSpaceNodes/BgSpaceNodes.js'
 import Summary from './components/Summary/Summary.js'
 import Skills from './components/Skills/Skills.js'
 import Projects from './components/Projects/Projects.js'
 import Education from './components/Education/Education.js'
+import Other from './components/Other/Other.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -206,8 +206,11 @@ class App extends Component {
           scrollPos > breakPt[4] && scrollPos <= breakPt[10] &&
           <Projects scrollToBreakPoint={this.scrollToBreakPoint}/>
         ||
-          scrollPos > breakPt[10] &&
+          scrollPos > breakPt[10] && scrollPos <= breakPt[12] &&
           <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
+        ||
+          scrollPos > breakPt[12] &&
+          <Other scrollToBreakPoint={this.scrollToBreakPoint}/>
         }
 
       </div>

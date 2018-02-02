@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Education.css'
+import './Other.css'
 import { connect } from 'react-redux'
 import {
   fadeOpacity,
@@ -19,7 +19,7 @@ import Menu from '../Menu/Menu.js'
 
 
 
-class Education extends Component {
+class Other extends Component {
   constructor() {
     super()
     this.state = {
@@ -64,9 +64,9 @@ class Education extends Component {
     ============*/
     let breakPt1, breakPt2
 
-    // Open Education component
-    breakPt1 = breakPt[10]
-    breakPt2 = breakPt[11]
+    // Open Other component
+    breakPt1 = breakPt[12]
+    breakPt2 = breakPt[13]
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
       this.setState({
         wrapperStyle: {
@@ -85,28 +85,6 @@ class Education extends Component {
         },
       })
     }
-
-    // Close Education component
-    breakPt1 = breakPt[11]
-    breakPt2 = breakPt[12]
-    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          height: decHeightWithScrollPosition(this.wrapperMaxHeight, breakPt1, breakPt2, scrollPos)
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: decWidthWithScrollPosition(breakPt1, breakPt2, scrollPos),
-        },
-        contentStyle: {
-          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
-        },
-        titleStyle: {
-          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
-        },
-      })
-    }
   }
 
 
@@ -114,20 +92,20 @@ class Education extends Component {
     const { wrapperStyle, sectionStyle, titleStyle, contentStyle } = this.state
     const { scrollToBreakPoint } = this.props
 
-    const renderEducation = "education"
+    const renderOther = "other"
 
     return (
       <Menu
-        title='Education'
-        renderContent={renderEducation}
+        title='Other'
+        renderContent={renderOther}
         wrapperStyle={wrapperStyle}
         sectionStyle={sectionStyle}
         titleStyle={titleStyle}
         contentStyle={contentStyle}
         scrollToBreakPoint={scrollToBreakPoint}
-        sectionColor='yellow'
-        breakPtPrev={9}
-        breakPtNext={13}
+        sectionColor='white'
+        breakPtPrev={11}
+        breakPtNext={15}
       />
     )
   }
@@ -140,6 +118,6 @@ function mapStateToProps(state) {
   }
 }
 
-Education = connect(mapStateToProps)(Education)
+Other = connect(mapStateToProps)(Other)
 
-export default Education
+export default Other
