@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import './App.css'
-import './components/Skills/Skills.css'
+import './components/Menu/skills/skills.css'
 
 import Summary from './components/Summary/Summary.js'
 
-// import Skills from './components/Skills/Skills.js'
-import { renderSkills } from './components/Skills/skillsData.js'
+import { renderSkills } from './components/Menu/skills/skillsData.js'
 
 import Projects from './components/Projects/Projects.js'
 
