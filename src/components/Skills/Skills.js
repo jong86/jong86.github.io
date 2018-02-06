@@ -47,14 +47,16 @@ class Skills extends Component {
     /*============
       Animation
     ============*/
+    let breakPt1, breakPt2 
 
-    // Before coming into view
+
+    // Make sure it's out of view before it comes
     if (scrollPos <= breakPt[1]) {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          top: '125%',
+          marginTop: '125%',
           height: this.initialWrapperHeight,
           minHeight: this.wrapperMinHeight,
           opacity: 0.0,
@@ -67,7 +69,7 @@ class Skills extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          top: moveComponentVertically('125%', '50%', breakPt[1], breakPt[2], scrollPos),
+          marginTop: moveComponentVertically('125%', '0%', breakPt[1], breakPt[2], scrollPos),
           opacity: fadeOpacity('in', breakPt[1], breakPt[2], scrollPos),
         },
         sectionStyle: {
@@ -85,7 +87,7 @@ class Skills extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          top: '50%',
+          marginTop: '0%',
           opacity: 1.0,
         }
       })
@@ -97,7 +99,7 @@ class Skills extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           height: this.initialWrapperHeight,
-          top: '50%',
+          marginTop: '0%',
         },
         sectionStyle: {
           width: incWidthWithScrollPosition(breakPt[2], breakPt[3], scrollPos)
@@ -139,7 +141,7 @@ class Skills extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           opacity: 1.0,
-          top: '50%',
+          marginTop: '0%',
           height: decHeightWithScrollPosition(this.initialWrapperHeight, breakPt[3], breakPt[4], scrollPos),
         },
         sectionStyle: {

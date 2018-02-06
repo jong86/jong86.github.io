@@ -67,12 +67,15 @@ class Summary extends Component {
     /*============
       Animation
     ============*/
+    let breakPt1, breakPt2
 
     // To allow gap between descramble/scramble
     const scrambleOutDiff = 150
 
-    // When centered in view, opening up
-    if (scrollPos <= breakPt[0]) {
+    // Centered in view, opening up
+    breakPt1 = 0
+    breakPt2 = breakPt[0]
+    if (scrollPos <= breakPt2) {
       // Style fix if scrolled too fast
       this.setState({
         wrapperStyle: {
@@ -83,35 +86,25 @@ class Summary extends Component {
           height: scrollPos + this.cssMinHeight
         },
         // Descramble text
-        displayedText: scrambleText(this.summary, 'descramble', 0, breakPt[0], scrollPos),
-      })
-    }
-
-    // Display the original text for a bit
-    if (scrollPos > breakPt[0] && scrollPos <= breakPt[0] + scrambleOutDiff) {
-      this.setState({
-        displayedText: this.summary,
-      })
-    }
-
-    // Scramble text on the way out
-    if (scrollPos > breakPt[0] + scrambleOutDiff) {
-      this.setState({
-        displayedText: scrambleText(this.summary, 'scramble', breakPt[0] + scrambleOutDiff, breakPt[0] + scrambleOutDiff + 200, scrollPos),
+        displayedText: scrambleText(this.summary, 'descramble', breakPt1, breakPt2, scrollPos),
       })
     }
 
     // When moving up and out of view
-    if (scrollPos > breakPt[0] && scrollPos <= breakPt[1]) {
+    breakPt1 = breakPt[0]
+    breakPt2 = breakPt[1]
+    if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
       this.setState({
         wrapperStyle: {
-          top: moveComponentVertically(topStartPct, '-25%', breakPt[0], breakPt[1], scrollPos),
-          opacity: fadeOpacity('out', breakPt[0], breakPt[1], scrollPos),
-        }
+          top: moveComponentVertically(topStartPct, '-25%', breakPt1, breakPt2, scrollPos),
+          opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
+        },
+        // Scramble text
+        displayedText: scrambleText(this.summary, 'scramble', breakPt1 + scrambleOutDiff, breakPt1 + scrambleOutDiff + 200, scrollPos),
       })
     }
 
-    // When should be fully open
+    // Make sure it's fully open when it should be
     if (scrollPos > breakPt[0]) {
       this.setState({
         sectionStyle: {
@@ -120,7 +113,7 @@ class Summary extends Component {
       })
     }
 
-    // When should be out of view
+    // Make sure it's out of view when it should be
     if (scrollPos > breakPt[1]) {
       this.setState({
         wrapperStyle: {

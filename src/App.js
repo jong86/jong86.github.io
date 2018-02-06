@@ -115,31 +115,6 @@ class App extends Component {
   }
 
 
-  /*=======================
-    Scroll event handler
-  =======================*/
-  // handleScroll = (event) => {
-  //   const { setScrollPosition, setIsScrolling } = this.props
-
-  //   // Save scroll position in redux store
-  //   setScrollPosition(document.documentElement.scrollTop)
-
-
-  //   // Get scroll state and save in redux store
-  //   if (this.timeoutScroll) {
-  //     // If there is already a timeout in process then cancel it
-  //     clearTimeout(this.timeoutScroll)
-  //   }
-  //   this.timeoutScroll = setTimeout(() => {
-  //     this.timeoutScroll = null
-  //     setIsScrolling(false)
-  //   }, 60)
-  //   if (this.props.isScrolling !== true) {
-  //     setIsScrolling(true)
-  //   }
-  // }
-
-
   scrollToBreakPoint = (specifiedBreakPt) => {
     const {
       scrollPosition: scrollPos,
