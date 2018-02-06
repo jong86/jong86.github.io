@@ -1,4 +1,7 @@
-export const skillsData = [
+import React from 'react'
+import uuidv4 from 'uuid/v4'
+
+const skillsData = [
   {
     label: 'Languages',
     items: [
@@ -33,3 +36,16 @@ export const skillsData = [
     ],
   },
 ]
+
+export const renderSkills = skillsData.map(section =>
+  <div className='skills-content' key={uuidv4()}>
+    <div className="label" key={uuidv4()}>
+      { section.label }
+    </div>
+    <ul className="list" key={uuidv4()}>
+      { section.items.map(item =>
+        <li key={uuidv4()}>{ item }</li>
+      )}
+    </ul>
+  </div>
+)

@@ -5,7 +5,11 @@ import { connect } from 'react-redux'
 import AngleDown from 'react-icons/lib/fa/angle-down'
 import AngleUp from 'react-icons/lib/fa/angle-up'
 
-import { fadeOpacity, moveComponentVertically, scrambleText } from '../../utils/animation.js'
+import {
+  fadeOpacity,
+  moveComponentVerticallyUp,
+  scrambleText,
+} from '../../utils/animation.js'
 
 
 
@@ -96,7 +100,7 @@ class Summary extends Component {
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
       this.setState({
         wrapperStyle: {
-          top: moveComponentVertically(topStartPct, '-25%', breakPt1, breakPt2, scrollPos),
+          top: moveComponentVerticallyUp(topStartPct, '-25%', breakPt1, breakPt2, scrollPos),
           opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
         },
         // Scramble text

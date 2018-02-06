@@ -1,53 +1,38 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import './components/Skills/Skills.css'
 
 import Summary from './components/Summary/Summary.js'
-import Skills from './components/Skills/Skills.js'
+
+// import Skills from './components/Skills/Skills.js'
+import { renderSkills } from './components/Skills/skillsData.js'
+
 import Projects from './components/Projects/Projects.js'
+
 import Education from './components/Education/Education.js'
+
 import Other from './components/Other/Other.js'
+
+
+import Menu from './components/Menu/Menu.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
 
-import throttle from 'lodash.throttle'
-
 import Synth from './utils/Synth.js'
 import { freqExp } from './utils/soundMod.js'
-
-import Scroll from 'react-scroll'
-
-// import disableScroll from 'disable-scroll';
-// disableScroll.on(document.scrollingElement, { disableScroll: false });
-
-const scroll = Scroll.animateScroll
 
 
 class App extends Component {
   constructor() {
     super()
-
-    // For isScrolling detection
-    this.timeoutScroll = null
-    // this.handleScroll = this.handleScroll.bind(this)
-
-    // For scroll rate
-    this.lastTime = null
-    this.lastScrollPosition = null
-
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
   }
 
 
   componentWillMount = () => {
-    const { scrollBreakpoints: breakPt } = this.props
-
     // Scroll to top of page on load:
-    // window.onbeforeunload = () => window.scrollTo(0, breakPt[1])
     window.onbeforeunload = () => window.scrollTo(0, 0)
-
-    // Add scroll listener
-    // window.addEventListener('scroll', throttle(this.handleScroll, 8));
 
     this.instantiateSynth()
   }
@@ -129,11 +114,11 @@ class App extends Component {
     this.posDiff = Math.abs(scrollPos - breakPt[specifiedBreakPt])
 
     setIsScrolling(true)
-    this.req = requestAnimationFrame(() => this.doStuff(specifiedBreakPt))
+    this.req = requestAnimationFrame(() => this.handleAnimation(specifiedBreakPt))
   }
 
 
-  doStuff = (specifiedBreakPt) => {
+  handleAnimation = (specifiedBreakPt) => {
     const {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
@@ -158,7 +143,7 @@ class App extends Component {
     } else if (Math.abs(scrollPos - breakPt[specifiedBreakPt]) > 0) {
       // Regular behavior
       setScrollPosition(scrollPos + ((amtPerFrame) * directionMod))
-      this.req = requestAnimationFrame(() => this.doStuff(specifiedBreakPt))
+      this.req = requestAnimationFrame(() => this.handleAnimation(specifiedBreakPt))
     }
   }
 
@@ -172,21 +157,33 @@ class App extends Component {
     return (
       <div className="App">
 
-        { scrollPos <= breakPt[1] &&
+        { (scrollPos <= breakPt[1] &&
           <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
-        ||
-          scrollPos > breakPt[1] && scrollPos <= breakPt[4] &&
-          <Skills scrollToBreakPoint={this.scrollToBreakPoint}/>
-        ||
-          scrollPos > breakPt[4] && scrollPos <= breakPt[10] &&
+        ) || (
+          scrollPos > breakPt[1] && scrollPos <= breakPt[5] &&
+          <Menu
+            scrollToBreakPoint={this.scrollToBreakPoint}
+            title='Skills'
+            renderContent={renderSkills}
+            sectionColor='red'
+            breakPt1={breakPt[1]}
+            breakPt2={breakPt[2]}
+            breakPt3={breakPt[3]}
+            breakPt4={breakPt[4]}
+            breakPt5={breakPt[5]}
+            breakPtPrev={0}
+            breakPtNext={6}
+          />
+        ) || (
+          scrollPos > breakPt[6] && scrollPos <= breakPt[10] &&
           <Projects scrollToBreakPoint={this.scrollToBreakPoint}/>
-        ||
+        ) || (
           scrollPos > breakPt[10] && scrollPos <= breakPt[12] &&
           <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
-        ||
+        ) || (
           scrollPos > breakPt[12] &&
           <Other scrollToBreakPoint={this.scrollToBreakPoint}/>
-        }
+        )}
 
       </div>
     )
