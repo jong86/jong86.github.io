@@ -117,7 +117,6 @@ class App extends Component {
   scrollToPosition = (destPos) => {
     const {
       scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt,
       setIsScrolling
     } = this.props
 
@@ -135,7 +134,6 @@ class App extends Component {
   handleAnimation = (destPos) => {
     const {
       scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt,
       setScrollPosition,
       setIsScrolling
     } = this.props

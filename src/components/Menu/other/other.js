@@ -33,14 +33,14 @@ const otherData = [
 
 export const renderOther = () => {
   return otherData.map(item =>
-    <div>
-      <div>
+    <div key={uuidv4()}>
+      <div key={uuidv4()}>
         { item.name }
       </div>
-      <div>
+      <div key={uuidv4()}>
         { item.url }
       </div>
-      <div>
+      <div key={uuidv4()}>
         { item.icon }
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Menu.css'
-import action from '../../redux/action.js'
 import { connect } from 'react-redux'
 import {
   fadeOpacity,
@@ -12,9 +11,6 @@ import AngleRight from 'react-icons/lib/fa/angle-right'
 import AngleLeft from 'react-icons/lib/fa/angle-left'
 
 
-import uuidv4 from 'uuid/v4'
-
-
 class Menu extends Component {
   constructor() {
     super()
@@ -23,17 +19,14 @@ class Menu extends Component {
       sectionStyle: {},
       titleStyle: {},
       contentStyle: {},
-      headingStyle: {},
     }
   }
 
   componentWillMount = () => {
     const {
-      sectionColor,
       breakPt1,
       breakPt4,
       scrollPosition: scrollPos,
-      isScrolling
     } = this.props
 
     if (scrollPos <= breakPt1) {
@@ -41,12 +34,6 @@ class Menu extends Component {
         wrapperStyle: {
           marginTop: '125%',
           opacity: 0.0,
-        },
-        sectionStyle: {
-          borderColor: sectionColor
-        },
-        headingStyle: {
-          borderColor: sectionColor
         },
       })
     } else if (scrollPos > breakPt4) {
@@ -70,7 +57,7 @@ class Menu extends Component {
     /*============
       Animation
     ============*/
-    let { breakPt1, breakPt2, breakPt3, breakPt4, breakPt5 } = this.props
+    let { breakPt1, breakPt2, breakPt3, breakPt4 } = this.props
 
     // Moving into view
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -149,32 +136,27 @@ class Menu extends Component {
   render = () => {
     const {
       scrollPosition: scrollPos,
-      scrollBreakpoints: breakPt,
-      scrollToBreakPoint,
       title,
       renderContent,
       sectionColor,
-      hasPages,
-      currentPage
     } = this.props
 
     const {
       wrapperStyle,
       sectionStyle,
-      headingStyle,
       titleStyle,
       contentStyle,
     } = this.state
 
     return (
       <div className="wrapper" style={wrapperStyle}>
-        <div className="section no-select" style={sectionStyle}>
-          <div className="heading" style={headingStyle}>
+        <div className="section no-select" style={{...sectionStyle, borderColor: sectionColor}}>
+          <div className="heading" style={{borderColor: sectionColor}}>
             <AngleLeft size={56} color={sectionColor} onClick={this.onClickPrev}/>
             <div className="title" style={titleStyle}>
               { title }
             </div>
-            { scrollPos < 4200 && (<AngleRight size={56} color={sectionColor} onClick={this.onClickNext}/>) }
+            <AngleRight size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
           </div>
           <div className="content" style={contentStyle}>
             { renderContent() }
