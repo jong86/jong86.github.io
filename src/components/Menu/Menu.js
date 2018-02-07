@@ -26,6 +26,8 @@ class Menu extends Component {
       titleStyle: {},
       contentStyle: {},
       headingStyle: {},
+
+      currentPage: 0,
     }
 
     this.initialWrapperHeight = '600px'
@@ -33,7 +35,8 @@ class Menu extends Component {
   }
 
   componentWillMount = () => {
-    const { sectionColor} = this.props
+    const { sectionColor, breakPt3, scrollPosition: scrollPos, isScrolling } = this.props
+
 
     this.setState({
       wrapperStyle: {
@@ -44,7 +47,7 @@ class Menu extends Component {
       },
       headingStyle: {
         border: `1px solid ${sectionColor}`
-      }
+      },
     })
   }
 
@@ -57,7 +60,26 @@ class Menu extends Component {
     /*============
       Animation
     ============*/
-    const { breakPt1, breakPt2, breakPt3, breakPt4, breakPt5 } = this.props
+    let { breakPt1, breakPt2, breakPt3, breakPt4, breakPt5, hasPages } = this.props
+
+
+    // For dealing with pages
+    const { currentPage } = this.state
+    if (hasPages) {
+      const breakPtMod = currentPage * 400
+      breakPt1 += breakPtMod
+      breakPt2 += breakPtMod
+      breakPt3 += breakPtMod
+      breakPt4 += breakPtMod
+      breakPt5 += breakPtMod
+
+      if (scrollPos === breakPt3) {
+        this.setState({
+          currentPage: currentPage,
+        })
+      }
+    }
+
 
     // Make sure it's out of view before it comes
     if (scrollPos <= breakPt1) {
@@ -180,14 +202,21 @@ class Menu extends Component {
   }
 
 
+  renderContentWithPages = () => {
+    const { renderContent, numPerPage } = this.props
+    const { currentPage } = this.state
+    return this.props.renderContent(currentPage, numPerPage)
+  }
+
+
   render = () => {
     const {
+      scrollPosition: scrollPos,
       scrollToBreakPoint,
       title,
       renderContent,
       sectionColor,
-      breakPtPrev,
-      breakPtNext,
+      hasPages,
     } = this.props
 
     const {
@@ -202,14 +231,14 @@ class Menu extends Component {
       <div className="wrapper" style={wrapperStyle}>
         <div className="menu no-select" style={sectionStyle}>
           <div className="heading" style={headingStyle}>
-            <AngleLeft size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(breakPtPrev)}/>
+            <AngleLeft size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(scrollPos - (scrollPos === 1400 ? 1200 : 2000))}/>
             <div className="title" style={titleStyle}>
-              { title }
+              { title } { hasPages ? this.state.currentPage + 1 : '' }
             </div>
-            <AngleRight size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(breakPtNext)}/>
+            <AngleRight size={56} color={`${sectionColor}`} onClick={() => scrollToBreakPoint(scrollPos + 2000)}/>
           </div>
           <div className="content" style={contentStyle}>
-            { renderContent }
+            { hasPages ? this.renderContentWithPages() : renderContent() }
           </div>
         </div>
       </div>

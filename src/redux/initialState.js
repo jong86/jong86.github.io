@@ -10,6 +10,7 @@ function makeInitialState() {
     scrollPosition: 0,
     isScrolling: false,
     scrollBreakpoints: scrollBreakpoints,
+    currentSectionPage: 0,
   }
 }
 

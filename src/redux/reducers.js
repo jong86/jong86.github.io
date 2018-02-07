@@ -1,19 +1,27 @@
 import initialState from './initialState.js'
-import update from 'immutability-helper'
 
 const reducers = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_SCROLL_POSITION':
       const { scrollPosition } = action
-      return update(state, {
-        scrollPosition: { $set: scrollPosition }
-      })
+      return {
+        ...state,
+        scrollPosition: scrollPosition,
+      }
 
     case 'SET_IS_SCROLLING':
       const { boolean } = action
-      return update(state, {
-        isScrolling: { $set: boolean }
-      })
+      return {
+        ...state,
+        isScrolling: boolean,
+      }
+
+    case 'SET_CURRENT_SECTION_PAGE':
+      const { page } = action
+      return {
+        ...state,
+        currentSectionPage: page,
+      }
 
     default:
       return { ...state }

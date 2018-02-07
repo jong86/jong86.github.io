@@ -1,0 +1,18 @@
+.projects .content {
+  color: white;
+  font-size: 1em; }
+  .projects .content .row {
+    display: flex; }
+    .projects .content .row .photo {
+      flex: 0.4; }
+    .projects .content .row .description {
+      flex: 0.6; }
+      .projects .content .row .description .title {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0; }
+      .projects .content .row .description ul {
+        list-style-type: none;
+        padding: 0; }
+        .projects .content .row .description ul li {
+          margin-bottom: 0.2em; }

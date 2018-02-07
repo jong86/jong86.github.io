@@ -41,7 +41,7 @@ export default class Synth {
 
     this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0)
     this.oscillator.start()
-    this.gainNode.gain.setTargetAtTime(0.2, this.context.currentTime, 0.015)
+    this.gainNode.gain.setTargetAtTime(0.2, this.context.currentTime, 0.05)
     this.isPlaying = true
   }
 

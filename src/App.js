@@ -4,16 +4,14 @@ import './components/Menu/skills/skills.css'
 
 import Summary from './components/Summary/Summary.js'
 
-import { renderSkills } from './components/Menu/skills/skillsData.js'
+import Menu from './components/Menu/Menu.js'
+import { renderSkills } from './components/Menu/skills/skills.js'
+import { renderProjects } from './components/Menu/projects/projects.js'
 
 import Projects from './components/Projects/Projects.js'
-
 import Education from './components/Education/Education.js'
-
 import Other from './components/Other/Other.js'
 
-
-import Menu from './components/Menu/Menu.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -99,7 +97,7 @@ class App extends Component {
   }
 
 
-  scrollToBreakPoint = (specifiedBreakPt) => {
+  scrollToPosition = (destPos) => {
     const {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
@@ -109,15 +107,15 @@ class App extends Component {
     const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 
-    // Diff between current scrollPos and specifiedBreakPt
-    this.posDiff = Math.abs(scrollPos - breakPt[specifiedBreakPt])
+    // Diff between current scrollPos and destPos
+    this.posDiff = Math.abs(scrollPos - destPos)
 
     setIsScrolling(true)
-    this.req = requestAnimationFrame(() => this.handleAnimation(specifiedBreakPt))
+    this.req = requestAnimationFrame(() => this.handleAnimation(destPos))
   }
 
 
-  handleAnimation = (specifiedBreakPt) => {
+  handleAnimation = (destPos) => {
     const {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
@@ -128,21 +126,21 @@ class App extends Component {
     var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
     // To determine if animation is going forward or backward
-    const directionMod = scrollPos < breakPt[specifiedBreakPt] ? 1 : -1
+    const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
     const amtPerFrame = this.posDiff / 30
 
-    if (Math.abs(scrollPos - breakPt[specifiedBreakPt]) < amtPerFrame) {
+    if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt
-      setScrollPosition(breakPt[specifiedBreakPt])
+      setScrollPosition(destPos)
       setIsScrolling(false)
       cancelAnimationFrame(this.req)
 
-    } else if (Math.abs(scrollPos - breakPt[specifiedBreakPt]) > 0) {
+    } else if (Math.abs(scrollPos - destPos) > 0) {
       // Regular behavior
       setScrollPosition(scrollPos + ((amtPerFrame) * directionMod))
-      this.req = requestAnimationFrame(() => this.handleAnimation(specifiedBreakPt))
+      this.req = requestAnimationFrame(() => this.handleAnimation(destPos))
     }
   }
 
@@ -157,31 +155,42 @@ class App extends Component {
       <div className="App">
 
         { (scrollPos <= breakPt[1] &&
-          <Summary scrollToBreakPoint={this.scrollToBreakPoint}/>
+          <Summary scrollToBreakPoint={this.scrollToPosition}/>
         ) || (
           scrollPos > breakPt[1] && scrollPos <= breakPt[5] &&
           <Menu
-            scrollToBreakPoint={this.scrollToBreakPoint}
+            scrollToBreakPoint={this.scrollToPosition}
             title='Skills'
-            renderContent={renderSkills}
             sectionColor='red'
             breakPt1={breakPt[1]}
             breakPt2={breakPt[2]}
             breakPt3={breakPt[3]}
             breakPt4={breakPt[4]}
             breakPt5={breakPt[5]}
-            breakPtPrev={0}
-            breakPtNext={6}
+            renderContent={renderSkills}
+            hasPages={false}
           />
         ) || (
-          scrollPos > breakPt[6] && scrollPos <= breakPt[10] &&
-          <Projects scrollToBreakPoint={this.scrollToBreakPoint}/>
+          scrollPos > breakPt[6] && scrollPos <= breakPt[18] &&
+          <Menu
+            scrollToBreakPoint={this.scrollToPosition}
+            title='Projects'
+            sectionColor='cyan'
+            breakPt1={breakPt[6]}
+            breakPt2={breakPt[7]}
+            breakPt3={breakPt[8]}
+            breakPt4={breakPt[9]}
+            breakPt5={breakPt[10]}
+            renderContent={renderProjects}
+            hasPages={true}
+            numPerPage={3}
+          />
         ) || (
-          scrollPos > breakPt[10] && scrollPos <= breakPt[12] &&
-          <Education scrollToBreakPoint={this.scrollToBreakPoint}/>
+          scrollPos > breakPt[19] && scrollPos <= breakPt[23] &&
+          <Education scrollToBreakPoint={this.scrollToPosition}/>
         ) || (
-          scrollPos > breakPt[12] &&
-          <Other scrollToBreakPoint={this.scrollToBreakPoint}/>
+          scrollPos > breakPt[24] && scrollPos <= breakPt[28] &&
+          <Other scrollToBreakPoint={this.scrollToPosition}/>
         )}
 
       </div>
