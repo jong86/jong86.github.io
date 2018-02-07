@@ -12,8 +12,6 @@ import {
 } from '../../utils/animation.js'
 
 
-
-
 class Summary extends Component {
   constructor() {
     super()

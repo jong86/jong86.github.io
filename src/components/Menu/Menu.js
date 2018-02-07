@@ -5,11 +5,7 @@ import { connect } from 'react-redux'
 import {
   fadeOpacity,
   moveComponentVerticallyUp,
-  moveComponentVerticallyDown,
-  incHeightWithScrollPosition,
-  decHeightWithScrollPosition,
   incWidthWithScrollPosition,
-  decWidthWithScrollPosition,
 } from '../../utils/animation.js'
 
 import AngleRight from 'react-icons/lib/fa/angle-right'
@@ -29,27 +25,40 @@ class Menu extends Component {
       contentStyle: {},
       headingStyle: {},
     }
-
-    this.initialWrapperHeight = '600px'
-    this.wrapperMinHeight = '1px'
   }
 
   componentWillMount = () => {
-    const { sectionColor, breakPt3, scrollPosition: scrollPos, isScrolling } = this.props
-    console.log(this.props);
+    const {
+      sectionColor,
+      breakPt1,
+      breakPt4,
+      scrollPosition: scrollPos,
+      isScrolling
+    } = this.props
 
-    this.setState({
-      wrapperStyle: {
-        opacity: 0.0,
-        marginTop: '125%',
-      },
-      sectionStyle: {
-        borderColor: sectionColor
-      },
-      headingStyle: {
-        borderColor: sectionColor
-      },
-    })
+    if (scrollPos <= breakPt1) {
+      this.setState({
+        wrapperStyle: {
+          marginTop: '125%',
+          opacity: 0.0,
+        },
+        sectionStyle: {
+          borderColor: sectionColor
+        },
+        headingStyle: {
+          borderColor: sectionColor
+        },
+      })
+    } else if (scrollPos > breakPt4) {
+      this.setState({
+        wrapperStyle: {
+          opacity: 1.0,
+        },
+        sectionStyle: {
+          width: '100%',
+        },
+      })
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -62,20 +71,6 @@ class Menu extends Component {
       Animation
     ============*/
     let { breakPt1, breakPt2, breakPt3, breakPt4, breakPt5 } = this.props
-
-    // Make sure it's out of view before it comes
-    if (scrollPos <= breakPt1) {
-      // Style fix if scrolled too fast
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          marginTop: '125%',
-          height: this.initialWrapperHeight,
-          minHeight: this.wrapperMinHeight,
-          opacity: 0.0,
-        }
-      })
-    }
 
     // Moving into view
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -90,20 +85,9 @@ class Menu extends Component {
           width: '2px',
         },
         contentStyle: {
+          ...this.state.contentStyle,
           opacity: 0.0,
         },
-      })
-    }
-
-    // When centered in view
-    if (scrollPos > breakPt2) {
-      // Style fix if scrolled too fast
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          marginTop: '0%',
-          opacity: 1.0,
-        }
       })
     }
 
@@ -119,55 +103,27 @@ class Menu extends Component {
           width: incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)
         },
         titleStyle: {
+          ...this.state.titleStyle,
           opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
         },
         contentStyle: {
+          ...this.state.contentStyle,
           opacity: 0,
         },
       })
     }
 
-    // Fade in content just before component's width maxes out
-    if (scrollPos > breakPt3 - 100 && scrollPos <= breakPt3) {
-      this.setState({
-        contentStyle: {
-          opacity: fadeOpacity('in', breakPt3 - 100, breakPt3, scrollPos),
-        },
-      })
-    }
-
-    // When shrinking in width
+    // Moving up, out of view
     if (scrollPos > breakPt3 && scrollPos <= breakPt4) {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          opacity: 1.0,
-          marginTop: '0%',
+          marginTop: moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos),
+          opacity: fadeOpacity('out', breakPt3, breakPt4, scrollPos),
         },
         sectionStyle: {
           ...this.state.sectionStyle,
-          width: decWidthWithScrollPosition(breakPt3, breakPt4, scrollPos),
-        },
-        contentStyle: {
-          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
-        },
-        titleStyle: {
-          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
-        },
-      })
-    }
-
-    // Moving out of view
-    if (scrollPos > breakPt4 && scrollPos <= breakPt5) {
-      this.setState({
-        wrapperStyle: {
-          ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyDown('0%', '125%', breakPt4, breakPt5, scrollPos),
-          opacity: fadeOpacity('in', breakPt4, breakPt5, scrollPos),
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: "2px",
+          width: '100%',
         },
       })
     }
@@ -178,7 +134,7 @@ class Menu extends Component {
       scrollToBreakPoint,
       scrollPosition: scrollPos,
     } = this.props
-    scrollToBreakPoint(scrollPos - (scrollPos === 1400 ? 1200 : 2000))
+    scrollToBreakPoint(scrollPos - 1200)
   }
 
   onClickNext = () => {
@@ -186,13 +142,14 @@ class Menu extends Component {
       scrollToBreakPoint,
       scrollPosition: scrollPos,
     } = this.props
-    scrollToBreakPoint(scrollPos + 2000)
+    scrollToBreakPoint(scrollPos + 1200)
   }
 
 
   render = () => {
     const {
       scrollPosition: scrollPos,
+      scrollBreakpoints: breakPt,
       scrollToBreakPoint,
       title,
       renderContent,
@@ -217,7 +174,7 @@ class Menu extends Component {
             <div className="title" style={titleStyle}>
               { title }
             </div>
-            { scrollPos < 6400 && (<AngleRight size={56} color={sectionColor} onClick={this.onClickNext}/>) }
+            { scrollPos < 4200 && (<AngleRight size={56} color={sectionColor} onClick={this.onClickNext}/>) }
           </div>
           <div className="content" style={contentStyle}>
             { renderContent() }

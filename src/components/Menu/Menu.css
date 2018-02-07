@@ -3,8 +3,7 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border: 1px dashed red; }
+  align-items: center; }
   .wrapper .section {
     height: min-content;
     width: 2px;

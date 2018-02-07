@@ -174,7 +174,7 @@ class App extends Component {
         { (scrollPos <= breakPt[1] &&
           <Summary scrollToBreakPoint={this.scrollToPosition}/>
         ) || (
-          scrollPos > breakPt[1] && scrollPos <= breakPt[5] &&
+          scrollPos > breakPt[1] && scrollPos <= breakPt[4] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Skills'
@@ -183,46 +183,42 @@ class App extends Component {
             breakPt2={breakPt[2]}
             breakPt3={breakPt[3]}
             breakPt4={breakPt[4]}
-            breakPt5={breakPt[5]}
             renderContent={renderSkills}
           />
         ) || (
-          scrollPos > breakPt[6] && scrollPos <= breakPt[10] &&
+          scrollPos > breakPt[4] && scrollPos <= breakPt[7] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Projects'
             sectionColor='fuchsia'
-            breakPt1={breakPt[6]}
-            breakPt2={breakPt[7]}
-            breakPt3={breakPt[8]}
-            breakPt4={breakPt[9]}
-            breakPt5={breakPt[10]}
+            breakPt1={breakPt[4]}
+            breakPt2={breakPt[5]}
+            breakPt3={breakPt[6]}
+            breakPt4={breakPt[7]}
             renderContent={renderProjects}
           />
         ) || (
-          scrollPos > breakPt[11] && scrollPos <= breakPt[15] &&
+          scrollPos > breakPt[7] && scrollPos <= breakPt[10] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Education'
             sectionColor='yellow'
-            breakPt1={breakPt[11]}
-            breakPt2={breakPt[12]}
-            breakPt3={breakPt[13]}
-            breakPt4={breakPt[14]}
-            breakPt5={breakPt[15]}
+            breakPt1={breakPt[7]}
+            breakPt2={breakPt[8]}
+            breakPt3={breakPt[9]}
+            breakPt4={breakPt[10]}
             renderContent={renderEducation}
           />
         ) || (
-          scrollPos > breakPt[16] && scrollPos <= breakPt[20] &&
+          scrollPos > breakPt[10] && scrollPos <= breakPt[13] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Other'
             sectionColor='white'
-            breakPt1={breakPt[16]}
-            breakPt2={breakPt[17]}
-            breakPt3={breakPt[18]}
-            breakPt4={breakPt[19]}
-            breakPt5={breakPt[20]}
+            breakPt1={breakPt[10]}
+            breakPt2={breakPt[11]}
+            breakPt3={breakPt[12]}
+            breakPt4={breakPt[13]}
             renderContent={renderOther}
           />
         )}

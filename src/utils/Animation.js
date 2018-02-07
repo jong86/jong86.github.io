@@ -19,11 +19,8 @@ export const moveComponentVerticallyUp = (startPct, endPct, breakPt1, breakPt2, 
 }
 
 
-export const moveComponentVerticallyDown = (startPct, endPct, breakPt1, breakPt2, scrollPos) => {
-  const startInt = parseInt(startPct, 10)
-  const endInt = parseInt(endPct, 10)
-  const output = startInt + ((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * (Math.abs(startInt - endInt))
-  return output + '%'
+export const incWidthWithScrollPosition = (breakPt1, breakPt2, scrollPos) => {
+  return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
 }
 
 
@@ -54,37 +51,4 @@ export const scrambleText = (origText, type, breakPt1, breakPt2, scrollPos) => {
     }
   })
   return scrambledText
-}
-
-
-
-export const incHeightWithScrollPosition = (maxHeight, breakPt1, breakPt2, scrollPos) => {
-  const current = scrollPos - breakPt1
-  const total = breakPt2 - breakPt1
-
-  const output = (current / total) * parseInt(maxHeight, 10)
-  return output < 1 ? '1px' : output + 'px'
-}
-
-
-
-export const decHeightWithScrollPosition = (minHeight, breakPt1, breakPt2, scrollPos) => {
-  const current = scrollPos - breakPt1
-  const total = breakPt2 - breakPt1
-
-  const output = (1 - (current / total)) * parseInt(minHeight, 10)
-  return output < 1 ? '1px' : output + 'px'
-}
-
-
-
-export const incWidthWithScrollPosition = (breakPt1, breakPt2, scrollPos) => {
-  return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
-}
-
-
-
-export const decWidthWithScrollPosition = (breakPt1, breakPt2, scrollPos) => {
-  const output = 100 - (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100)
-  return output + '%'
 }
