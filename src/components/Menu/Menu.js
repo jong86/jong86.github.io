@@ -15,6 +15,7 @@ import {
 import AngleRight from 'react-icons/lib/fa/angle-right'
 import AngleLeft from 'react-icons/lib/fa/angle-left'
 
+
 import uuidv4 from 'uuid/v4'
 
 
@@ -40,6 +41,7 @@ class Menu extends Component {
     this.setState({
       wrapperStyle: {
         opacity: 0.0,
+        marginTop: '125%',
       },
       sectionStyle: {
         borderColor: sectionColor
@@ -110,7 +112,6 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          height: this.initialWrapperHeight,
           marginTop: '0%',
         },
         sectionStyle: {
@@ -131,20 +132,6 @@ class Menu extends Component {
       this.setState({
         contentStyle: {
           opacity: fadeOpacity('in', breakPt3 - 100, breakPt3, scrollPos),
-        },
-      })
-    }
-
-    // When should be centered and fully opened
-    if (scrollPos > breakPt3 && scrollPos <= breakPt3 + 1)  {
-      // Style fix if moved too fast
-      this.setState({
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: '100%',
-        },
-        contentStyle: {
-          opacity: 1.0,
         },
       })
     }

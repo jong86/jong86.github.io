@@ -146,7 +146,7 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 45
+    const amtPerFrame = this.posDiff / 60
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt
@@ -191,7 +191,7 @@ class App extends Component {
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Projects'
-            sectionColor='cyan'
+            sectionColor='fuchsia'
             breakPt1={breakPt[6]}
             breakPt2={breakPt[7]}
             breakPt3={breakPt[8]}
