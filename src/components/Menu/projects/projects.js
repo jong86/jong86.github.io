@@ -105,7 +105,7 @@ export const renderProjects = () => {
       <a href={ project.url } target="_blank"><img src={project.image}/></a>
       </div>
       <div className="description" key={uuidv4()}>
-        <div className="project-title" key={uuidv4()}>
+        <div className="project-title subtitle" key={uuidv4()}>
           <a href={ project.url } target="_blank">{ project.title }</a>
         </div>
         <ul>

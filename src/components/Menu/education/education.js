@@ -22,7 +22,7 @@ const educationData = [
 export const renderEducation = () => {
   return educationData.map(item =>
     <div className="education-item" key={uuidv4()}>
-      <div className="school" key={uuidv4()}>
+      <div className="school subtitle" key={uuidv4()}>
         { item.school }
       </div>
       <div className="date" key={uuidv4()}>

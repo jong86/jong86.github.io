@@ -40,7 +40,7 @@ const skillsData = [
 export const renderSkills = () => {
   return skillsData.map(section =>
     <div className='skills-content' key={uuidv4()}>
-      <div className="label" key={uuidv4()}>
+      <div className="label subtitle" key={uuidv4()}>
         { section.label }
       </div>
       <ul className="list" key={uuidv4()}>

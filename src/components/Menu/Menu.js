@@ -152,7 +152,7 @@ class Menu extends Component {
         <div className="section no-select" style={{...sectionStyle, borderColor: sectionColor}}>
           <div className="heading" style={{borderColor: sectionColor}}>
             <AngleLeft className="nav" size={56} color={sectionColor} onClick={this.onClickPrev}/>
-            <div className="title" style={titleStyle}>
+            <div className="title" style={{...titleStyle, color: sectionColor}}>
               { title }
             </div>
             <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>

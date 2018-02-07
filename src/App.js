@@ -161,7 +161,7 @@ class App extends Component {
           scrollPos > breakPt[1] && scrollPos <= breakPt[4] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='Skills'
+            title='SKILLS'
             sectionColor='red'
             breakPt1={breakPt[1]}
             breakPt2={breakPt[2]}
@@ -173,7 +173,7 @@ class App extends Component {
           scrollPos > breakPt[4] && scrollPos <= breakPt[7] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='Projects'
+            title='PROJECTS'
             sectionColor='fuchsia'
             breakPt1={breakPt[4]}
             breakPt2={breakPt[5]}
@@ -185,7 +185,7 @@ class App extends Component {
           scrollPos > breakPt[7] && scrollPos <= breakPt[10] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='Education'
+            title='EDUCATION'
             sectionColor='yellow'
             breakPt1={breakPt[7]}
             breakPt2={breakPt[8]}
@@ -197,8 +197,8 @@ class App extends Component {
           scrollPos > breakPt[10] && scrollPos <= breakPt[13] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='Other'
-            sectionColor='white'
+            title='OTHER'
+            sectionColor='cyan'
             breakPt1={breakPt[10]}
             breakPt2={breakPt[11]}
             breakPt3={breakPt[12]}
