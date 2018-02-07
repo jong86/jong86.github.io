@@ -1,3 +1,5 @@
+@import "../../_global.scss";
+
 .summary-wrapper {
   position: fixed;
   width: 90vw;
@@ -13,14 +15,14 @@
 }
 
 .summary {
-  color: var(--menu-color-summary);
+  color: $summary-color;
   font-size: 1.5em;
 
-  background-color: var(--menu-bg-color);
-  background-color: var(--menu-bg-transparent);
+  background-color: $menu-bg-color;
+  background-color: $menu-bg-transparent;
 
-  border-radius: var(--menu-border-radius);
-  border: 1px solid var(--menu-color-summary);
+  border-radius: $menu-border-radius;
+  border: 1px solid $summary-color;
 
   width: 100%;
   height: 200px;
@@ -35,26 +37,24 @@
 
   overflow: hidden;
 
-
   .heading {
     width: 100%;
 
     margin-bottom: auto;
 
-    background-color: var(--menu-bg-color);
+    background-color: $menu-bg-color;
 
-    border-bottom: 1px solid var(--menu-color-summary);
-    border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+    border-bottom: 1px solid $summary-color;
+    border-radius: $menu-border-radius $menu-border-radius 0 0;
 
     z-index: 2;
   }
-
 
   .name {
     width: 100%;
 
     font-family: 'Black Ops One';
-    color: var(--menu-color-summary);
+    color: $summary-color;
     font-size: 2em;
 
     display: flex;
@@ -63,7 +63,6 @@
     padding-top: 5px;
     padding-bottom: 5px;
   }
-
 
   .title {
     width: 100%;
@@ -74,7 +73,6 @@
     margin-top: 1em;
     margin-bottom: 1em;
   }
-
 
   .text {
     color: white;
@@ -89,7 +87,6 @@
     word-break: keep-all;
     white-space: pre-wrap;
   }
-
 
   svg.nav {
     position: absolute;

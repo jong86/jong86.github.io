@@ -1,0 +1,23 @@
+a.other-item {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  min-width: fit-content;
+  color: white;
+  text-decoration: none;
+  margin: 2em;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 4px; }
+  a.other-item:hover {
+    background: rgba(255, 255, 255, 0.05); }
+  a.other-item .icon {
+    flex: 0.4;
+    display: flex;
+    justify-content: flex-end; }
+  a.other-item .name {
+    flex: 0.6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 1em; }

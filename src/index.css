@@ -1,13 +1,3 @@
-:root {
-  --menu-color-summary: lime;
-  --menu-color-skills: red;
-  --menu-color-projects: cyan;
-  --menu-color-education: yellow;
-  --menu-bg-color: #121212;
-  --menu-bg-transparent: rgba(32, 32, 32, 0.75);
-  --menu-border-radius: 4px;
-  --btn-flash-speed: 1s; }
-
 body {
   margin: 0;
   padding: 0;
@@ -35,8 +25,8 @@ body {
 
 svg.nav {
   width: 48px;
-  animation: btn-opacity var(--btn-flash-speed) infinite;
-  animation-timing-function: ease-out;
+  animation: btn-opacity 1s infinite;
+  animation-timing-function: ease-in;
   cursor: pointer; }
 
 @keyframes btn-opacity {

@@ -130,7 +130,7 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 10
+    const amtPerFrame = this.posDiff / 20
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt

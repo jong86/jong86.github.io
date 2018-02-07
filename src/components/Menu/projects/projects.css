@@ -1,26 +1,30 @@
-.project-row {
-  width: 100%;
+.project {
+  width: 90%;
   margin: 1em;
-  display: flex; }
-  .project-row .image {
+  display: flex;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 4px;
+  padding: 1em; }
+  .project a {
+    color: white;
+    text-decoration: none; }
+  .project .image {
     flex: 0.4; }
-    .project-row .image img {
+    .project .image img {
       max-width: fill-available;
       margin: 0 1em; }
-  .project-row .description {
+  .project .description {
     font-size: 0.9em;
     flex: 0.6; }
-    .project-row .description .project-title {
+    .project .description .project-title {
       display: flex;
       justify-content: flex-start;
       padding: 0;
       font-weight: bold;
       font-size: 1.25em; }
-      .project-row .description .project-title a {
-        color: white; }
-    .project-row .description ul {
+    .project .description ul {
       list-style-type: circle;
       padding: 0;
       margin-left: 1.5em; }
-      .project-row .description ul li {
+      .project .description ul li {
         margin-bottom: 0.5em; }

@@ -1,8 +1,18 @@
-.project-row {
-  width: 100%;
+@import "../../../_global.scss";
+
+.project {
+  width: 90%;
   margin: 1em;
   display: flex;
-  // border: 1px dashed red;
+  background: $submenu-bg;
+  border-radius: 4px;
+  padding: 1em;
+
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 
   .image {
     flex: 0.4;
@@ -25,9 +35,6 @@
       font-weight: bold;
       font-size: 1.25em;
 
-      a {
-        color: white;
-      }
     }
 
     ul {

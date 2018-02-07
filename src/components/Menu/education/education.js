@@ -9,20 +9,28 @@ const educationData = [
   },
   {
     school: 'Industry Training Authority',
-    description: 'Red Seal Steamfitter-Pipefitter',
+    description: 'Red Seal Steamfitter-Pipefitter skilled trade certification',
     date: '2012 - 2016',
   },
   {
-    school: 'University of British Columbia, University of Alberta',
-    description: 'Completed 2.5 years in a wide variety of subjects, but left to find something I was more passionate about',
+    school: 'University of British Columbia,\nUniversity of Alberta',
+    description: `Completed 2.5 years in a wide variety of subjects.\nI always approached my courses with curiosity, but decided to leave to find something I was truly passionate about.`,
     date: '2005 - 2008',
   },
 ]
 
 export const renderEducation = () => {
   return educationData.map(item =>
-    <div key={uuidv4()}>
-      { item.school } { item.description } { item.date }
+    <div className="education-item" key={uuidv4()}>
+      <div className="school" key={uuidv4()}>
+        { item.school }
+      </div>
+      <div className="date" key={uuidv4()}>
+        { item.date }
+      </div>
+      <div className="description" key={uuidv4()}>
+        { item.description }
+      </div>
     </div>
   )
 }

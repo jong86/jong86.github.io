@@ -1,3 +1,5 @@
+@import "../../_global.scss";
+
 .wrapper {
   width: 99.5vw;
   max-width: 600px;
@@ -6,28 +8,26 @@
   flex-direction: column;
   align-items: center;
 
-
   .section {
     height: min-content;
     width: 2px;
 
-    border-radius: var(--menu-border-radius);
+    border-radius: $menu-border-radius;
     border-width: 1px;
     border-style: solid;
 
     color: white;
 
-    background-color: var(--menu-bg-transparent);
-
+    background-color: $menu-bg-transparent;
 
     .heading {
       width: 100%;
 
       margin-bottom: auto;
 
-      background-color: var(--menu-bg-color);
+      background-color: $menu-bg-color;
 
-      border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+      border-radius: $menu-border-radius $menu-border-radius 0 0;
       border-width: 0 0 1px 0;
       border-style: solid;
 
@@ -38,7 +38,6 @@
       align-items: center;
     }
 
-
     .title {
       width: 100%;
 
@@ -47,7 +46,6 @@
       display: flex;
       justify-content: center;
     }
-
 
     .content {
       color: white;

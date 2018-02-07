@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './Summary.css'
+import { summary } from './summaryData.js'
+
 import { connect } from 'react-redux'
 
 import AngleDown from 'react-icons/lib/fa/angle-down'
@@ -20,7 +22,7 @@ class Summary extends Component {
       wrapperStyle: {},
       sectionStyle: {},
     }
-    this.summary = `I'm a web developer with a background including construction, oil rigs, and university. I've dabbled with making web pages since I was in high school, and I've recently decided on a career switch into what I have more passion for. I'm also an alumni of the Lighthouse Labs Web Dev Bootcamp in Vancouver.\n\nOther than coding, in my spare time I enjoy playing guitar and producing music.`
+    this.summary = summary
 
     this.topStartPct = '40%'
     this.cssMinHeight = 200
