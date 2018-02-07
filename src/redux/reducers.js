@@ -16,13 +16,6 @@ const reducers = (state = initialState, action) => {
         isScrolling: boolean,
       }
 
-    case 'SET_CURRENT_SECTION_PAGE':
-      const { page } = action
-      return {
-        ...state,
-        currentSectionPage: page,
-      }
-
     default:
       return { ...state }
   }

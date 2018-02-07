@@ -1,5 +1,5 @@
 .wrapper {
-  width: 99vw;
+  width: 90vw;
   max-width: 600px;
 
   display: flex;
@@ -7,11 +7,14 @@
   align-items: center;
 
 
-  .menu {
-    height: 100%;
+  .section {
+    height: min-content;
     width: 2px;
 
     border-radius: var(--menu-border-radius);
+    border-width: 1px;
+    border-style: solid;
+
     color: white;
 
     background-color: var(--menu-bg-transparent);
@@ -25,6 +28,8 @@
       background-color: var(--menu-bg-color);
 
       border-radius: var(--menu-border-radius) var(--menu-border-radius) 0 0;
+      border-width: 0 0 1px 0;
+      border-style: solid;
 
       z-index: 2;
 

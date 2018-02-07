@@ -64,8 +64,8 @@ const projectsData = [
   },
 ]
 
-export const renderProjects = (startPrj, numPerPage) => {
-  return projectsData.slice(startPrj, startPrj + numPerPage).map(project =>
+export const renderProjects = () => {
+  return projectsData.map(project =>
     <div className="row" key={uuidv4()}>
       <div className="photo" key={uuidv4()}>
         this is the photo

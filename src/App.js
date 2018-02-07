@@ -7,11 +7,8 @@ import Summary from './components/Summary/Summary.js'
 import Menu from './components/Menu/Menu.js'
 import { renderSkills } from './components/Menu/skills/skills.js'
 import { renderProjects } from './components/Menu/projects/projects.js'
-
-import Projects from './components/Projects/Projects.js'
-import Education from './components/Education/Education.js'
-import Other from './components/Other/Other.js'
-
+import { renderEducation } from './components/Menu/education/education.js'
+import { renderOther } from './components/Menu/other/other.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -49,23 +46,43 @@ class App extends Component {
 
     // Set breakPts and direction for sound frequency function
     let direction, breakPt1, breakPt2
+    // Make exception for first menu (Summary)
     if (scrollPos <= breakPt[0]) {
       direction = 'down'
       breakPt1 = 0
       breakPt2 = breakPt[0]
-    } else {
-      for (let i = 0; i < breakPt.length; i++) {
-        if (scrollPos > breakPt[i] && scrollPos <= breakPt[i + 1]) {
-          direction = (i % 2 === 0 || i === 0) ? 'up' : 'down'
-          breakPt1 = breakPt[i]
-          breakPt2 = breakPt[i + 1]
-          break
-        }
-      }
+    } else if (scrollPos > breakPt[0] && scrollPos <= breakPt[3]) {
+      direction = 'up'
+      breakPt1 = breakPt[0]
+      breakPt2 = breakPt[3]
+    } else if (scrollPos > breakPt[3] && scrollPos <= breakPt[3] + 1000) {
+      direction = 'down'
+      breakPt1 = breakPt[3]
+      breakPt2 = breakPt[3] + 1000
+    } else if (scrollPos > breakPt[3] + 1000 && scrollPos <= breakPt[3] + 2000) {
+      direction = 'up'
+      breakPt1 = breakPt[3] + 1000
+      breakPt2 = breakPt[3] + 2000
+    } else if (scrollPos > breakPt[8] && scrollPos <= breakPt[8] + 1000) {
+      direction = 'down'
+      breakPt1 = breakPt[8]
+      breakPt2 = breakPt[8] + 1000
+    } else if (scrollPos > breakPt[8] + 1000 && scrollPos <= breakPt[8] + 2000) {
+      direction = 'up'
+      breakPt1 = breakPt[8] + 1000
+      breakPt2 = breakPt[8] + 2000
+    } else if (scrollPos > breakPt[13] && scrollPos <= breakPt[13] + 1000) {
+      direction = 'down'
+      breakPt1 = breakPt[13]
+      breakPt2 = breakPt[13] + 1000
+    } else if (scrollPos > breakPt[13] + 1000 && scrollPos <= breakPt[13] + 2000) {
+      direction = 'up'
+      breakPt1 = breakPt[13] + 1000
+      breakPt2 = breakPt[13] + 2000
     }
 
     // Pitch modulation function
-    const freq = freqExp(direction, breakPt1, breakPt2, 22050, 0, scrollPos)
+    const freq = freqExp(direction, breakPt1, breakPt2, 16000, 200, scrollPos)
 
     // To play the sound
     if (isScrolling && !this.synthIsPlaying) {
@@ -129,7 +146,7 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 30
+    const amtPerFrame = this.posDiff / 45
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt
@@ -168,10 +185,9 @@ class App extends Component {
             breakPt4={breakPt[4]}
             breakPt5={breakPt[5]}
             renderContent={renderSkills}
-            hasPages={false}
           />
         ) || (
-          scrollPos > breakPt[6] && scrollPos <= breakPt[18] &&
+          scrollPos > breakPt[6] && scrollPos <= breakPt[10] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
             title='Projects'
@@ -182,15 +198,33 @@ class App extends Component {
             breakPt4={breakPt[9]}
             breakPt5={breakPt[10]}
             renderContent={renderProjects}
-            hasPages={true}
-            numPerPage={3}
           />
         ) || (
-          scrollPos > breakPt[19] && scrollPos <= breakPt[23] &&
-          <Education scrollToBreakPoint={this.scrollToPosition}/>
+          scrollPos > breakPt[11] && scrollPos <= breakPt[15] &&
+          <Menu
+            scrollToBreakPoint={this.scrollToPosition}
+            title='Education'
+            sectionColor='yellow'
+            breakPt1={breakPt[11]}
+            breakPt2={breakPt[12]}
+            breakPt3={breakPt[13]}
+            breakPt4={breakPt[14]}
+            breakPt5={breakPt[15]}
+            renderContent={renderEducation}
+          />
         ) || (
-          scrollPos > breakPt[24] && scrollPos <= breakPt[28] &&
-          <Other scrollToBreakPoint={this.scrollToPosition}/>
+          scrollPos > breakPt[16] && scrollPos <= breakPt[20] &&
+          <Menu
+            scrollToBreakPoint={this.scrollToPosition}
+            title='Other'
+            sectionColor='white'
+            breakPt1={breakPt[16]}
+            breakPt2={breakPt[17]}
+            breakPt3={breakPt[18]}
+            breakPt4={breakPt[19]}
+            breakPt5={breakPt[20]}
+            renderContent={renderOther}
+          />
         )}
 
       </div>
