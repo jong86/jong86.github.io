@@ -56,15 +56,10 @@
     padding: 0 6em;
     word-break: keep-all;
     white-space: pre-wrap; }
-  .summary svg {
-    width: 100%;
+  .summary svg.nav {
     position: absolute;
     margin: 0 auto;
-    bottom: 0;
-    width: 48px;
-    animation: btn-summary-color var(--btn-flash-speed) infinite;
-    animation-timing-function: ease-out;
-    cursor: pointer; }
+    bottom: 0; }
 
 @media only screen and (max-width: 600px) {
   .summary .heading {
@@ -73,9 +68,3 @@
     height: 1000px;
     padding: 0 5%;
     font-size: 0.575em; } }
-
-@keyframes btn-summary-color {
-  0% {
-    color: transparent; }
-  100% {
-    color: var(--menu-color-summary); } }

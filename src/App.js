@@ -43,46 +43,29 @@ class App extends Component {
     /*===============
       Sound effect
     ===============*/
+    const freqMax = 19000
+    const freqMin = 20
 
     // Set breakPts and direction for sound frequency function
     let direction, breakPt1, breakPt2
-    // Make exception for first menu (Summary)
+    // Make exception for first menu opening down (Summary)
     if (scrollPos <= breakPt[0]) {
       direction = 'down'
       breakPt1 = 0
       breakPt2 = breakPt[0]
-    } else if (scrollPos > breakPt[0] && scrollPos <= breakPt[3]) {
-      direction = 'up'
-      breakPt1 = breakPt[0]
-      breakPt2 = breakPt[3]
-    } else if (scrollPos > breakPt[3] && scrollPos <= breakPt[3] + 1000) {
-      direction = 'down'
-      breakPt1 = breakPt[3]
-      breakPt2 = breakPt[3] + 1000
-    } else if (scrollPos > breakPt[3] + 1000 && scrollPos <= breakPt[3] + 2000) {
-      direction = 'up'
-      breakPt1 = breakPt[3] + 1000
-      breakPt2 = breakPt[3] + 2000
-    } else if (scrollPos > breakPt[8] && scrollPos <= breakPt[8] + 1000) {
-      direction = 'down'
-      breakPt1 = breakPt[8]
-      breakPt2 = breakPt[8] + 1000
-    } else if (scrollPos > breakPt[8] + 1000 && scrollPos <= breakPt[8] + 2000) {
-      direction = 'up'
-      breakPt1 = breakPt[8] + 1000
-      breakPt2 = breakPt[8] + 2000
-    } else if (scrollPos > breakPt[13] && scrollPos <= breakPt[13] + 1000) {
-      direction = 'down'
-      breakPt1 = breakPt[13]
-      breakPt2 = breakPt[13] + 1000
-    } else if (scrollPos > breakPt[13] + 1000 && scrollPos <= breakPt[13] + 2000) {
-      direction = 'up'
-      breakPt1 = breakPt[13] + 1000
-      breakPt2 = breakPt[13] + 2000
+    } else {
+      // For rest of animations
+      for (let i = 0; i < breakPt.length; i += 3) {
+        if (scrollPos >= breakPt[i] && scrollPos <= breakPt[i + 3]) {
+          direction = 'up'
+          breakPt1 = breakPt[i]
+          breakPt2 = breakPt[i + 3]
+        }
+      }
     }
 
     // Pitch modulation function
-    const freq = freqExp(direction, breakPt1, breakPt2, 16000, 200, scrollPos)
+    const freq = freqExp(direction, breakPt1, breakPt2, freqMax, freqMin, scrollPos)
 
     // To play the sound
     if (isScrolling && !this.synthIsPlaying) {
@@ -144,7 +127,7 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 60
+    const amtPerFrame = this.posDiff / 30
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt

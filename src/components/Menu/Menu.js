@@ -139,11 +139,11 @@ class Menu extends Component {
       <div className="wrapper" style={wrapperStyle}>
         <div className="section no-select" style={{...sectionStyle, borderColor: sectionColor}}>
           <div className="heading" style={{borderColor: sectionColor}}>
-            <AngleLeft size={56} color={sectionColor} onClick={this.onClickPrev}/>
+            <AngleLeft className="nav" size={56} color={sectionColor} onClick={this.onClickPrev}/>
             <div className="title" style={titleStyle}>
               { title }
             </div>
-            <AngleRight size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
+            <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
           </div>
           <div className="content" style={contentStyle}>
             { renderContent() }

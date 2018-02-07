@@ -143,9 +143,9 @@ class Summary extends Component {
 
     const btnSize = 56
     const button = (scrollPos < breakPt[0]) ? (
-      (<AngleDown size={btnSize} onClick={() => scrollToBreakPoint(200)}/>)
+      (<AngleDown className="nav" size={btnSize} onClick={() => scrollToBreakPoint(200)}/>)
     ) : (
-      (<AngleUp size={btnSize} onClick={() => scrollToBreakPoint(scrollPos + 1200)}/>)
+      (<AngleUp className="nav" size={btnSize} onClick={() => scrollToBreakPoint(scrollPos + 1200)}/>)
     )
 
     return (

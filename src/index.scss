@@ -34,3 +34,17 @@ body {
 .hide {
   visibility: hidden;
 }
+
+svg.nav {
+  width: 48px;
+
+  animation: btn-opacity var(--btn-flash-speed) infinite;
+  animation-timing-function: ease-out;
+
+  cursor: pointer;
+
+  @keyframes btn-opacity {
+    0% { opacity: 0.0; }
+    100% { opacity: 1.0 }
+  }
+}
