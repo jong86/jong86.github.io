@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './App.css'
 import './components/Menu/skills/skills.css'
+import './components/Menu/projects/projects.css'
+import './components/Menu/education/education.css'
+import './components/Menu/other/other.css'
 
 import Summary from './components/Summary/Summary.js'
 
@@ -43,10 +46,10 @@ class App extends Component {
     /*===============
       Sound effect
     ===============*/
-    const freqMax = 19000
-    const freqMin = 20
+    const freqMax = 22050
+    const freqMin = 0
 
-    // Set breakPts and direction for sound frequency function
+    // Determine breakPts and direction for sound frequency function
     let direction, breakPt1, breakPt2
     // Make exception for first menu opening down (Summary)
     if (scrollPos <= breakPt[0]) {
@@ -93,7 +96,7 @@ class App extends Component {
 
   instantiateSynth = () => {
     // This is required to replay the sound
-    this.synth = new Synth(this.audioContext, 'triangle', 900, 400)
+    this.synth = new Synth(this.audioContext, 'triangle', 1200, 800)
   }
 
 
@@ -127,7 +130,7 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 30
+    const amtPerFrame = this.posDiff / 10
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt

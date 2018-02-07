@@ -23,11 +23,11 @@ class Menu extends Component {
 
     this.state = {
       wrapperStyle: {
-        marginTop: scrollPos <= breakPt2 ? '125%' : '-125%',
+        marginTop: scrollPos <= breakPt2 ? '125%' : '-25%',
         opacity: scrollPos <= breakPt2 ? 0.0 : 1.0,
       },
       sectionStyle: {
-        width: scrollPos > breakPt4 ? '100%' : '2px',
+        width: scrollPos > breakPt4 ? '100%' : '1%',
       },
       titleStyle: {},
       contentStyle: {},
@@ -56,7 +56,11 @@ class Menu extends Component {
         },
         sectionStyle: {
           ...this.state.sectionStyle,
-          width: '2px',
+          width: '1%',
+        },
+        titleStyle: {
+          ...this.state.titleStyle,
+          opacity: 0.0,
         },
         contentStyle: {
           ...this.state.contentStyle,
@@ -92,12 +96,20 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos),
+          marginTop: moveComponentVerticallyUp('0%', '-25%', breakPt3, breakPt4, scrollPos),
           opacity: fadeOpacity('out', breakPt3, breakPt4, scrollPos),
         },
         sectionStyle: {
           ...this.state.sectionStyle,
           width: '100%',
+        },
+        titleStyle: {
+          ...this.state.titleStyle,
+          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
+        },
+        contentStyle: {
+          ...this.state.contentStyle,
+          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
       })
     }

@@ -33,8 +33,7 @@
       font-size: 1em;
       margin: 0 auto;
       margin-top: 0.25em;
-      overflow: hidden;
-      white-space: nowrap;
+      overflow: keep-all;
       display: flex;
       justify-content: center;
       flex-direction: column;
