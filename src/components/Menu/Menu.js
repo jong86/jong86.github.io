@@ -12,39 +12,25 @@ import AngleLeft from 'react-icons/lib/fa/angle-left'
 
 
 class Menu extends Component {
-  constructor() {
-    super()
-    this.state = {
-      wrapperStyle: {},
-      sectionStyle: {},
-      titleStyle: {},
-      contentStyle: {},
-    }
-  }
+  constructor(props) {
+    super(props)
 
-  componentWillMount = () => {
     const {
-      breakPt1,
+      breakPt2,
       breakPt4,
       scrollPosition: scrollPos,
-    } = this.props
+    } = props
 
-    if (scrollPos <= breakPt1) {
-      this.setState({
-        wrapperStyle: {
-          marginTop: '125%',
-          opacity: 0.0,
-        },
-      })
-    } else if (scrollPos > breakPt4) {
-      this.setState({
-        wrapperStyle: {
-          opacity: 1.0,
-        },
-        sectionStyle: {
-          width: '100%',
-        },
-      })
+    this.state = {
+      wrapperStyle: {
+        marginTop: scrollPos <= breakPt2 ? '125%' : '-125%',
+        opacity: scrollPos <= breakPt2 ? 0.0 : 1.0,
+      },
+      sectionStyle: {
+        width: scrollPos > breakPt4 ? '100%' : '2px',
+      },
+      titleStyle: {},
+      contentStyle: {},
     }
   }
 
@@ -58,6 +44,7 @@ class Menu extends Component {
       Animation
     ============*/
     let { breakPt1, breakPt2, breakPt3, breakPt4 } = this.props
+
 
     // Moving into view
     if (scrollPos > breakPt1 && scrollPos <= breakPt2) {
@@ -95,7 +82,7 @@ class Menu extends Component {
         },
         contentStyle: {
           ...this.state.contentStyle,
-          opacity: 0,
+          opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
         },
       })
     }
