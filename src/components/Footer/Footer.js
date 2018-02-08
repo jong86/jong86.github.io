@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './Footer.css'
 import { connect } from 'react-redux'
 
+import CaretDown from 'react-icons/lib/fa/caret-down'
+
 class Footer extends Component {
   constructor() {
     super()
@@ -64,7 +66,9 @@ class Footer extends Component {
         </div>
         <div className="progress-track">
           <div className="progress-indicator-wrapper" style={progressStyle}>
-            <div className="progress-indicator"/>
+            <div className="progress-indicator">
+              <CaretDown className="icon" size={64} color="white"/>
+            </div>
           </div>
         </div>
       </footer>
