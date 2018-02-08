@@ -56,7 +56,7 @@ class Footer extends Component {
           SKILLS
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[6])}>
-          PROJECTS
+          PORTFOLIO
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[9])}>
           EDUCATION

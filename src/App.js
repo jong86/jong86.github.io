@@ -196,7 +196,7 @@ class App extends Component {
           scrollPos > breakPt[4] && scrollPos <= breakPt[7] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='PROJECTS'
+            title='PORTFOLIO'
             sectionColor='fuchsia'
             breakPt1={breakPt[4]}
             breakPt2={breakPt[5]}
