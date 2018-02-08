@@ -7,7 +7,7 @@ class Footer extends Component {
     super()
     this.state = {
       progressStyle: {
-        left: '10%',
+        left: '0%',
       },
     }
   }
@@ -28,8 +28,11 @@ class Footer extends Component {
   getProgressIndicatorLeftPos = (scrollPos) => {
     const { scrollBreakpoints: breakPt } = this.props
 
-    console.log((((scrollPos - 200) / (breakPt[12] - 200)) * 100), scrollPos)
-    
+    let pctScroll = (((scrollPos - 200) / (breakPt[12] - 200)) * 100)
+
+    // Makes sure it doesn't go below zero (initial summary section has an exception)
+    pctScroll = pctScroll < 0 ? 0 : pctScroll
+    return pctScroll + '%'
   }
 
   handleClick = (dest) => {
@@ -59,8 +62,11 @@ class Footer extends Component {
         <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
           OTHER
         </div>
-        <div className="progress-track"/>
-        <div className="progress-indicator-wrapper" style={progressStyle}><div className="progress-indicator"/></div>
+        <div className="progress-track">
+          <div className="progress-indicator-wrapper" style={progressStyle}>
+            <div className="progress-indicator"/>
+          </div>
+        </div>
       </footer>
     )
   }
