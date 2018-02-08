@@ -38,8 +38,8 @@ class Footer extends Component {
   }
 
   handleClick = (dest) => {
-    const { scrollPosition: scrollPos, scrollTo } = this.props
-    if (scrollPos !== dest) scrollTo(dest)
+    const { scrollPosition: scrollPos, scrollTo, isScrolling } = this.props
+    if (scrollPos !== dest && !isScrolling) scrollTo(dest)
   }
 
   render = () => {
@@ -80,6 +80,7 @@ function mapStateToProps(state) {
   return {
     scrollPosition: state.scrollPosition,
     scrollBreakpoints: state.scrollBreakpoints,
+    isScrolling: state.isScrolling,
   }
 }
 

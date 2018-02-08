@@ -26,22 +26,20 @@ export default class Synth {
     this.oscillator.type = this.waveshape
 
     this.filterLowPass.type = 'lowpass'
-    this.filterLowPass.frequency.setTargetAtTime(this.lowpassFreq, this.context.currentTime, 0)
+    this.filterLowPass.frequency.setTargetAtTime(this.lowpassFreq, this.context.currentTime, 0.015)
 
     this.filterHiPass.type = 'highpass'
-    this.filterHiPass.frequency.setTargetAtTime(this.hipassFreq, this.context.currentTime, 0)
+    this.filterHiPass.frequency.setTargetAtTime(this.hipassFreq, this.context.currentTime, 0.015)
 
     this.isPlaying = false
   }
 
-  play(freq) {
+  play() {
     this.init()
-
-    this.oscillator.frequency.setTargetAtTime(freq, this.context.currentTime, 0)
 
     this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0)
     this.oscillator.start()
-    this.gainNode.gain.setTargetAtTime(0.2, this.context.currentTime, 0.05)
+    this.gainNode.gain.setTargetAtTime(0.03, this.context.currentTime, 0.015)
     this.isPlaying = true
   }
 
