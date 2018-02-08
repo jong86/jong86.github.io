@@ -15,7 +15,7 @@ footer {
     flex: 0.2;
 
     // border-width: 1px 1px 0 1px;
-    // border-color: lime;
+    // border-color: rgba(255, 255, 255, 0.637);
     // border-style: solid;
 
     display: flex;
@@ -30,6 +30,10 @@ footer {
 
     &:hover {
       background-color: rgba(197, 197, 197, 0.8);
+    }
+
+    @media only screen and (max-width: 600px) {
+      font-size: 0.8em;
     }
   }
 

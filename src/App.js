@@ -112,6 +112,9 @@ class App extends Component {
     // Diff between current scrollPos and destPos
     this.posDiff = Math.abs(scrollPos - destPos)
 
+    // Scroll to top of page when changing sections
+    window.scrollTo(0, 0)
+
     setIsScrolling(true)
     this.req = requestAnimationFrame(() => this.handleAnimation(destPos))
   }

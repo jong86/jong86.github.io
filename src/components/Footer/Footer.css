@@ -17,3 +17,6 @@ footer {
     cursor: pointer; }
     footer .btn-footer:hover {
       background-color: rgba(197, 197, 197, 0.8); }
+    @media only screen and (max-width: 600px) {
+      footer .btn-footer {
+        font-size: 0.8em; } }
