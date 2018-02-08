@@ -3,6 +3,35 @@ import './Footer.css'
 import { connect } from 'react-redux'
 
 class Footer extends Component {
+  constructor() {
+    super()
+    this.state = {
+      progressStyle: {
+        left: '10%',
+      },
+    }
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    const {
+      scrollPosition: scrollPos,
+    } = nextProps
+
+    this.setState({
+      progressStyle:{
+        ...this.state.progressStyle,
+        left: this.getProgressIndicatorLeftPos(scrollPos),
+      },
+    })
+  }
+
+  getProgressIndicatorLeftPos = (scrollPos) => {
+    const { scrollBreakpoints: breakPt } = this.props
+
+    console.log((((scrollPos - 200) / (breakPt[12] - 200)) * 100), scrollPos)
+    
+  }
+
   handleClick = (dest) => {
     const { scrollPosition: scrollPos, scrollTo } = this.props
     if (scrollPos !== dest) scrollTo(dest)
@@ -10,7 +39,9 @@ class Footer extends Component {
 
   render = () => {
     const { scrollBreakpoints: breakPt } = this.props
+    const { progressStyle } = this.state
     const { handleClick } = this
+
     return (
       <footer className="no-select">
         <div className="btn-footer" onClick={() => handleClick(breakPt[0])}>
@@ -28,6 +59,8 @@ class Footer extends Component {
         <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
           OTHER
         </div>
+        <div className="progress-track"/>
+        <div className="progress-indicator-wrapper" style={progressStyle}><div className="progress-indicator"/></div>
       </footer>
     )
   }
