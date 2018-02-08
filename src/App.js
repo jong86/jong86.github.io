@@ -28,6 +28,7 @@ class App extends Component {
     this.soundDirection = ''
     this.soundBreakPt1 = 0
     this.soundBreakPt2 = 0
+    this.soundReady = false
   }
 
 
@@ -51,8 +52,8 @@ class App extends Component {
     /*===============
       Sound effect
     ===============*/
-    const freqMax = 19000
-    const freqMin = 60
+    const freqMax = 16000
+    const freqMin = 0
 
 
     // Determine breakPts and direction for sound frequency function
@@ -61,6 +62,7 @@ class App extends Component {
       this.soundDirection = 'down'
       this.soundBreakPt1 = 0
       this.soundBreakPt2 = breakPt[0]
+      this.soundReady = true
     } else {
       // For rest of animations
       for (let i = 0; i < breakPt.length; i += 3) {
@@ -68,16 +70,15 @@ class App extends Component {
           this.soundDirection = 'up'
           this.soundBreakPt1 = breakPt[i]
           this.soundBreakPt2 = breakPt[i + 3]
+          this.soundReady = true
         }
       }
     }
 
 
     // To play the sound
-    if (isScrolling && !this.synthIsPlaying) {
+    if (isScrolling && !this.synthIsPlaying && this.soundReady) {
       this.synthIsPlaying = true
-      console.log("=============================");
-      console.log("starting sound");
 
       // Pitch modulation function
       this.soundFreq = freqExp(this.soundDirection, this.soundBreakPt1, this.soundBreakPt2, freqMax, freqMin, scrollPos)
@@ -85,14 +86,10 @@ class App extends Component {
     }
 
     // Continuously set sound frequency as scrollPos (props) changes
-    this.soundFreq = freqExp(this.soundDirection, this.soundBreakPt1, this.soundBreakPt2, freqMax, freqMin, scrollPos)
-    this.synth.frequency = this.soundFreq
-  }
-
-  getSoundDirectionAndBreakpoints = async () => {
-
-
-    
+    if (this.soundReady) {
+      this.soundFreq = freqExp(this.soundDirection, this.soundBreakPt1, this.soundBreakPt2, freqMax, freqMin, scrollPos)
+      this.synth.frequency = this.soundFreq
+    }
   }
 
 
@@ -101,19 +98,18 @@ class App extends Component {
 
     // To stop the sound:
     if (!isScrolling && this.synthIsPlaying) {
-      console.log("stopping sound");
-      console.log("===========================");
       this.synthIsPlaying = false
       this.synth.stop()
       // Re-create the sound object
       this.instantiateSynth()
+      this.soundReady = false
     }
   }
 
 
   instantiateSynth = () => {
     // This is required to replay the sound
-    this.synth = new Synth(this.audioContext, 'triangle', 1200, 800)
+    this.synth = new Synth(this.audioContext, 'sawtooth', 640, 440)
   }
 
 
