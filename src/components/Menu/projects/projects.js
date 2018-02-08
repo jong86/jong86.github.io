@@ -102,7 +102,7 @@ export const renderProjects = () => {
   return projectsData.map(project =>
     <div className="project" key={uuidv4()}>
       <div className="image" key={uuidv4()}>
-      <a href={ project.url } target="_blank"><img src={project.image}/></a>
+      <a href={ project.url } target="_blank"><img src={project.image} alt={project.title}/></a>
       </div>
       <div className="description" key={uuidv4()}>
         <div className="project-title subtitle" key={uuidv4()}>

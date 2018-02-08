@@ -11,7 +11,7 @@
   .project .image {
     flex: 0.4; }
     .project .image img {
-      max-width: fill-available;
+      max-width: stretch;
       margin: 0 1em; }
   .project .description {
     font-size: 0.9em;
@@ -23,7 +23,7 @@
       font-weight: bold;
       font-size: 1.25em; }
     .project .description ul {
-      list-style-type: circle;
+      list-style-type: square;
       padding: 0;
       margin-left: 1.5em; }
       .project .description ul li {

@@ -1,15 +1,19 @@
 @import "../../../_global.scss";
 
 .skills-content {
-  width: 100%;
+  width: 60%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  margin-bottom: 0.25em;
+  margin: 1em;
   padding-top: 1em;
+
+  border-radius: $menu-border-radius;
+
+  background: $submenu-bg;
 
   .label {
     width: 100%;

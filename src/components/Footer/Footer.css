@@ -1,0 +1,19 @@
+footer {
+  z-index: 3;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 800px;
+  height: 50px;
+  display: flex;
+  background-color: rgba(105, 105, 105, 0.8); }
+  footer .btn-footer {
+    flex: 0.2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    color: white;
+    cursor: pointer; }
+    footer .btn-footer:hover {
+      background-color: rgba(197, 197, 197, 0.8); }

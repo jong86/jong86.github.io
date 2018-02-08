@@ -6,12 +6,12 @@ import './components/Menu/education/education.css'
 import './components/Menu/other/other.css'
 
 import Summary from './components/Summary/Summary.js'
-
 import Menu from './components/Menu/Menu.js'
 import { renderSkills } from './components/Menu/skills/skills.js'
 import { renderProjects } from './components/Menu/projects/projects.js'
 import { renderEducation } from './components/Menu/education/education.js'
 import { renderOther } from './components/Menu/other/other.js'
+import Footer from './components/Footer/Footer.js'
 
 import action from './redux/action.js'
 import { connect } from 'react-redux'
@@ -206,6 +206,8 @@ class App extends Component {
             renderContent={renderOther}
           />
         )}
+
+        <Footer scrollToBreakPoint={this.scrollToPosition}/>
 
       </div>
     )
