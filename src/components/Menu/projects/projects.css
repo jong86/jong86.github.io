@@ -1,0 +1,30 @@
+.project {
+  width: 90%;
+  margin: 1em;
+  display: flex;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 4px;
+  padding: 1em; }
+  .project a {
+    color: silver;
+    text-decoration: none; }
+  .project .image {
+    flex: 0.4; }
+    .project .image img {
+      max-width: stretch;
+      margin: 0 0.4em; }
+  .project .description {
+    font-size: 0.9em;
+    flex: 0.6; }
+    .project .description .project-title {
+      display: flex;
+      justify-content: flex-start;
+      padding: 0;
+      font-weight: bold;
+      font-size: 1.25em; }
+    .project .description ul {
+      list-style-type: square;
+      padding: 0;
+      margin-left: 1.5em; }
+      .project .description ul li {
+        margin-bottom: 0.5em; }

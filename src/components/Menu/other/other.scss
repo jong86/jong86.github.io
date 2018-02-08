@@ -1,0 +1,32 @@
+@import "../../../_global.scss";
+
+a.other-item {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  min-width: fit-content;
+  color: white;
+  text-decoration: none;
+  margin: 2em;
+  padding: 1em;
+  background: $submenu-bg;
+  border-radius: $menu-border-radius;
+
+  &:hover {
+    background: $submenu-bg-active;
+  }
+
+  .icon {
+    flex: 0.4;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .name {
+    flex: 0.6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 1em;
+  }
+}
