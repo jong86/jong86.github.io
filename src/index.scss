@@ -33,12 +33,13 @@ svg.nav {
   width: 48px;
 
   animation: btn-opacity $btn-flash-speed infinite;
-  animation-timing-function: ease-in;
+  animation-timing-function: linear;
 
   cursor: pointer;
 
   @keyframes btn-opacity {
-    0% { opacity: 0.0; }
-    100% { opacity: 1.0 }
+    0% { opacity: 0.6; }
+    50% { opacity: 1.0 }
+    100% { opacity: 0.6 }
   }
 }

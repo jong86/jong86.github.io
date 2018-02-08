@@ -62,7 +62,7 @@ class Footer extends Component {
           EDUCATION
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
-          OTHER
+          CONTACT
         </div>
         <div className="progress-track">
           <div className="progress-indicator-wrapper" style={progressStyle}>
