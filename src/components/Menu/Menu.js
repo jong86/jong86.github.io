@@ -91,6 +91,30 @@ class Menu extends Component {
       })
     }
 
+    // Check to make sure proper state when section displayed
+    if (scrollPos === breakPt3) {
+      this.setState({
+        wrapperStyle: {
+          ...this.state.wrapperStyle,
+          opacity: 1.0,
+          marginTop: '0%',
+        },
+        sectionStyle: {
+          ...this.state.sectionStyle,
+          opacity: 1.0,
+          width: '100%',
+        },
+        titleStyle: {
+          ...this.state.titleStyle,
+          opacity: 1.0,
+        },
+        contentStyle: {
+          ...this.state.contentStyle,
+          opacity: 1.0,
+        },
+      })
+    }
+
     // Moving up, out of view
     if (scrollPos > breakPt3 && scrollPos <= breakPt4) {
       this.setState({
