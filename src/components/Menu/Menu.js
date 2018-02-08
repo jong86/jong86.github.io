@@ -82,11 +82,11 @@ class Menu extends Component {
         },
         titleStyle: {
           ...this.state.titleStyle,
-          opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
+          opacity: fadeOpacity('in', breakPt2 + 300, breakPt3, scrollPos),
         },
         contentStyle: {
           ...this.state.contentStyle,
-          opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
+          opacity: fadeOpacity('in', breakPt2 + 300, breakPt3, scrollPos),
         },
       })
     }
@@ -120,8 +120,8 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos),
-          opacity: fadeOpacity('out', breakPt3, breakPt4, scrollPos),
+          marginTop: moveComponentVerticallyUp('0%', '-50%', breakPt3, breakPt4, scrollPos),
+          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
         sectionStyle: {
           ...this.state.sectionStyle,
@@ -133,7 +133,7 @@ class Menu extends Component {
         },
         contentStyle: {
           ...this.state.contentStyle,
-          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
+          opacity: fadeOpacity('out', breakPt3, breakPt4 - 300, scrollPos),
         },
       })
     }
