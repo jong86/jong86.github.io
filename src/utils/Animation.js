@@ -20,7 +20,7 @@ export const moveComponentVerticallyUp = (startPct, endPct, breakPt1, breakPt2, 
 
 
 export const incWidthWithScrollPosition = (breakPt1, breakPt2, scrollPos) => {
-  return (((scrollPos - breakPt1) / (breakPt2 - breakPt1)) * 100) + '%'
+  return (scrollPos - breakPt1) / (breakPt2 - breakPt1)
 }
 
 

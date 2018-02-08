@@ -23,11 +23,8 @@ class Menu extends Component {
 
     this.state = {
       wrapperStyle: {
-        marginTop: scrollPos <= breakPt2 ? '125%' : '-25%',
+        transform: `translateY(${scrollPos <= breakPt2 ? '125%' : '-125%'}) scaleX(0.01)`,
         opacity: scrollPos <= breakPt2 ? 0.0 : 1.0,
-      },
-      sectionStyle: {
-        width: scrollPos > breakPt4 ? '100%' : '1%',
       },
       titleStyle: {},
       contentStyle: {},
@@ -51,12 +48,8 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos),
+          transform: `translateY(${moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos)})  scaleX(0.01)`,
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: '1%',
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -74,11 +67,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: '0%',
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)
+          transform: `translateY(0) scaleX(${incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)})`,
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -97,12 +86,7 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           opacity: 1.0,
-          marginTop: '0%',
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          opacity: 1.0,
-          width: '100%',
+          transform: `translateY(0) scaleX(1)`,
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -120,12 +104,8 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos),
+          transform: `translateY(${moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos)}) scaleX(1)`,
           opacity: fadeOpacity('out', breakPt3, breakPt4, scrollPos),
-        },
-        sectionStyle: {
-          ...this.state.sectionStyle,
-          width: '100%',
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -172,18 +152,16 @@ class Menu extends Component {
     } = this.state
 
     return (
-      <div className="wrapper" style={wrapperStyle}>
-        <div className="section no-select" style={{...sectionStyle, borderColor: sectionColor}}>
-          <div className="heading" style={{borderColor: sectionColor}}>
-            <AngleLeft className="nav" size={56} color={sectionColor} onClick={this.onClickPrev}/>
-            <div className="title" style={{...titleStyle, color: sectionColor}}>
-              { title }
-            </div>
-            <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
+      <div className="wrapper no-select" style={{...wrapperStyle, borderColor: sectionColor}}>
+        <div className="heading" style={{borderColor: sectionColor}}>
+          <AngleLeft className="nav" size={56} color={sectionColor} onClick={this.onClickPrev}/>
+          <div className="title" style={{...titleStyle, color: sectionColor}}>
+            { title }
           </div>
-          <div className="content" style={contentStyle}>
-            { renderContent() }
-          </div>
+          <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
+        </div>
+        <div className="content" style={contentStyle}>
+          { renderContent() }
         </div>
       </div>
     )
