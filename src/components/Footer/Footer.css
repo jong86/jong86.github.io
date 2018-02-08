@@ -18,7 +18,7 @@ footer {
     cursor: pointer; }
     @media only screen and (max-width: 600px) {
       footer .btn-footer {
-        font-size: 0.8em; } }
+        font-size: 0.75em; } }
   footer .progress-track {
     position: absolute;
     top: 0;
