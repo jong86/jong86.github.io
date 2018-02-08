@@ -120,7 +120,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-50%', breakPt3, breakPt4, scrollPos),
+          marginTop: moveComponentVerticallyUp('0%', '-250%', breakPt3, breakPt4, scrollPos),
           opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
         sectionStyle: {
