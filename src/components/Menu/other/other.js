@@ -12,7 +12,7 @@ const iconSize = 48
 const otherData = [
   {
     name: 'jongaspar@gmail.com',
-    url: 'mailto://jongaspar@gmail.com',
+    url: 'mailto:jongaspar@gmail.com',
     icon: (<Envelope size={iconSize} color='white'/>),
   },
   {
