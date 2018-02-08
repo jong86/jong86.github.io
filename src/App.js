@@ -210,7 +210,7 @@ class App extends Component {
           />
         )}
 
-        <Footer scrollToBreakPoint={this.scrollToPosition}/>
+        <Footer scrollTo={this.scrollToPosition}/>
 
       </div>
     )

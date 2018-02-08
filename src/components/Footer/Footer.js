@@ -3,41 +3,29 @@ import './Footer.css'
 import { connect } from 'react-redux'
 
 class Footer extends Component {
-  handleClick = (scrollDest) => {
-    const { scrollToBreakPoint: scrollTo, scrollBreakpoints: breakPt } = this.props
-    switch (scrollDest) {
-      case 'summary':
-        return scrollTo(breakPt[0])
-      case 'skills':
-        return scrollTo(breakPt[3])
-      case 'projects':
-        return scrollTo(breakPt[6])
-      case 'education':
-        return scrollTo(breakPt[9])
-      case 'other':
-        return scrollTo(breakPt[12])
-      default:
-        break
-    }
+  handleClick = (dest) => {
+    const { scrollPosition: scrollPos, scrollTo } = this.props
+    if (scrollPos !== dest) scrollTo(dest)
   }
 
   render = () => {
+    const { scrollBreakpoints: breakPt } = this.props
     const { handleClick } = this
     return (
       <footer className="no-select">
-        <div className="btn-footer btn-summary" onClick={() => handleClick('summary')}>
+        <div className="btn-footer" onClick={() => handleClick(breakPt[0])}>
           SUMMARY
         </div>
-        <div className="btn-footer btn-skills" onClick={() => handleClick('skills')}>
+        <div className="btn-footer" onClick={() => handleClick(breakPt[3])}>
           SKILLS
         </div>
-        <div className="btn-footer btn-projects" onClick={() => handleClick('projects')}>
+        <div className="btn-footer" onClick={() => handleClick(breakPt[6])}>
           PROJECTS
         </div>
-        <div className="btn-footer btn-education" onClick={() => handleClick('education')}>
+        <div className="btn-footer" onClick={() => handleClick(breakPt[9])}>
           EDUCATION
         </div>
-        <div className="btn-footer btn-other" onClick={() => handleClick('other')}>
+        <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
           OTHER
         </div>
       </footer>
