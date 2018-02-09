@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-top: -20vh;
+  margin-top: -25vh;
   z-index: 1;
   overflow: hidden; }
   .summary .heading {
