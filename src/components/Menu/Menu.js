@@ -124,7 +124,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-250%', breakPt3, breakPt4, scrollPos),
+          marginTop: moveComponentVerticallyUp('0%', '-50%', breakPt3, breakPt4, scrollPos),
           transform: 'rotate(0.01deg)',
           opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
@@ -187,8 +187,8 @@ class Menu extends Component {
             </div>
             <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
           </div>
-          <div className="content" style={contentStyle} style={{visibility: isScrolling ? 'hidden' : 'visible'}}>
-            { title === 'PORTFOLIO' ? this.props.children : renderContent() }
+          <div className="content" style={contentStyle} style={{display: isScrolling ? 'none' : 'initial'}}>
+            { renderContent() }
           </div>
         </div>
       </div>

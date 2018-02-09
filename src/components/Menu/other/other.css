@@ -5,7 +5,7 @@ a.other-item {
   min-width: fit-content;
   color: white;
   text-decoration: none;
-  margin: 2em;
+  margin: 2em auto;
   padding: 1em;
   background: rgba(255, 255, 255, 0.025);
   border-radius: 4px; }

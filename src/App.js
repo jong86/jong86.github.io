@@ -8,7 +8,7 @@ import './components/Menu/other/other.css'
 import Summary from './components/Summary/Summary.js'
 import Menu from './components/Menu/Menu.js'
 import { renderSkills } from './components/Menu/skills/skills.js'
-import RenderProjects from './components/Menu/projects/projects.js'
+import { renderProjects } from './components/Menu/projects/projects.js'
 import { renderEducation } from './components/Menu/education/education.js'
 import { renderOther } from './components/Menu/other/other.js'
 import Footer from './components/Footer/Footer.js'
@@ -202,9 +202,8 @@ class App extends Component {
             breakPt2={breakPt[5]}
             breakPt3={breakPt[6]}
             breakPt4={breakPt[7]}
-          >
-            <RenderProjects/>
-          </Menu>
+            renderContent={renderProjects}
+          />
         ) || (
           scrollPos > breakPt[7] && scrollPos <= breakPt[10] &&
           <Menu

@@ -131,6 +131,14 @@ class Summary extends Component {
   }
 
 
+  scrollTo = (dest) => {
+    const { scrollToBreakPoint, isScrolling } = this.props
+    if (!isScrolling) {
+      scrollToBreakPoint(dest)
+    }
+  }
+
+
 
   render = () => {
     const {
@@ -142,20 +150,19 @@ class Summary extends Component {
     const {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
-      scrollToBreakPoint,
     } = this.props
 
     const btnSize = 56
     const button = (scrollPos < breakPt[0]) ? (
-      (<AngleDown className="nav" size={btnSize} onClick={() => scrollToBreakPoint(200)}/>)
+      (<AngleDown className="nav" size={btnSize} onClick={() => this.scrollTo(200)}/>)
     ) : (
-      (<AngleUp className="nav" size={btnSize} onClick={() => scrollToBreakPoint(scrollPos + 1200)}/>)
+      (<AngleUp className="nav" size={btnSize} onClick={() => this.scrollTo(scrollPos + 1200)}/>)
     )
 
     return (
       <div className="summary-wrapper" style={wrapperStyle}>
         <div className="summary no-select" style={sectionStyle}>
-          <div className="heading" onClick={() => scrollToBreakPoint(-1)}>
+          <div className="heading" onClick={() => this.scrollTo(-1)}>
             <div className="name">
               Jon Gaspar
             </div>

@@ -1,6 +1,6 @@
 .project {
   width: 90%;
-  margin: 1em;
+  margin: 1em auto;
   display: flex;
   background: rgba(255, 255, 255, 0.025);
   border-radius: 4px;
