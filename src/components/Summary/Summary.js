@@ -85,6 +85,7 @@ class Summary extends Component {
         wrapperStyle: {
           top: topStartPct,
           opacity: 1.0,
+          transform: 'rotate(0.01deg)',
         },
         sectionStyle: {
           height: scrollPos + this.cssMinHeight
@@ -101,6 +102,7 @@ class Summary extends Component {
       this.setState({
         wrapperStyle: {
           top: moveComponentVerticallyUp(topStartPct, '-25%', breakPt1, breakPt2, scrollPos),
+          transform: 'rotate(0.01deg)',
           opacity: fadeOpacity('out', breakPt1, breakPt2, scrollPos),
         },
         // Scramble text

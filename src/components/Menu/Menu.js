@@ -52,6 +52,7 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           marginTop: moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos),
+          transform: 'rotate(0.01deg)',
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
         sectionStyle: {
@@ -78,7 +79,8 @@ class Menu extends Component {
         },
         sectionStyle: {
           ...this.state.sectionStyle,
-          width: incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)
+          width: incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos),
+          transform: 'rotate(0.01deg)',
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -97,11 +99,13 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           opacity: 1.0,
+          transform: 'rotate(0.0deg)',
           marginTop: '0%',
         },
         sectionStyle: {
           ...this.state.sectionStyle,
           opacity: 1.0,
+          transform: 'rotate(0.0deg)',
           width: '100%',
         },
         titleStyle: {
@@ -121,6 +125,7 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           marginTop: moveComponentVerticallyUp('0%', '-250%', breakPt3, breakPt4, scrollPos),
+          transform: 'rotate(0.01deg)',
           opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
         sectionStyle: {
@@ -162,6 +167,7 @@ class Menu extends Component {
       title,
       renderContent,
       sectionColor,
+      isScrolling,
     } = this.props
 
     const {
@@ -181,8 +187,8 @@ class Menu extends Component {
             </div>
             <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
           </div>
-          <div className="content" style={contentStyle}>
-            { renderContent() }
+          <div className="content" style={contentStyle} style={{visibility: isScrolling ? 'hidden' : 'visible'}}>
+            { title === 'PORTFOLIO' ? this.props.children : renderContent() }
           </div>
         </div>
       </div>
@@ -194,6 +200,7 @@ function mapStateToProps(state) {
   return {
     scrollPosition: state.scrollPosition,
     scrollBreakpoints: state.scrollBreakpoints,
+    isScrolling: state.isScrolling,
   }
 }
 

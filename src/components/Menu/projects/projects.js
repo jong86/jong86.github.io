@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
 
 import chatty from './images/chatty.png'
@@ -98,24 +99,47 @@ const projectsData = [
   },
 ]
 
-export const renderProjects = () => {
-  return projectsData.map(project =>
-    <div className="project" key={uuidv4()}>
-      <div className="image" key={uuidv4()}>
-      <a href={ project.url } target="_blank"><img src={project.image} alt={project.title}/></a>
-      </div>
-      <div className="description" key={uuidv4()}>
-        <div className="project-title subtitle" key={uuidv4()}>
-          <a href={ project.url } target="_blank">{ project.title }</a>
+class RenderProjects extends Component {
+  constructor() {
+    super()
+    this.projectsData = projectsData
+  }
+
+  render = () => {
+    console.log("RenderProjects props", this.props)
+    const { isScrolling } = this.props
+    const { projectsData } = this
+
+    return projectsData.map(project =>
+      <div className="project" key={uuidv4()}>
+        <div className="image" key={uuidv4()}>
+          <a href={ project.url } target="_blank">
+            <img style={{display: isScrolling ? 'none' : 'initial'}} src={project.image} alt={project.title}/>
+          </a>
         </div>
-        <ul>
-          { project.bulletPoints.map((bulletPoint, j) =>
-            <li key={uuidv4()}>
-              { bulletPoint }
-            </li>
-          )}
-        </ul>
+        <div style={{display: isScrolling ? 'none' : 'initial'}} className="description" key={uuidv4()}>
+          <div className="project-title subtitle" key={uuidv4()}>
+            <a href={ project.url } target="_blank">{ project.title }</a>
+          </div>
+          <ul>
+            { project.bulletPoints.map((bulletPoint, j) =>
+              <li key={uuidv4()}>
+                { bulletPoint }
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
+
+function mapStateToProps(state) {
+  return {
+    isScrolling: state.isScrolling,
+  }
+}
+
+RenderProjects = connect(mapStateToProps)(RenderProjects)
+
+export default RenderProjects
