@@ -184,7 +184,7 @@ class Menu extends Component {
             </div>
             <AngleRight className="nav" size={56} color={sectionColor} onClick={this.onClickNext} style={{visibility: scrollPos <= 4200 ? 'visible' : 'hidden'}}/>
           </div>
-          <div className="content" style={contentStyle} style={{display: isScrolling ? 'none' : 'initial'}}>
+          <div className="content" style={{...contentStyle, display: isScrolling ? 'none' : 'initial'}}>
             { renderContent() }
           </div>
         </div>

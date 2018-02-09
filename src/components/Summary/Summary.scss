@@ -31,8 +31,9 @@
   flex-direction: column;
   align-items: center;
 
-  position: absolute;
-  top: -50%;
+  position: relative;
+  margin-top: -20vh;
+
   z-index: 1;
 
   overflow: hidden;
@@ -91,7 +92,7 @@
   }
 
   svg.nav {
-    position: absolute;
+    position: relative;
     margin: 0 auto;
     bottom: 0;
   }

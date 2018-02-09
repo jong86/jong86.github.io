@@ -21,8 +21,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: -50%;
+  position: relative;
+  margin-top: -20vh;
   z-index: 1;
   overflow: hidden; }
   .summary .heading {
@@ -58,7 +58,7 @@
     word-break: keep-all;
     white-space: pre-wrap; }
   .summary svg.nav {
-    position: absolute;
+    position: relative;
     margin: 0 auto;
     bottom: 0; }
 

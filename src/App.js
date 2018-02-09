@@ -45,7 +45,6 @@ class App extends Component {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
       isScrolling,
-      scrollDirection,
     } = nextProps
 
 
