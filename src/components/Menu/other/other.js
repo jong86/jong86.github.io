@@ -39,7 +39,7 @@ const otherData = [
 
 export const renderOther = () => {
   return otherData.map(item =>
-    <a className="other-item" href={item.url} target="_blank" key={uuidv4()}>
+    <a className="other-item" href={item.url} target={item.name !== 'jongaspar@gmail.com' && '_blank'} key={uuidv4()}>
       <div className="icon" key={uuidv4()}>
         { item.icon }
       </div>
