@@ -1,7 +1,7 @@
 a.other-item {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: fit-content;
   min-width: fit-content;
   color: white;
   text-decoration: none;

@@ -38,8 +38,8 @@ class Footer extends Component {
   }
 
   handleClick = (dest) => {
-    const { scrollPosition: scrollPos, scrollTo } = this.props
-    if (scrollPos !== dest) scrollTo(dest)
+    const { scrollPosition: scrollPos, scrollTo, isScrolling } = this.props
+    if (scrollPos !== dest && !isScrolling) scrollTo(dest)
   }
 
   render = () => {
@@ -56,13 +56,13 @@ class Footer extends Component {
           SKILLS
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[6])}>
-          PROJECTS
+          PORTFOLIO
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[9])}>
           EDUCATION
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
-          OTHER
+          CONTACT
         </div>
         <div className="progress-track">
           <div className="progress-indicator-wrapper" style={progressStyle}>
@@ -80,6 +80,7 @@ function mapStateToProps(state) {
   return {
     scrollPosition: state.scrollPosition,
     scrollBreakpoints: state.scrollBreakpoints,
+    isScrolling: state.isScrolling,
   }
 }
 

@@ -48,7 +48,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          transform: `translateY(${moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos)})  scaleX(0.01)`,
+          transform: `translateY(${moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos)})  scaleX(0.01) rotate(0.01deg)`,
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
         titleStyle: {
@@ -67,15 +67,15 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          transform: `translateY(0) scaleX(${incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)})`,
+          transform: `translateY(0) scaleX(${incWidthWithScrollPosition(breakPt2, breakPt3, scrollPos)}) rotate(0.01deg)`,
         },
         titleStyle: {
           ...this.state.titleStyle,
-          opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
+          opacity: fadeOpacity('in', breakPt2 + 300, breakPt3, scrollPos),
         },
         contentStyle: {
           ...this.state.contentStyle,
-          opacity: fadeOpacity('in', breakPt2, breakPt3, scrollPos),
+          opacity: fadeOpacity('in', breakPt2 + 300, breakPt3, scrollPos),
         },
       })
     }
@@ -86,7 +86,7 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           opacity: 1.0,
-          transform: `translateY(0) scaleX(1)`,
+          transform: `translateY(0) scaleX(1) rotate(0deg)`,
         },
         titleStyle: {
           ...this.state.titleStyle,
@@ -104,7 +104,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          transform: `translateY(${moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos)}) scaleX(1)`,
+          transform: `translateY(${moveComponentVerticallyUp('0%', '-125%', breakPt3, breakPt4, scrollPos)}) scaleX(1) rotate(0.01deg)`,
           opacity: fadeOpacity('out', breakPt3, breakPt4, scrollPos),
         },
         titleStyle: {
@@ -113,7 +113,7 @@ class Menu extends Component {
         },
         contentStyle: {
           ...this.state.contentStyle,
-          opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
+          opacity: fadeOpacity('out', breakPt3, breakPt4 - 300, scrollPos),
         },
       })
     }

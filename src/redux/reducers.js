@@ -16,6 +16,13 @@ const reducers = (state = initialState, action) => {
         isScrolling: boolean,
       }
 
+    case 'SET_SCROLL_DIRECTION':
+      const { direction } = action
+      return {
+        ...state,
+        scrollDirection: direction,
+      }
+
     default:
       return { ...state }
   }

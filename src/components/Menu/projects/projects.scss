@@ -16,16 +16,17 @@
 
   .image {
     flex: 0.4;
+    width: 40%;
 
     img {
-      max-width: stretch;
-      margin: 0 0.4em;
+      width: 100%;
     }
   }
 
   .description {
     font-size: 0.9em;
     flex: 0.6;
+    padding-left: 1em;
 
     .project-title {
       display: flex;

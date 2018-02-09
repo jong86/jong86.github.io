@@ -24,6 +24,11 @@ class App extends Component {
   constructor() {
     super()
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    this.soundFreq = 0
+    this.soundDirection = ''
+    this.soundBreakPt1 = 0
+    this.soundBreakPt2 = 0
+    this.soundReady = false
   }
 
 
@@ -40,44 +45,51 @@ class App extends Component {
       scrollPosition: scrollPos,
       scrollBreakpoints: breakPt,
       isScrolling,
+      scrollDirection,
     } = nextProps
 
 
     /*===============
       Sound effect
     ===============*/
-    const freqMax = 22050
+    const freqMax = 16000
     const freqMin = 0
 
+
     // Determine breakPts and direction for sound frequency function
-    let direction, breakPt1, breakPt2
     // Make exception for first menu opening down (Summary)
-    if (scrollPos <= breakPt[0]) {
-      direction = 'down'
-      breakPt1 = 0
-      breakPt2 = breakPt[0]
+    if (scrollPos < breakPt[0]) {
+      this.soundDirection = 'down'
+      this.soundBreakPt1 = 0
+      this.soundBreakPt2 = breakPt[0]
+      this.soundReady = true
     } else {
       // For rest of animations
       for (let i = 0; i < breakPt.length; i += 3) {
-        if (scrollPos >= breakPt[i] && scrollPos <= breakPt[i + 3]) {
-          direction = 'up'
-          breakPt1 = breakPt[i]
-          breakPt2 = breakPt[i + 3]
+        if (scrollPos > breakPt[i] && scrollPos < breakPt[i + 3]) {
+          this.soundDirection = 'up'
+          this.soundBreakPt1 = breakPt[i]
+          this.soundBreakPt2 = breakPt[i + 3]
+          this.soundReady = true
         }
       }
     }
 
-    // Pitch modulation function
-    const freq = freqExp(direction, breakPt1, breakPt2, freqMax, freqMin, scrollPos)
 
     // To play the sound
-    if (isScrolling && !this.synthIsPlaying) {
+    if (isScrolling && !this.synthIsPlaying && this.soundReady) {
       this.synthIsPlaying = true
-      this.synth.play(freq)
+
+      // Pitch modulation function
+      this.soundFreq = freqExp(this.soundDirection, this.soundBreakPt1, this.soundBreakPt2, freqMax, freqMin, scrollPos)
+      this.synth.play(this.soundFreq)
     }
 
     // Continuously set sound frequency as scrollPos (props) changes
-    this.synth.frequency = freq
+    if (this.soundReady) {
+      this.soundFreq = freqExp(this.soundDirection, this.soundBreakPt1, this.soundBreakPt2, freqMax, freqMin, scrollPos)
+      this.synth.frequency = this.soundFreq
+    }
   }
 
 
@@ -90,27 +102,35 @@ class App extends Component {
       this.synth.stop()
       // Re-create the sound object
       this.instantiateSynth()
+      this.soundReady = false
     }
   }
 
 
   instantiateSynth = () => {
     // This is required to replay the sound
-    this.synth = new Synth(this.audioContext, 'triangle', 1200, 800)
+    this.synth = new Synth(this.audioContext, 'sawtooth', 640, 440)
   }
 
 
   scrollToPosition = (destPos) => {
     const {
       scrollPosition: scrollPos,
-      setIsScrolling
+      setIsScrolling,
+      setScrollDirection,
     } = this.props
+
+    if (destPos < scrollPos) {
+      setScrollDirection('backward')
+    } else if (destPos > scrollPos) {
+      setScrollDirection('forward')
+    }
 
     const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
     window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 
     // Diff between current scrollPos and destPos
-    this.posDiff = Math.abs(scrollPos - destPos)
+    this.scrollPosDiff = Math.abs(scrollPos - destPos)
 
     // Scroll to top of page when changing sections
     window.scrollTo(0, 0)
@@ -133,16 +153,19 @@ class App extends Component {
     const directionMod = scrollPos < destPos ? 1 : -1
 
     // Divide by 30 for half a second per transition (60 for full second)
-    const amtPerFrame = this.posDiff / 45
+    const amtPerFrame = this.scrollPosDiff / 45
 
     if (Math.abs(scrollPos - destPos) < amtPerFrame) {
       // If within less than one movement unit, make scrollPos the breakPt
+      console.log("***", destPos)
+      
       setScrollPosition(destPos)
       setIsScrolling(false)
       cancelAnimationFrame(this.req)
 
     } else if (Math.abs(scrollPos - destPos) > 0) {
       // Regular behavior
+      console.log("***", scrollPos, amtPerFrame, directionMod)
       setScrollPosition(scrollPos + ((amtPerFrame) * directionMod))
       this.req = requestAnimationFrame(() => this.handleAnimation(destPos))
     }
@@ -176,7 +199,7 @@ class App extends Component {
           scrollPos > breakPt[4] && scrollPos <= breakPt[7] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='PROJECTS'
+            title='PORTFOLIO'
             sectionColor='fuchsia'
             breakPt1={breakPt[4]}
             breakPt2={breakPt[5]}
@@ -200,7 +223,7 @@ class App extends Component {
           scrollPos > breakPt[10] && scrollPos <= breakPt[13] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='OTHER'
+            title='CONTACT'
             sectionColor='cyan'
             breakPt1={breakPt[10]}
             breakPt2={breakPt[11]}
@@ -236,6 +259,10 @@ function mapDispatchToProps(dispatch) {
     },
     setIsScrolling: (boolean) => {
       dispatch(action('SET_IS_SCROLLING', { boolean: boolean }))
+    },
+    setScrollDirection: (direction) => {
+      // 'forward' or 'backward'
+      dispatch(action('SET_SCROLL_DIRECTION', { direction: direction }))
     },
   })
 }
