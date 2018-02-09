@@ -23,7 +23,7 @@ class Menu extends Component {
 
     this.state = {
       wrapperStyle: {
-        marginTop: scrollPos <= breakPt2 ? '125%' : '-25%',
+        transform: `translateY(${scrollPos <= breakPt2 ? '1250%' : '-1250%'})`,
         opacity: scrollPos <= breakPt2 ? 0.0 : 1.0,
       },
       sectionStyle: {
@@ -51,8 +51,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('125%', '0%', breakPt1, breakPt2, scrollPos),
-          transform: 'rotate(0.01deg)',
+          transform: `translateY(${moveComponentVerticallyUp('1250%', '0%', breakPt1, breakPt2, scrollPos)}) rotate(0.01deg)`,
           opacity: fadeOpacity('in', breakPt1, breakPt2, scrollPos),
         },
         sectionStyle: {
@@ -75,7 +74,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: '0%',
+          transform: `translateY(0) rotate(0.01deg)`,
         },
         sectionStyle: {
           ...this.state.sectionStyle,
@@ -99,8 +98,7 @@ class Menu extends Component {
         wrapperStyle: {
           ...this.state.wrapperStyle,
           opacity: 1.0,
-          transform: 'rotate(0.0deg)',
-          marginTop: '0%',
+          transform: `translateY(0) scaleX(1) rotate(0deg)`,
         },
         sectionStyle: {
           ...this.state.sectionStyle,
@@ -124,8 +122,7 @@ class Menu extends Component {
       this.setState({
         wrapperStyle: {
           ...this.state.wrapperStyle,
-          marginTop: moveComponentVerticallyUp('0%', '-50%', breakPt3, breakPt4, scrollPos),
-          transform: 'rotate(0.01deg)',
+          transform: `translateY(${moveComponentVerticallyUp('0%', '-1250%', breakPt3, breakPt4, scrollPos)}) rotate(0.01deg)`,
           opacity: fadeOpacity('out', breakPt3, breakPt4 - 100, scrollPos),
         },
         sectionStyle: {
