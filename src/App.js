@@ -108,7 +108,7 @@ class App extends Component {
 
   instantiateSynth = () => {
     // This is required to replay the sound
-    this.synth = new Synth(this.audioContext, 'sawtooth', 640, 440)
+    this.synth = new Synth(this.audioContext, 'triangle', 2500, 200)
   }
 
 
