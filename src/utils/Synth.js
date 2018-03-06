@@ -14,7 +14,8 @@ export default class Synth {
   }
 
   set frequency(value) {
-    this.oscillator.frequency.setTargetAtTime(value, this.context.currentTime, 0.05)
+    this.oscillator.frequency.setTargetAtTime(value, this.context.currentTime, 0.015)
+    console.log(this.oscillator.frequency.value)
   }
 
   init() {
@@ -37,9 +38,9 @@ export default class Synth {
   play() {
     this.init()
 
-    this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0)
+    this.gainNode.gain.setTargetAtTime(0, this.context.currentTime, 0.0)
     this.oscillator.start()
-    this.gainNode.gain.setTargetAtTime(0.1, this.context.currentTime, 0.25)
+    this.gainNode.gain.setTargetAtTime(0.1, this.context.currentTime, 0.015)
     this.isPlaying = true
   }
 
