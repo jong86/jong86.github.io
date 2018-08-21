@@ -22,15 +22,15 @@ const projectsData = [
       `Rails for the back-end and Vue for the front-end`,
     ],
   },
-  {
-    image: tuneProg,
-    title: `Tune Progresser`,
-    url: `https://github.com/jong86/tuneprog`,
-    bulletPoints: [
-      `A mobile app that allows musicians to organize sections of songs visually on a map, by recording the parts inside individual recorder components that can be placed where desired on a 'map'`,
-      `Uses React Native and Redux`,
-    ],
-  },
+  // {
+  //   image: tuneProg,
+  //   title: `Tune Progresser`,
+  //   url: `https://github.com/jong86/tuneprog`,
+  //   bulletPoints: [
+  //     `A mobile app that allows musicians to organize sections of songs visually on a map, by recording the parts inside individual recorder components that can be placed where desired on a 'map'`,
+  //     `Uses React Native and Redux`,
+  //   ],
+  // },
   {
     image: payItForward,
     title: `PayItForward`,
