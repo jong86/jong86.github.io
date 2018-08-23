@@ -13,9 +13,9 @@ const educationData = [
     date: '2012 - 2016',
   },
   {
-    school: 'University of British Columbia,\nUniversity of Alberta',
-    description: `Completed 2.5 years in a wide variety of subjects.\nI always approached my courses with curiosity, but decided to leave to find something I was truly passionate about.`,
-    date: '2005 - 2008',
+    school: 'University of British Columbia',
+    description: `General studies`,
+    date: '2004 - 2007',
   },
 ]
 
