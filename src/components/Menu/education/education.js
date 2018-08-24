@@ -15,7 +15,7 @@ const educationData = [
   {
     school: 'University of British Columbia',
     description: `General studies`,
-    date: '2004 - 2007',
+    date: '2005 - 2008',
   },
 ]
 
