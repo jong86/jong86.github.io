@@ -85,7 +85,6 @@ class Summary extends Component {
         wrapperStyle: {
           top: topStartPct,
           opacity: 1.0,
-          transform: 'rotate(0.01deg)',
         },
         sectionStyle: {
           height: scrollPos + this.cssMinHeight

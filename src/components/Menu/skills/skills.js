@@ -8,6 +8,7 @@ const skillsData = [
       'Javascript',
       'Python',
       'Ruby',
+      'SQL',
     ],
   },
   {
@@ -19,9 +20,9 @@ const skillsData = [
       'Vue.js',
       'JQuery',
       'CSS/SCSS',
-      'Photoshop',
       'Google Maps API',
       'Web Audio API',
+      'Photoshop',
     ],
   },
   {
@@ -30,9 +31,10 @@ const skillsData = [
       'Node.js',
       'Express',
       'Ruby on Rails',
-      'SQL',
+      'PostgreSQL',
       'MongoDB',
       'Web Sockets',
+      'Docker',
     ],
   },
 ]

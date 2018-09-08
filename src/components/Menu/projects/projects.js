@@ -22,15 +22,6 @@ const projectsData = [
       `Rails for the back-end and Vue for the front-end`,
     ],
   },
-  // {
-  //   image: tuneProg,
-  //   title: `Tune Progresser`,
-  //   url: `https://github.com/jong86/tuneprog`,
-  //   bulletPoints: [
-  //     `A mobile app that allows musicians to organize sections of songs visually on a map, by recording the parts inside individual recorder components that can be placed where desired on a 'map'`,
-  //     `Uses React Native and Redux`,
-  //   ],
-  // },
   {
     image: payItForward,
     title: `PayItForward`,
@@ -51,51 +42,51 @@ const projectsData = [
       `My contributions included: Google Maps API, user interaction with the map`,
     ],
   },
-  {
-    image: jungle,
-    title: `Jungle`,
-    url: `https://github.com/jong86/jungle-rails`,
-    bulletPoints: [
-      `Lighthouse Labs solo project`,
-      `An e-commerce Rails app`,
-    ],
-  },
-  {
-    image: chatty,
-    title: `Chatty`,
-    url: `https://github.com/jong86/chattyapp`,
-    bulletPoints: [
-      `Lighthouse Labs solo project`,
-      `Simple real-time chat app using React, Express and Websockets`,
-    ],
-  },
-  {
-    image: tinyApp,
-    title: `TinyApp`,
-    url: `https://github.com/jong86/tinyapp`,
-    bulletPoints: [
-      `Lighthouse Labs solo project`,
-      `Small full-stack app using Node and Express that allows users to shorten long URLs`,
-    ],
-  },
-  {
-    image: tweeter,
-    title: `Tweeter`,
-    url: `https://github.com/jong86/tweeter`,
-    bulletPoints: [
-      `Lighthouse Labs solo project`,
-      `Twitter clone made with JQuery, Express, and MongoDB`,
-    ],
-  },
-  {
-    image: loopFun,
-    title: `LoopFun`,
-    url: `https://github.com/jong86/loopfun`,
-    bulletPoints: [
-      `Personal project`,
-      `Drum machine and note sequencer that uses Javascript and Web Audio API to synthesize sounds`,
-    ],
-  },
+  // {
+  //   image: jungle,
+  //   title: `Jungle`,
+  //   url: `https://github.com/jong86/jungle-rails`,
+  //   bulletPoints: [
+  //     `Lighthouse Labs solo project`,
+  //     `An e-commerce Rails app`,
+  //   ],
+  // },
+  // {
+  //   image: chatty,
+  //   title: `Chatty`,
+  //   url: `https://github.com/jong86/chattyapp`,
+  //   bulletPoints: [
+  //     `Lighthouse Labs solo project`,
+  //     `Simple real-time chat app using React, Express and Websockets`,
+  //   ],
+  // },
+  // {
+  //   image: tinyApp,
+  //   title: `TinyApp`,
+  //   url: `https://github.com/jong86/tinyapp`,
+  //   bulletPoints: [
+  //     `Lighthouse Labs solo project`,
+  //     `Small full-stack app using Node and Express that allows users to shorten long URLs`,
+  //   ],
+  // },
+  // {
+  //   image: tweeter,
+  //   title: `Tweeter`,
+  //   url: `https://github.com/jong86/tweeter`,
+  //   bulletPoints: [
+  //     `Lighthouse Labs solo project`,
+  //     `Twitter clone made with JQuery, Express, and MongoDB`,
+  //   ],
+  // },
+  // {
+  //   image: loopFun,
+  //   title: `LoopFun`,
+  //   url: `https://github.com/jong86/loopfun`,
+  //   bulletPoints: [
+  //     `Personal project`,
+  //     `Drum machine and note sequencer that uses Javascript and Web Audio API to synthesize sounds`,
+  //   ],
+  // },
 ]
 
 export const renderProjects = () => {
