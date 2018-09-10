@@ -1,18 +1,29 @@
 import React from 'react'
 import uuidv4 from 'uuid/v4'
 
-import chatty from './images/chatty.png'
-import jungle from './images/jungle.gif'
-import loopFun from './images/loopfun.gif'
+// import chatty from './images/chatty.png'
+// import jungle from './images/jungle.gif'
+// import loopFun from './images/loopfun.gif'
+// import tinyApp from './images/tinyapp.png'
+// import tuneProg from './images/tuneprog.gif'
+// import tweeter from './images/tweeter.gif'
 import payItForward from './images/payitforward.gif'
-import tinyApp from './images/tinyapp.png'
 import trikiMaps from './images/trikimaps.gif'
-import tuneProg from './images/tuneprog.gif'
-import tweeter from './images/tweeter.gif'
 import vanCleaning from './images/vancleaning.gif'
+import coinage from './images/coinage.gif'
 
 
 const projectsData = [
+  {
+    image: coinage,
+    title: `Coinage ICO Website`,
+    url: ``,
+    bulletPoints: [
+      `Back-end with Node, Express and PostgreSQL`,
+      `Front-end with React, Redux, Material UI`,
+      `Neo blockchain monitoring`,
+    ],
+  },
   {
     image: vanCleaning,
     title: `VanCleaning Service`,
@@ -29,7 +40,7 @@ const projectsData = [
     bulletPoints: [
       `Volunteering platform with a token incentive`,
       `Lighthouse Labs group final project made in under 2 weeks`,
-      `My contributions included: database, transaction logic, the contract page w/ chat, and homepage cards design`,
+      `My contributions included database, transaction logic, the contract page w/ chat, and homepage cards design`,
     ],
   },
   {
@@ -39,7 +50,7 @@ const projectsData = [
     bulletPoints: [
       `Lighthouse Labs group midterm project`,
       `Collaborated with a team of four using Git to create a 'Wikimap'-style single-page website where users can create custom markers and make their own maps`,
-      `My contributions included: Google Maps API, user interaction with the map`,
+      `My contributions included Google Maps API, user interaction with the map`,
     ],
   },
   // {
