@@ -8,9 +8,9 @@ body {
   background: linear-gradient(to bottom, #777 0%, #333 24%, #111 51%, #111 51%, #333 80%, #777 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#999999', endColorstr='#777777',GradientType=0 );
   background-size: 100% 110%;
-  -webkit-animation: AnimationName 10s ease-in-out infinite;
-  -moz-animation: AnimationName 10s ease-in-out infinite;
-  animation: AnimationName 10s ease-in-out infinite;
+  -webkit-animation: AnimationName 20s ease-in-out infinite;
+  -moz-animation: AnimationName 20s ease-in-out infinite;
+  animation: AnimationName 20s ease-in-out infinite;
   background-attachment: fixed; }
 
 @-webkit-keyframes AnimationName {

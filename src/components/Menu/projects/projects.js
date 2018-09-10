@@ -104,13 +104,16 @@ export const renderProjects = () => {
   return projectsData.map(project =>
     <div className="project" key={uuidv4()}>
       <div className="image" key={uuidv4()}>
-        <a href={ project.url } target="_blank">
+        {project.url ?
+          <a href={project.url} target="_blank">
+            <img src={project.image} alt={project.title}/>
+          </a> :
           <img src={project.image} alt={project.title}/>
-        </a>
+        }
       </div>
       <div className="description" key={uuidv4()}>
         <div className="project-title subtitle" key={uuidv4()}>
-          <a href={ project.url } target="_blank">{ project.title }</a>
+          {project.url ? <a href={ project.url } target="_blank">{project.title}</a> : project.title}
         </div>
         <ul>
           { project.bulletPoints.map((bulletPoint, j) =>
