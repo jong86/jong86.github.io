@@ -6,6 +6,7 @@ footer {
   max-width: 800px;
   height: 50px;
   display: flex;
+  justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: visible; }
   footer .btn-footer {

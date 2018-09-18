@@ -9,7 +9,6 @@ import Summary from './components/Summary/Summary.js'
 import Menu from './components/Menu/Menu.js'
 import { renderSkills } from './components/Menu/skills/skills.js'
 import { renderProjects } from './components/Menu/projects/projects.js'
-import { renderEducation } from './components/Menu/education/education.js'
 import { renderOther } from './components/Menu/other/other.js'
 import Footer from './components/Footer/Footer.js'
 
@@ -207,24 +206,12 @@ class App extends Component {
           scrollPos > breakPt[7] && scrollPos <= breakPt[10] &&
           <Menu
             scrollToBreakPoint={this.scrollToPosition}
-            title='EDUCATION'
-            sectionColor='yellow'
+            title='CONTACT'
+            sectionColor='cyan'
             breakPt1={breakPt[7]}
             breakPt2={breakPt[8]}
             breakPt3={breakPt[9]}
             breakPt4={breakPt[10]}
-            renderContent={renderEducation}
-          />
-        ) || (
-          scrollPos > breakPt[10] && scrollPos <= breakPt[13] &&
-          <Menu
-            scrollToBreakPoint={this.scrollToPosition}
-            title='CONTACT'
-            sectionColor='cyan'
-            breakPt1={breakPt[10]}
-            breakPt2={breakPt[11]}
-            breakPt3={breakPt[12]}
-            breakPt4={breakPt[13]}
             renderContent={renderOther}
           />
         )}

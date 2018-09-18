@@ -30,7 +30,7 @@ class Footer extends Component {
   getProgressIndicatorLeftPos = (scrollPos) => {
     const { scrollBreakpoints: breakPt } = this.props
 
-    let pctScroll = (((scrollPos - 200) / (breakPt[12] - 200)) * 100)
+    let pctScroll = (((scrollPos - breakPt[0]) / (breakPt[9] - breakPt[0])) * 100)
 
     // Makes sure it doesn't go below zero (initial summary section has an exception)
     pctScroll = pctScroll < 0 ? 0 : pctScroll
@@ -59,9 +59,6 @@ class Footer extends Component {
           PORTFOLIO
         </div>
         <div className="btn-footer" onClick={() => handleClick(breakPt[9])}>
-          EDUCATION
-        </div>
-        <div className="btn-footer" onClick={() => handleClick(breakPt[12])}>
           CONTACT
         </div>
         <div className="progress-track">
